@@ -1,12 +1,12 @@
 {
     "global": {
-        "title": "Floop!",
+        "title": "floop.io",
         "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
         "menu": {
             "home": "Home",
-            "entities": {
-                "main": "Entities",
-                "additionalEntity": "JHipster will add addtional entities"
+            "opinion": {
+                "main": "Opinion",
+                "select": "Select"
             },
             "account": {
                 "main": "Account",
@@ -86,5 +86,5 @@
             "title": "Confirm delete operation"
         }
     },
-    "footer": "&copy; 2015 Evolving Reality"
+    "footer": "&copy; 2015 floop.io"
 }

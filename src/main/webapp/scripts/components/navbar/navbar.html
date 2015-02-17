@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"><span class="navbar-title" translate="global.title">Floop!</span> <span class="navbar-version">v{{VERSION}}</span></a>
+            <a class="navbar-brand" href="#"><span class="navbar-title" translate="global.title">floop.io</span> <span class="navbar-version">v{{VERSION}}</span></a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="isAuthenticated()">
             <ul class="nav navbar-nav nav-pills navbar-right">
@@ -17,18 +17,19 @@
                         <span translate="global.menu.home">Home</span>
                     </a>
                 </li>
-                <li ui-sref-active="active" ng-switch-when="true" class="dropdown pointer">
+                <li ui-sref-active="active"  class="dropdown pointer">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="">
                                 <span>
                                     <span class="glyphicon glyphicon-th-list"></span>
-                                    <span class="hidden-tablet" translate="global.menu.entities.main">
-                                        Entities
+                                    <span class="hidden-tablet" translate="global.menu.opinion.main">
+                                        Opinion
                                     </span>
                                     <b class="caret"></b>
                                 </span>
                     </a>
-                    <ul class="dropdown-menu">
-                        <!-- JHipster will add entities to the menu here -->
+                    <ul class="dropdown-menu">                        
+                        <li ui-sref-active="active"><a ui-sref="select"><span class="glyphicon glyphicon-wrench"></span>
+                            &#xA0;<span translate="global.menu.opinion.select">Select</span></a></li>
                     </ul>
                 </li>
                 <li ng-class="{active: $state.includes('account')}" class="dropdown pointer">

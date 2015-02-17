@@ -1,0 +1,14 @@
+<div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 translate="select.title">Select</h1>           
+
+            <form ng-show="!success" name="form" role="form" novalidate ng-submit="select()" show-validation>                
+                <button type="submit" ng-disabled="form.$invalid" class="btn" translate="select.petition.button"><i class="fa fa-bullhorn"></i> Petition</button>
+                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="select.question.button">Question</button>
+                <button type="submit" ng-disabled="form.$invalid" class="btn" translate="select.option.button">Option</button>
+                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="select.rate.button">Rate</button>
+            </form>
+        </div>
+    </div>
+</div>
