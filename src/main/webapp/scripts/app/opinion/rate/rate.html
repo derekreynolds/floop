@@ -1,0 +1,57 @@
+<div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 translate="rate.title">Rate</h1>           
+
+            <form ng-show="!success" name="form" role="form" novalidate ng-submit="select()" show-validation>                
+                <div class="form-group">
+                    <label translate="rate.form.title.label">Title</label>
+                    <input type="text" class="form-control" name="login" placeholder="{{'rate.form.title.placeholder' | translate}}"
+                           ng-model="rate.title" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[a-z0-9]*$/" required>
+                    <div ng-show="form.title.$dirty && form.title.$invalid">
+                        <p class="help-block"
+                               ng-show="form.title.$error.required" translate="register.messages.validate.title.required">
+                            Your login is required.
+                        </p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label translate="rate.form.description.label">Description</label>
+                    <input type="text" class="form-control" name="login" placeholder="{{'rate.form.description.placeholder' | translate}}"
+                           ng-model="rate.description" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[a-z0-9]*$/" required>
+                    <div ng-show="form.description.$dirty && form.description.$invalid">
+                        <p class="help-block"
+                               ng-show="form.description.$error.required" translate="register.messages.validate.description.required">
+                            Your login is required.
+                        </p>
+                    </div>
+                </div>
+                <div class="row">               
+                    <div class="col-md-6">
+                        <label translate="rate.form.startDate.label">Start Date</label>
+                        <span class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="rate.startDate" is-open="opened" min-date="minDate" 
+                                max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
+                                <button type="button" class="btn btn-default" ng-click="openTimeCalendar($event)"><i class="fa fa-clock-o"></i></button>
+                            </span>
+                        </span>                        
+                    </div>             
+                    <div class="col-md-6">
+                        <label translate="rate.form.endDate.label">End Date</label>
+                        <span class="input-group">
+                            <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="rate.endDate" is-open="opened" min-date="minDate" 
+                                max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>
+                                <button type="button" class="btn btn-default" ng-click="openTimeCalendar($event)"><i class="fa fa-clock-o"></i></button>
+                            </span>
+                        </span>                        
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

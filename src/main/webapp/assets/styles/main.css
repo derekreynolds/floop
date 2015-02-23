@@ -117,6 +117,7 @@ only screen and (                min-resolution: 2dppx) {
 .hand {
     cursor: pointer;
 }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 #threadDump .popover, #healthCheck .popover {
     top: inherit;
@@ -143,6 +144,7 @@ only screen and (                min-resolution: 2dppx) {
 .voffset7 { margin-top: 80px; }
 .voffset8 { margin-top: 100px; }
 .voffset9 { margin-top: 150px; }
+
 
 .footer {
   position: absolute;
@@ -185,3 +187,64 @@ ul#strength {
 }
 /* end Password strength bar style */
 
+.loop {
+    background-color: rgba(0,0,0,0);
+    border: 3px solid #ffffff;
+    opacity: .9;
+    border-top: 5px solid rgba(0,0,0,0);
+    border-left: 5px solid rgba(0,0,0,0);
+    border-radius: 30px;
+    box-shadow: 0 0 35px #2187e7;
+    width: 30px;
+    height: 30px;
+    margin: 10px auto;
+    -moz-animation: spin 0.8s infinite linear;
+    -webkit-animation: spin 0.8s infinite linear;
+    float:left;
+}
+
+.stopLoop {
+    -webkit-animation-play-state:paused;
+    -moz-animation-play-state:paused;
+}
+
+
+@-moz-keyframes spin {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+    };
+}
+
+@-moz-keyframes spinoff {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(-360deg);
+    };
+}
+
+@-webkit-keyframes spin {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    };
+}
+
+@-webkit-keyframes spinoff {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(-360deg);
+    };
+}

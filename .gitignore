@@ -7,9 +7,11 @@ node_modules
 .project
 .settings
 .tmp
+.log
 .merge_file*
 .sass-cache
 .DS_Store
 src/main/webapp/dist
 .gradle
 build
+/.gitignore~

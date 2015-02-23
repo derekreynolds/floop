@@ -3,21 +3,21 @@
 angular.module('floopApp')
     .config(function ($stateProvider) {
         $stateProvider
-            .state('select', {
-                parent: 'opinion',
-                url: '/select',
+            .state('rate', {
+                parent: 'site',
+                url: '/rate',
                 data: {
                     roles: []
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'scripts/app/opinion/select/select.html',
-                        controller: 'SelectController'
+                        templateUrl: 'scripts/app/opinion/rate/rate.html',
+                        controller: 'RateController'
                     }
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('select');
+                        $translatePartialLoader.addPart('rate');
                         return $translate.refresh();
                     }]
                 }

@@ -1,17 +1,24 @@
 {
-    "select": {
-        "title": "Select",
-        "petition": {
-            "button": "<i class=\"fa fa-bullhorn\"></i> Petition"
-        },
-        "question": {
-            "button": "<i class=\"fa fa-question\"></i> Question"
-        },
-        "option": {
-            "button": "<i class=\"fa fa-ellipsis-v\"></i> Options"
-        },
-        "rate": {
-            "button": "<i class=\"fa fa-star\"></i> Rate"
+    "rate": {
+        "title": "Rate",
+        "form": {
+            "title": {
+                "label": "Title",
+                "placeholder": "Title for rating"
+            },
+            "description": {
+                "label": "Description",
+                "placeholder": "Description for rating"
+            },
+            "startDate": {
+                "label": "Start Date",
+                "placeholder": "Description for rating"
+            },
+            "endDate": {
+                "label": "End Date",
+                "placeholder": "Description for rating"
+            }
+            
         },
         "messages": {
             "validate": {

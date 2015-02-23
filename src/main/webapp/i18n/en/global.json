@@ -6,7 +6,8 @@
             "home": "Home",
             "opinion": {
                 "main": "Opinion",
-                "select": "Select"
+                "rate": "Rate",
+                "petition": "Petition"
             },
             "account": {
                 "main": "Account",

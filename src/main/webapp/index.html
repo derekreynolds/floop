@@ -26,10 +26,8 @@
         <![endif]-->
         <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div>
         <div ui-view="navbar" ng-cloak=""></div>
-        <div class="container">
+        <div class="container">        
             <div ui-view="content"></div>
-
-
         </div>
 
         <footer class="footer text-muted">
@@ -66,6 +64,7 @@
         <script src="bower_components/angular-dynamic-locale/src/tmhDynamicLocale.js"></script>
         <script src="bower_components/angular-local-storage/dist/angular-local-storage.js"></script>
         <script src="bower_components/angular-cache-buster/angular-cache-buster.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -125,8 +124,8 @@
         <script src="scripts/app/admin/tracker/tracker.controller.js"></script>
         <script src="scripts/components/tracker/tracker.service.js"></script>
         <script src="scripts/app/opinion/opinion.js"></script>
-        <script src="scripts/app/opinion/select/select.js"></script>
-        <script src="scripts/app/opinion/select/select.controller.js"></script>
+        <script src="scripts/app/opinion/rate/rate.js"></script>
+        <script src="scripts/app/opinion/rate/rate.controller.js"></script>
         <!-- endbuild -->
 </body>
 </html>
