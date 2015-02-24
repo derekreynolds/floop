@@ -1,19 +1,19 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('RateController', function ($scope, $translate, $timeout, Auth) {
+    .controller('PetitionController', function ($scope, $translate, $timeout, Auth) {
         $scope.success = null;
         $scope.error = null;
         $scope.format = 'yyyy-MM-dd hh:mm';
-        $scope.rate = {};
+        $scope.petition = {};
 
         $scope.now = new Date();
 
-        $scope.rate.startDate = $scope.now.getFullYear() + '-' + ($scope.now.getMonth() + 1) + '-' 
-        $scope.rate.startDate   += $scope.now.getDate() + ' ' + $scope.now.getHours() + ':' + $scope.now.getMinutes();
-        $scope.rate.endDate = $scope.rate.startDate;
+        $scope.petition.startDate = $scope.now.getFullYear() + '-' + $scope.now.getMonth() + '-' 
+        $scope.petition.startDate   += $scope.now.getDate() + ' ' + $scope.now.getHours() + ':' + $scope.now.getMinutes();
+        $scope.petition.endDate = $scope.petition.startDate;
 
-        $timeout(function (){angular.element('[ng-model="rate.title"]').focus();});
+        $timeout(function (){angular.element('[ng-model="petition.title"]').focus();});
 
         $scope.ismeridian = true; 
         $scope.hstep = 1;
@@ -38,14 +38,7 @@ angular.module('floopApp')
             $scope.opened = true;
         };
 
-        $scope.addItem = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            var parent = angular.element($event.target)
-
-            console.log(parent.parent().parent().first());
-
-
+        $scope.select = function () {
+            
         };
     });

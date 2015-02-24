@@ -1,24 +1,22 @@
 {
-    "rate": {
-        "title": "Rate",
+    "petition": {
+        "title": "Petition",
         "form": {
             "title": {
                 "label": "Title",
-                "placeholder": "Title for rating"
+                "placeholder": "Title for petition"
             },
             "description": {
                 "label": "Description",
-                "placeholder": "Description for rating"
+                "placeholder": "Description for petition"
             },
             "startDate": {
-                "label": "Start Date"
+                "label": "Start Date",
+                "placeholder": "Description for petition"
             },
             "endDate": {
-                "label": "End Date"
-            },
-            "item": {
-                "label": "Item",
-                "placeholder": "Item you want rated"
+                "label": "End Date",
+                "placeholder": "Description for petition"
             }
             
         },
