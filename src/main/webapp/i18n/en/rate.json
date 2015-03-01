@@ -16,19 +16,24 @@
             "endDate": {
                 "label": "End Date"
             },
+            "range": {
+                "label": "Range"
+            },
+            "step": {
+                "label": "Step"
+            },
             "item": {
                 "label": "Item",
                 "placeholder": "Item you want rated"
-            }
-            
+            }            
         },
         "messages": {
             "validate": {
-                "login": {
-                    "required": "Your login is required.",
-                    "minlength": "Your login is required to be at least 1 character",
-                    "maxlength": "Your login cannot be longer than 50 characters",
-                    "pattern": "Your login can only contain lower-case letters and digits"
+                "title": {
+                    "required": "A title is required."
+                },
+                "description": {
+                    "required": "A description is required."
                 }
             },
             "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",

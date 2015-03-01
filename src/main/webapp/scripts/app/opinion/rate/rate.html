@@ -10,8 +10,8 @@
                            ng-model="rate.title" ng-minlength=1 ng-maxlength=250 ng-pattern="/^[a-z0-9]*$/" required>
                     <div ng-show="form.title.$dirty && form.title.$invalid">
                         <p class="help-block"
-                               ng-show="form.title.$error.required" translate="register.messages.validate.title.required">
-                            Your login is required.
+                               ng-show="form.title.$error.required" translate="rate.messages.validate.title.required">
+                           A title is required.
                         </p>
                     </div>
                 </div>
@@ -21,8 +21,8 @@
                            ng-model="rate.description" ng-minlength=1 ng-maxlength=250 ng-pattern="/^[a-z0-9]*$/" required>
                     <div ng-show="form.description.$dirty && form.description.$invalid">
                         <p class="help-block"
-                               ng-show="form.description.$error.required" translate="register.messages.validate.description.required">
-                            Your login is required.
+                               ng-show="form.description.$error.required" translate="rate.messages.validate.description.required">
+                            A description is required.
                         </p>
                     </div>
                 </div>
@@ -50,22 +50,33 @@
                         </span>                        
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group voffset2">
                     <label translate="rate.form.item.label">Item</label>
-                    <span class="input-group" id="item1">
-                        <input type="text" class="form-control" name="item1" placeholder="{{'rate.form.item.placeholder' | translate}}"
-                           ng-model="rate.item" ng-minlength=1 ng-maxlength=250 ng-pattern="/^[a-z0-9]*$/" required>
+                    <span class="input-group">
+                        <input type="text" class="form-control" ng-change="enableButton()" name="item1" placeholder="{{'rate.form.item.placeholder' | translate}}"
+                           ng-model="rate.item1" ng-minlength=1 ng-maxlength=250 ng-pattern="/^[a-z0-9]*$/" required>
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="addItem($event)"><i class="fa fa-plus"></i></button>                               
+                            <button type="button" class="btn btn-default" ng-click="addItem($event)" ng-disabled="rate.item1 === undefined|| rate.item1 === ''"><i class="fa fa-plus"></i></button>                               
                         </span>
                     </span>
-                    <div ng-show="form.item.$dirty && form.item.$invalid">
+                    <div ng-show="form.item1.$dirty && form.item1.$invalid">
                         <p class="help-block"
-                               ng-show="form.item.$error.required" translate="register.messages.validate.item.required">
-                            Your login is required.
+                               ng-show="form.item.$error.required" translate="rate.messages.validate.item.required">
+                            At least 1 item is required.
                         </p>
                     </div>
                 </div>
+                <div class="form-group">
+                    <span class="input-group">
+                        <span class="input-group-btn">
+                            <button type="reset" class="btn btn-default" translate="global.form.cancel">Cancel</button>
+                        </span>
+                        <span class="input-group-btn">
+                            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.create"><i class="fa fa-clock-o"></i>Create</button>                           
+                        </span>
+                    </span>
+                </div>
+                
             </form>
         </div>
     </div>
