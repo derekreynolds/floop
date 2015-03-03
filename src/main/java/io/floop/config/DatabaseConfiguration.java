@@ -26,7 +26,7 @@ import java.util.List;
 
 @Configuration
 @Profile("!cloud")
-@EnableMongoRepositories("io.floop.repository")
+@EnableMongoRepositories("io.floop")
 @Import(value = MongoAutoConfiguration.class)
 @EnableMongoAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class DatabaseConfiguration extends AbstractMongoConfiguration  {

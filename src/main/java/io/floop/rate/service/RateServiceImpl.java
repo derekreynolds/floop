@@ -9,11 +9,13 @@ import io.floop.rate.repository.RateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Derek Reynolds
  *
  */
+@Service
 public class RateServiceImpl implements RateService {
 
 	private final RateRepository rateRepository;

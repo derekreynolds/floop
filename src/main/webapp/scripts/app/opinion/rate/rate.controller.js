@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('RateController', function ($scope, $translate, $timeout, $filter, Auth) {
+    .controller('RateController', function ($scope, $translate, $timeout, $filter, Rate) {
         $scope.success = null;
         $scope.error = null;
         $scope.format = 'yyyy-MM-dd hh:mm';
@@ -61,5 +61,13 @@ angular.module('floopApp')
             var $grandParent = target.closest('span.input-group');
             var $button = $grandParent.find('button');
             $button.prop("di");
+        };
+
+        $scope.create = function() {
+            $scope.rate['item'] = $scope.rate.item1;
+            delete $scope.rate.item1;
+
+            Rate.post($scope.rate)
+            console.log($scope.rate);
         };
     });
