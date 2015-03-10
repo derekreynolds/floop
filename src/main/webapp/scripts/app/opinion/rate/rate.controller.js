@@ -1,17 +1,16 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('RateController', function ($scope, $translate, $timeout, $filter, Rate) {
+    .controller('RateController', function ($scope, $translate, $timeout, $filter, DateTimeService, Rate) {
         $scope.success = null;
         $scope.error = null;
-        $scope.format = 'yyyy-MM-dd hh:mm';
+        $scope.format = 'yyyy-MM-dd HH:mm';
         $scope.rate = {};
 
         $scope.now = new Date();
 
-        $scope.rate.startDate = $scope.now.getFullYear() + '-' + $filter('leftPad')(($scope.now.getMonth() + 1), 2) + '-'; 
-        $scope.rate.startDate += $filter('leftPad')($scope.now.getDate(), 2) + ' ' + $filter('leftPad')($scope.now.getHours(), 2);
-        $scope.rate.startDate += ':' + $filter('leftPad')($scope.now.getMinutes(), 2);
+        $scope.rate.startDate = DateTimeService.formatDateTime($scope.now);
+
         $scope.rate.endDate = $scope.rate.startDate;
 
         $timeout(function (){angular.element('[ng-model="rate.title"]').focus();});
@@ -32,13 +31,6 @@ angular.module('floopApp')
             $scope.timeOpen = true;
         };
 
-        $scope.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            $scope.opened = true;
-        };
-
         $scope.addItem = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
@@ -47,9 +39,6 @@ angular.module('floopApp')
             var $grandParent = target.closest('span.input-group');
             var $button = $grandParent.find('button');
             $grandParent.find('i').removeClass('fa-plus').addClass('fa-minus');
-            debugger
-            $button.attr("ng-click", null);
-            $button.prop("ng-click", null);
 
         };
 
@@ -60,14 +49,17 @@ angular.module('floopApp')
             var target = angular.element($event.target);
             var $grandParent = target.closest('span.input-group');
             var $button = $grandParent.find('button');
-            $button.prop("di");
+            
         };
 
         $scope.create = function() {
-            $scope.rate['item'] = $scope.rate.item1;
-            delete $scope.rate.item1;
+            //$scope.rate['item'] = $scope.rate.item1;
+            //delete $scope.rate.item1;
 
-            Rate.post($scope.rate)
-            console.log($scope.rate);
+            $scope.rate.startDate = DateTimeService.toUTC($scope.rate.startDate);
+            $scope.rate.endDate = DateTimeService.toUTC($scope.rate.endDate);
+            debugger
+            Rate.post($scope.rate);
+
         };
     });

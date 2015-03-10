@@ -30,7 +30,9 @@
         "messages": {
             "validate": {
                 "title": {
-                    "required": "A title is required."
+                    "required": "A title is required.",
+                    "minlength": "A title must be greater than 1 character.",
+                    "maxlength": "A title must be less then 250 characters."
                 },
                 "description": {
                     "required": "A description is required."

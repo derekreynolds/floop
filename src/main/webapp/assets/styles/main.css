@@ -87,6 +87,10 @@ Browser Upgrade Prompt
     letter-spacing: -1px;
 }
 
+.title {
+    font-weight: 500;
+}
+
 .error {
     color: white;
     background-color: red;
