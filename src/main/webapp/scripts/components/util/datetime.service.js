@@ -13,10 +13,21 @@ angular.module('floopApp')
             if(!_.isDate(dateTime))
                 throw new TypeError("Expected a date type")
 
-            var formattedDateTime = dateTime.getFullYear() + '-' + s.lpad((dateTime.getMonth() + 1), 2, '0') + '-';     
-                formattedDateTime += s.lpad(dateTime.getDate(), 2, '0') + ' ' + s.lpad(dateTime.getHours(), 2, '0');
-                formattedDateTime += ':' + s.lpad(dateTime.getMinutes(), 2, '0');
-            return formattedDateTime;
+            return this.formatDate(dateTime) + ' ' + this.formatTime(dateTime);
+        };
+
+        factory.formatDate = function(date) {
+            if(!_.isDate(date))
+                throw new TypeError("Expected a date type")
+
+            var formattedDate = date.getFullYear() + '-' + s.lpad((date.getMonth() + 1), 2, '0') + '-';     
+                formattedDate += s.lpad(date.getDate(), 2, '0');
+
+            return formattedDate;
+        };
+
+        factory.formatTime = function(time) {   
+            return s.lpad(time.getHours(), 2, '0') + ':' + s.lpad(time.getMinutes(), 2, '0');                
         };
 
         return factory;

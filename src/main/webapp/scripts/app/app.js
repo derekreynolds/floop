@@ -3,7 +3,7 @@
 angular.module('floopApp', ['LocalStorageModule', 'tmh.dynamicLocale',
     'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster','ui.bootstrap', 'restangular', 'underscore.string'])
 
-    .run(function ($rootScope, $location, $http, $state, $translate, Auth, Principal, Language, ENV, VERSION) {
+    .run(function ($rootScope, $location, $http, $state, $translate, Auth, Principal, Language, Restangular, ToasterService, ENV, VERSION) {
         $rootScope.ENV = ENV;
         $rootScope.VERSION = VERSION;
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
@@ -33,6 +33,23 @@ angular.module('floopApp', ['LocalStorageModule', 'tmh.dynamicLocale',
                 $state.go($rootScope.previousStateName, $rootScope.previousStateParams);
             }
         };
+
+         Restangular.addResponseInterceptor(
+          function(data, operation, what, url, response, deferred) {
+            
+            if(operation === 'post') {
+                $rootScope.$emit('event:resource.create', {text:'test', title:'Created'});
+            } else if(operation === 'put') {
+                $rootScope.$emit('event:resource.update', {text:'test', title:'Updated'});
+            } else if(operation === 'delete') {
+                $rootScope.$emit('event:resource.delete', {text:'test', title:'Delted'});
+            } 
+            
+            return data;               
+        });
+
+        ToasterService.initialise();
+
     })
     
     .factory('authInterceptor', function ($rootScope, $q, $location, localStorageService) {

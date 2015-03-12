@@ -112,4 +112,29 @@ angular.module('floopApp')
                 }
             }
         };
+    }).directive('dateInput', function(formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: '^form',          
+            compile: function(element, attr) {
+                element.append(formService.createLabel(attr));
+                element.append(formService.createDateInput(attr));
+                //element.append(formService.createError(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs){
+                    var dateDialogFunctionName = 'open' + iAttrs.name + 'DateDialog';
+                    scope[dateDialogFunctionName] = function($event) {
+                        $event.preventDefault();
+                        $event.stopPropagation();
+
+                        scope[iAttrs.name + 'Opened'] = true;
+                    };
+                  },
+                  post: function(scope, iElem, iAttrs){
+                   
+                  }
+                }
+            }
+        };
     });

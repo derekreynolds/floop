@@ -87,8 +87,9 @@ angular.module('floopApp')
                 input +=  'datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-readonly="true"/>';
                 input +=  '<span class="input-group-btn">';
                 input +=  '<button type="button" class="btn btn-default" ng-click="' + dateDialog + '"><i class="fa fa-calendar"></i></button>';
-                input +=  '<button type="button" class="btn btn-default" ng-click="' + timeDialog + '"><i class="fa fa-clock-o"></i></button>';
+                //input +=  '<button type="button" class="btn btn-default" ng-click="' + timeDialog + '"><i class="fa fa-clock-o"></i></button>';
                 input +=  '</span>';
+
                 input +=  '</span>';        
            return input;
         };

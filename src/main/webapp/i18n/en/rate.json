@@ -35,7 +35,12 @@
                     "maxlength": "A title must be less then 250 characters."
                 },
                 "description": {
-                    "required": "A description is required."
+                    "required": "A description is required.",
+                    "minlength": "A description must be greate than 1 character.",
+                    "maxlength": "A description must be less then 250 characters."
+                },
+                "item": {
+                    "required": "A item is required."
                 }
             },
             "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",

@@ -21,7 +21,6 @@
     "commit": "21301df17c8d3af0caa9a1d03b939d1b88144318"
   },
   "_source": "git://github.com/tlvince/angular-underscore-string.git",
-  "_target": "~1.0.0",
-  "_originalSource": "angular-underscore-string",
-  "_direct": true
+  "_target": "*",
+  "_originalSource": "angular-underscore-string"
 }

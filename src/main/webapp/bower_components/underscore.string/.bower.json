@@ -38,7 +38,6 @@
     "commit": "26630d119c2fa3dce47ea8325480c7eb321eaf82"
   },
   "_source": "git://github.com/epeli/underscore.string.git",
-  "_target": "~3.0.3",
-  "_originalSource": "underscore.string",
-  "_direct": true
+  "_target": "*",
+  "_originalSource": "underscore.string"
 }
