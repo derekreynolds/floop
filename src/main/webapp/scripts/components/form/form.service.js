@@ -80,17 +80,25 @@ angular.module('floopApp')
         */
         factory.createDateTimeInput = function(attributes) {
             var dateDialog = 'open' + attributes.name + 'DateDialog($event)';
-            var timeDialog = 'open' + attributes.name + 'TimeDialog($event)';
-            var input =   '<span class="input-group">';
-                input +=  '<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="';
-                input +=  this.getModelKey(attributes) + '" is-open="' + attributes.name + 'Opened"';
-                input +=  'datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" ng-readonly="true"/>';
-                input +=  '<span class="input-group-btn">';
-                input +=  '<button type="button" class="btn btn-default" ng-click="' + dateDialog + '"><i class="fa fa-calendar"></i></button>';
-                //input +=  '<button type="button" class="btn btn-default" ng-click="' + timeDialog + '"><i class="fa fa-clock-o"></i></button>';
-                input +=  '</span>';
-
-                input +=  '</span>';        
+            
+            var input =  '<div class="col-md-6">';                
+                input += '<div class="row">'; 
+                input += '<div class="col-xs-8">';                      
+                input += this.createLabel(attributes);
+                input += '<span class="input-group voffset2">';
+                input += '<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="' + this.getModelKey(attributes);
+                input += '" is-open="' + attributes.name + 'Opened" min-date="minDate"';
+                input += 'datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />';
+                input += '<span class="input-group-btn">';
+                input += '<button type="button" class="btn btn-default" ng-click="' + dateDialog + '"><i class="fa fa-calendar"></i></button>';                     
+                input += '</span>';
+                input += '</span>';                        
+                input += '</div>';
+                input += '<div class="col-xs-4">';
+                input += '<timepicker ng-model="' + this.getModelKey(attributes) + 'Time" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>';
+                input += '</div>';
+                input += '</div>';      
+         
            return input;
         };
 

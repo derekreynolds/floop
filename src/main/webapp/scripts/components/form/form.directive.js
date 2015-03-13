@@ -93,7 +93,7 @@ angular.module('floopApp')
             replace: true,
             require: '^form',          
             compile: function(element, attr) {
-                element.append(formService.createLabel(attr));
+                //element.append(formService.createLabel(attr));
                 element.append(formService.createDateTimeInput(attr));
                 //element.append(formService.createError(attr));
                 return {

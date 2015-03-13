@@ -7,18 +7,17 @@ angular.module('floopApp')
         $scope.format = 'yyyy-MM-dd';
         $scope.rate = {};
 
-        $scope.now = new Date();
+        $scope.now = moment();
 
-        $scope.rate.startDate = DateTimeService.formatDate($scope.now);
+        $scope.rate.startDate = $scope.now.format('YYYY-MM-DD');
 
-        $scope.rate.endDate = $scope.rate.startDate;
+        $scope.rate.endDate = $scope.now.add(1,'h').format('YYYY-MM-DD');
 
         $timeout(function (){angular.element('[ng-model="rate.title"]').focus();});
 
         $scope.ismeridian = false; 
         $scope.hstep = 1;
         $scope.mstep = 5;
-
 
         $scope.addItem = function ($event) {
             $event.preventDefault();
@@ -42,9 +41,11 @@ angular.module('floopApp')
         };
 
         $scope.create = function() {
-            $scope.rate.startDate = DateTimeService.toUTC($scope.rate.startDate);
-            $scope.rate.endDate = DateTimeService.toUTC($scope.rate.endDate);
-            
+            $scope.rate.startDate = DateTimeService.toDateTimeUTC($scope.rate.startDate, $scope.rate.startDateTime);
+            $scope.rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.endDate, $scope.rate.endDateTime);
+            delete $scope.rate['startDateTime'];
+            delete $scope.rate['endDateTime'];
+
             Rate.post($scope.rate).then(
                 function (value, responseHeaders) {
                     $scope.success = 'OK';
