@@ -98,7 +98,7 @@ angular.module('floopApp')
                 //element.append(formService.createError(attr));
                 return {
                   pre: function(scope, iElem, iAttrs){
-                    var dateDialogFunctionName = 'open' + iAttrs.name + 'DateDialog';
+                    var dateDialogFunctionName = 'open' + iAttrs.name + 'Dialog';
                     scope[dateDialogFunctionName] = function($event) {
                         $event.preventDefault();
                         $event.stopPropagation();

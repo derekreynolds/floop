@@ -79,23 +79,43 @@ angular.module('floopApp')
          * @return {String} A Html <label> text.
         */
         factory.createDateTimeInput = function(attributes) {
-            var dateDialog = 'open' + attributes.name + 'DateDialog($event)';
+            var dateDialog = 'open' + attributes.name + 'Dialog($event)';
             
             var input =  '<div class="col-md-6">';                
                 input += '<div class="row">'; 
                 input += '<div class="col-xs-8">';                      
                 input += this.createLabel(attributes);
                 input += '<span class="input-group voffset2">';
-                input += '<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="' + this.getModelKey(attributes);
-                input += '" is-open="' + attributes.name + 'Opened" min-date="minDate"';
-                input += 'datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />';
+                input += '<input type="text" class="form-control" ng-model="' + this.getModelKey(attributes);
+                input += '" is-open="' + attributes.name + 'Opened" datepicker-popup="yyyy-MM-dd"';
+
+                if(angular.isDefined(attributes.dateNgChange))
+                    input += ' ng-change="' + attributes.dateNgChange + '" ';
+                if(angular.isDefined(attributes.minDate))
+                    input += ' min-date="' + attributes.minDate + '" ';
+                if(angular.isDefined(attributes.maxDate))
+                    input += ' max-date="' + attributes.maxDate + '" ';
+                if(angular.isDefined(attributes.datepickerOptions))
+                    input += ' datepicker-options="' + attributes.datepickerOptions + '" ';
+                if(angular.isDefined(attributes.dateDisabled))
+                    input += ' date-disabled="' + attributes.dateDisabled + '" ';
+                if(angular.isDefined(attributes.ngRequired))
+                    input += ' ng-required="' + attributes.ngRequired + '" ';
+                if(angular.isDefined(attributes.datepickerPopup))
+                    input += ' datepicker-popup="' + attributes.datepickerPopup + '" ';
+
+                input += 'close-text="Close" ng-readonly="true"/>';
                 input += '<span class="input-group-btn">';
                 input += '<button type="button" class="btn btn-default" ng-click="' + dateDialog + '"><i class="fa fa-calendar"></i></button>';                     
                 input += '</span>';
                 input += '</span>';                        
                 input += '</div>';
+                
                 input += '<div class="col-xs-4">';
-                input += '<timepicker ng-model="' + this.getModelKey(attributes) + 'Time" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>';
+                input += '<timepicker ng-model="' + this.getModelKey(attributes) + 'Time"';
+                if(angular.isDefined(attributes.timeNgChange))
+                    input += ' ng-change="' + attributes.timeNgChange + '" ';
+                input += ' hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>';
                 input += '</div>';
                 input += '</div>';      
          
