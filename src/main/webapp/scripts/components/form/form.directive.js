@@ -66,6 +66,27 @@ angular.module('floopApp')
             }
         };
     })
+    .directive('textArea', function(formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: '^form', 
+            template: '<div class="form-group"></div>',
+            compile: function(element, attr) {
+                element.append(formService.createLabel(attr));
+                element.append(formService.createTextAreaInput(attr));
+                element.append(formService.createError(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs){
+                    
+                  },
+                  post: function(scope, iElem, iAttrs){
+                   
+                  }
+                }
+            }
+        };
+    })
     .directive('addOptionInput', function(formService) {
         return {
             restrict: 'E',

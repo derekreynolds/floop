@@ -1,71 +1,18 @@
-<div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-        
-            <h1 translate="petition.title">Petition</h1>           
+<form-view entity-name="petition">
+    <form-group ng-submit="create()">           
+            <text-input entity-name="petition" name="title" ng-minlength=2 ng-maxlength=250 ng-required="true"></text-input>
+            <text-area entity-name="petition" name="description" rows="5" ngRequired="true" ngMinlength="2" ngMaxlength="2500"></text-area>
+            <text-input entity-name="petition" name="hashtag" ng-minlength=2 ng-maxlength=140 ng-required="true"></text-input>
 
-            <form ng-show="!success" name="form" role="form" novalidate ng-submit="select()" show-validation>                
-                <div class="form-group">
-                    <label translate="petition.form.title.label">Title</label>
-                    <input type="text" class="form-control" name="login" placeholder="{{'petition.form.title.placeholder' | translate}}"
-                           ng-model="petition.title" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[a-z0-9]*$/" required>
-                    <div ng-show="form.title.$dirty && form.title.$invalid">
-                        <p class="help-block"
-                               ng-show="form.title.$error.required" translate="register.messages.validate.title.required">
-                            Your login is required.
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label translate="petition.form.description.label">Description</label>
-                    <input type="text" class="form-control" name="login" placeholder="{{'petition.form.description.placeholder' | translate}}"
-                           ng-model="petition.description" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[a-z0-9]*$/" required>
-                    <div ng-show="form.description.$dirty && form.description.$invalid">
-                        <p class="help-block"
-                               ng-show="form.description.$error.required" translate="register.messages.validate.description.required">
-                            Your login is required.
-                        </p>
-                    </div>
-                </div>
-                <div class="row">               
-                    <div class="col-md-6"> 
-                        <div class="row"> 
-                            <div class="col-xs-8">                       
-                                <label translate="petition.form.startDate.label">Start Date</label>
-                                <span class="input-group voffset2">
-                                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="petition.startDate" is-open="opened" min-date="minDate"
-                                        max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>                     
-                                    </span>
-                                </span>                        
-                            </div>
-                            <div class="col-xs-4"> 
-                                <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
-                            </div> 
-                        </div>                                             
-                    </div>  
-                              
-                    <div class="col-md-6">
-                        <div class="row"> 
-                            <div class="col-xs-8">                       
-                                <label translate="petition.form.endDate.label">End Date</label>
-                                <span class="input-group voffset2">
-                                    <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="petition.endDate" is-open="opened" min-date="minDate"
-                                        max-date="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="fa fa-calendar"></i></button>                     
-                                    </span>
-                                </span>                        
-                            </div>
-                            <div class="col-xs-4"> 
-                                <timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="false"></timepicker>
-                            </div> 
-                        </div>                          
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+            <div class="row">               
+                <date-time-input entity-name="petition" name="startDate"></date-time-input>
+                <date-time-input entity-name="petition" name="endDate"></date-time-input>
+            </div>
+            <div class="voffset2"></div>
+     
+            <div class="form-group">                               
+                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.create"><i class="fa fa-clock-o"></i>Create           </button>                                 
+            </div>                
+    </form-group>
+</form-view>
 

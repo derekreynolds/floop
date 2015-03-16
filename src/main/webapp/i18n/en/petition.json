@@ -10,6 +10,10 @@
                 "label": "Description",
                 "placeholder": "Description for petition"
             },
+            "hashtag": {
+                "label": "Twitter Hashtag",
+                "placeholder": "Hashtag for petition"
+            },
             "startDate": {
                 "label": "Start Date"
             },
