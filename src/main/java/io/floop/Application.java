@@ -34,6 +34,7 @@ public class Application {
     @PostConstruct
     public void initApplication() throws IOException {
         if (env.getActiveProfiles().length == 0) {
+        	//asdasdas
             log.warn("No Spring profile configured, running with default configuration");
         } else {
             log.info("Running with Spring profile(s) : {}", Arrays.toString(env.getActiveProfiles()));

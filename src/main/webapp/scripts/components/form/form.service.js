@@ -26,6 +26,16 @@ angular.module('floopApp')
         };
 
         /**
+         * Creates an text area input.
+         * 
+         * @param  {Object} attributes - The attributes of the input control.
+         * @return {String} A Html text input
+         */
+        factory.createTextAreaInput = function(attributes) {
+            return this.createTextarea(attributes);        
+        };
+
+        /**
          * Create a password input.
          * 
          * @param  {Object} attributes - The attributes of the input control.
@@ -71,6 +81,30 @@ angular.module('floopApp')
 
            return input;
         };
+
+
+        /**
+         * Creates a textarea for the type.
+         *
+         * @param {Object} attributes - The attributes of the textarea control.
+         * @return {String} A Html <label> text.
+        */
+        factory.createTextarea = function(attributes) {
+            var textarea =  '<textarea class="form-control" ng-model="';
+                textarea +=  this.getModelKey(attributes) + '" placeholder="' + this.getPlaceHolder(attributes) + '"';
+                angular.forEach(attributes, function(value, key) {
+                // skip these
+                if((key.lastIndexOf('$', 0) === 0) ) 
+                    return true;                
+                
+                if(typeof attributes.$attr[key] !== 'undefined') 
+                  textarea += attributes.$attr[key] + '="' + value + '" ';                   
+                });
+                textarea += '/textarea>'; 
+
+           return textarea;
+        };
+
 
         /**
          * Creates a Date Time input.
