@@ -9,6 +9,7 @@ angular.module('floopApp')
 
         $scope.now = moment();
 
+        $scope.minDate = $scope.now.format($scope.format);
         $scope.rate.startDate = $scope.now.format($scope.format);
 
         $scope.rate.endDate = $scope.now.add(1,'d').format($scope.format);
@@ -22,59 +23,6 @@ angular.module('floopApp')
         $scope.hstep = 1;
         $scope.mstep = 10;
 
-        $scope.startDateChange = function() {            
-            var startDate = moment($scope.rate.startDate);
-            var startDateTime = moment($scope.rate.startDateTime);
-            var endDate = moment($scope.rate.endDate);
-            var endDateTime = moment($scope.rate.endDateTime);
-
-            if(startDate.isAfter(endDate)) {
-                $scope.rate.endDate = DateTimeService.formatDate($scope.rate.startDate);
-                $scope.rate.endDateTime = startDateTime.add(1, 'h').toDate();                
-            } else if(startDate.isSame(endDate) && (startDateTime.isAfter(endDateTime) 
-                || startDateTime.isSame(endDateTime))) {
-                $scope.rate.endDateTime = startDateTime.add(1, 'h').toDate();
-            }         
-        };
-
-        $scope.endDateChange = function() {
-            var startDate = moment($scope.rate.startDate);
-            var startDateTime = moment($scope.rate.startDateTime);
-            var endDate = moment($scope.rate.endDate);
-            var endDateTime = moment($scope.rate.endDateTime);
-
-            if(endDate.isBefore(startDate)) {
-                $scope.rate.endDate = DateTimeService.formatDate($scope.rate.startDate);
-                $scope.rate.endDateTime = startDateTime.add(1, 'h').toDate(); 
-            } else if(endDate.isSame(startDate) && (endDateTime.isAfter(startDateTime) 
-                || endDateTime.isSame(startDateTime))) {                
-                $scope.rate.endDateTime = startDateTime.add(1, 'h').toDate();
-            }   
-        };
-
-        $scope.startDateTimeChange = function() {
-            var startDate = moment($scope.rate.startDate);
-            var startDateTime = moment($scope.rate.startDateTime);
-            var endDate = moment($scope.rate.endDate);
-            var endDateTime = moment($scope.rate.endDateTime);
-    
-            if(endDate.isSame(startDate) && (DateTimeService.isMomentTimeAfter(startDateTime, endDateTime))
-                || (DateTimeService.isMomentTimeSame(startDateTime, endDateTime))) {
-                $scope.rate.endDateTime = startDateTime.add(1, 'h').toDate();
-            }
-        };
-
-        $scope.endDateTimeChange = function() {
-            var startDate = moment($scope.rate.startDate);
-            var startDateTime = moment($scope.rate.startDateTime);
-            var endDate = moment($scope.rate.endDate);
-            var endDateTime = moment($scope.rate.endDateTime);
-
-            if(endDate.isSame(startDate) && (DateTimeService.isMomentTimeAfter(startDateTime, endDateTime))
-                || (DateTimeService.isMomentTimeSame(startDateTime, endDateTime))) {
-                $scope.rate.endDateTime = startDateTime.add(1, 'h').toDate();
-            }
-        };
 
         $scope.addItem = function ($event) {
             $event.preventDefault();
@@ -100,7 +48,7 @@ angular.module('floopApp')
         $scope.create = function() {
             $scope.rate.startDate = DateTimeService.toDateTimeUTC($scope.rate.startDate, $scope.rate.startDateTime);
             $scope.rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.endDate, $scope.rate.endDateTime);
-            
+            debugger
             delete $scope.rate['startDateTime'];
             delete $scope.rate['endDateTime'];
 

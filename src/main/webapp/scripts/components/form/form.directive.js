@@ -66,7 +66,7 @@ angular.module('floopApp')
             }
         };
     })
-    .directive('textArea', function(formService) {
+    .directive('textAreaInput', function(formService) {
         return {
             restrict: 'E',
             replace: true,
@@ -151,6 +151,81 @@ angular.module('floopApp')
 
                         scope[iAttrs.name + 'Opened'] = true;
                     };
+                  },
+                  post: function(scope, iElem, iAttrs){
+                   
+                  }
+                }
+            }
+        };
+    }).directive('startEndDateTimeInput', function(formService, DateTimeService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: '^form',         
+            compile: function(element, attr) {
+                //element.append(formService.createLabel(attr));
+                element.append(formService.createStartEndDateTimeInput(attr));
+                //element.append(formService.createError(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs){
+
+                    scope.startDateChange = function() { 
+                        
+                        var startDate = moment(scope[iAttrs.entityName].startDate);
+                        var startDateTime = moment(scope[iAttrs.entityName].startDateTime);
+                        var endDate = moment(scope[iAttrs.entityName].endDate);
+                        var endDateTime = moment(scope[iAttrs.entityName].endDateTime);
+
+                        if(startDate.isAfter(endDate)) {
+                            scope[iAttrs.entityName].endDate = DateTimeService.formatDate(scope[iAttrs.entityName].startDate);
+                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();                
+                        } else if(startDate.isSame(endDate) && (startDateTime.isAfter(endDateTime) 
+                            || startDateTime.isSame(endDateTime))) {
+                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();
+                        }         
+                    };
+
+                    scope.endDateChange = function() {
+
+                        var startDate = moment(scope[iAttrs.entityName].startDate);
+                        var startDateTime = moment(scope[iAttrs.entityName].startDateTime);
+                        var endDate = moment(scope[iAttrs.entityName].endDate);
+                        var endDateTime = moment(scope[iAttrs.entityName].endDateTime);
+
+                        if(endDate.isBefore(startDate)) {
+                            scope[iAttrs.entityName].endDate = DateTimeService.formatDate(scope[iAttrs.entityName].startDate);
+                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate(); 
+                        } else if(endDate.isSame(startDate) && (endDateTime.isAfter(startDateTime) 
+                            || endDateTime.isSame(startDateTime))) {                
+                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();
+                        }   
+                    };
+
+                    scope.startDateTimeChange = function() {
+                        var startDate = moment(scope[iAttrs.entityName].startDate);
+                        var startDateTime = moment(scope[iAttrs.entityName].startDateTime);
+                        var endDate = moment(scope[iAttrs.entityName].endDate);
+                        var endDateTime = moment(scope[iAttrs.entityName].endDateTime);
+                
+                        if(endDate.isSame(startDate) && (DateTimeService.isMomentTimeAfter(startDateTime, endDateTime))
+                            || (DateTimeService.isMomentTimeSame(startDateTime, endDateTime))) {
+                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();
+                        }
+                    };
+
+                    scope.endDateTimeChange = function() {
+                        var startDate = moment(scope[iAttrs.entityName].startDate);
+                        var startDateTime = moment(scope[iAttrs.entityName].startDateTime);
+                        var endDate = moment(scope[iAttrs.entityName].endDate);
+                        var endDateTime = moment(scope[iAttrs.entityName].endDateTime);
+
+                        if(endDate.isSame(startDate) && (DateTimeService.isMomentTimeAfter(startDateTime, endDateTime))
+                            || (DateTimeService.isMomentTimeSame(startDateTime, endDateTime))) {
+                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();
+                        }
+                    };
+
                   },
                   post: function(scope, iElem, iAttrs){
                    

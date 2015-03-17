@@ -5,14 +5,17 @@ angular.module('floopApp')
     .controller('PetitionController', function ($scope, $translate, $timeout, Auth) {
         $scope.success = null;
         $scope.error = null;
-        $scope.format = 'yyyy-MM-dd hh:mm';
+        $scope.format = 'YYYY-MM-DD';
         $scope.petition = {};
+        
+        $scope.now = moment();
 
-        $scope.now = new Date();
+        $scope.petition.startDate = $scope.now.format($scope.format);
 
-        $scope.petition.startDate = $scope.now.getFullYear() + '-' + $scope.now.getMonth() + '-' 
-        $scope.petition.startDate   += $scope.now.getDate() + ' ' + $scope.now.getHours() + ':' + $scope.now.getMinutes();
-        $scope.petition.endDate = $scope.petition.startDate;
+        $scope.petition.endDate = $scope.now.add(1,'d').format($scope.format);
+
+        $scope.petition.startDateTime = new Date();
+        $scope.petition.endDateTime = new Date();
 
         $timeout(function (){angular.element('[ng-model="petition.title"]').focus();});
 

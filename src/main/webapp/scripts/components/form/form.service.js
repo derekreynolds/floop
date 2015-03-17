@@ -90,19 +90,19 @@ angular.module('floopApp')
          * @return {String} A Html <label> text.
         */
         factory.createTextarea = function(attributes) {
-            var textarea =  '<textarea class="form-control" ng-model="';
-                textarea +=  this.getModelKey(attributes) + '" placeholder="' + this.getPlaceHolder(attributes) + '"';
+            var input =  '<textarea class="form-control" ng-model="';
+                input +=  this.getModelKey(attributes) + '" placeholder="' + this.getPlaceHolder(attributes) + '"';
                 angular.forEach(attributes, function(value, key) {
                 // skip these
                 if((key.lastIndexOf('$', 0) === 0) ) 
                     return true;                
                 
                 if(typeof attributes.$attr[key] !== 'undefined') 
-                  textarea += attributes.$attr[key] + '="' + value + '" ';                   
+                  input += attributes.$attr[key] + '="' + value + '" ';                   
                 });
-                textarea += '/textarea>'; 
+                input += '/textarea>'; 
 
-           return textarea;
+           return input;
         };
 
 
@@ -156,7 +156,35 @@ angular.module('floopApp')
            return input;
         };
 
+        /**
+         * Creates a textarea for the type.
+         *
+         * @param {Object} attributes - The attributes of the textarea control.
+         * @return {String} A Html <label> text.
+        */
+        factory.createStartEndDateTimeInput = function(attributes) {
+            var input =  '<div class="row">';               
+                input += '<date-time-input entity-name="' + attributes.entityName + '"';
 
+                if(angular.isDefined(attributes.minDate))
+                    input += ' min-date="\'' + attributes.minDate + '\'" ';
+
+                if(angular.isDefined(attributes.maxDate))
+                    input += ' max-date="\'' + attributes.maxDate + '\'" ';
+
+                input += ' name="startDate" date-ng-change="startDateChange()" time-ng-change="startDateTimeChange()"></date-time-input>';
+                input += '<date-time-input entity-name="' + attributes.entityName + '"';
+
+                if(angular.isDefined(attributes.minDate))
+                    input += ' min-date="\'' + attributes.minDate + '\'" ';
+
+                if(angular.isDefined(attributes.maxDate))
+                    input += ' max-date="\'' + attributes.maxDate + '\'" ';
+
+                input +=  ' name="endDate" date-ng-change="endDateChange()" time-ng-change="endDateTimeChange()"></date-time-input>';
+                input += '</div>';
+            return input;    
+        };
 
         factory.createAddOptionInput = function(attributes) {
             var model = this.getModelKey(attributes);

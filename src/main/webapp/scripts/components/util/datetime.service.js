@@ -59,6 +59,7 @@ angular.module('floopApp')
             return s.lpad(time.getHours(), 2, '0') + ':' + s.lpad(time.getMinutes(), 2, '0');                
         };
 
+
         factory.isMomentTimeBefore = function(startTime, endTime) {
             return this.isTimeBefore(startTime.hours(), startTime.minutes(), startTime.seconds(), 
                 endTime.hours(), endTime.minutes(), endTime.seconds());

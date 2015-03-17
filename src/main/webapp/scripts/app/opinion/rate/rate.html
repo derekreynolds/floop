@@ -1,11 +1,8 @@
 <form-view entity-name="rate">
     <form-group ng-submit="create()">           
             <text-input entity-name="rate" name="title" ng-minlength=2 ng-maxlength=250 ng-required="true"></text-input>
-            <text-input entity-name="rate" name="description" ng-minlength=2 ng-maxlength=250 ng-required="true"></text-input>
-            <div class="row">               
-                <date-time-input entity-name="rate" name="startDate" date-ng-change="startDateChange()" time-ng-change="startDateTimeChange()"></date-time-input>
-                <date-time-input entity-name="rate" name="endDate" date-ng-change="endDateChange()" time-ng-change="endDateTimeChange()"></date-time-input>
-            </div>
+            <text-area-input entity-name="rate" name="description" rows="5" ngRequired="true" ngMinlength="2" ngMaxlength="2500"></text-area-input>
+            <start-end-date-time-input entity-name="rate" min-date="{{minDate}}"></start-end-date-time-input>
             <add-option-input entity-name="rate" name="item" ng-required="true"></add-option-input>
             <div class="form-group">                               
                 <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.create"><i class="fa fa-clock-o"></i>Create           </button>                                 
