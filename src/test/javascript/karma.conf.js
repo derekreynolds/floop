@@ -32,7 +32,7 @@ module.exports = function (config) {
             'main/webapp/bower_components/underscore.string/dist/underscore.string.js',
             'main/webapp/bower_components/angular-underscore-string/angular-underscore-string.js',
             'main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-            'main/webapp/bower_components/lodash/dist/lodash.compat.js',
+            'main/webapp/bower_components/lodash/lodash.js',
             'main/webapp/bower_components/restangular/dist/restangular.js',
             'main/webapp/bower_components/toastr/toastr.js',
             'main/webapp/bower_components/moment/moment.js',

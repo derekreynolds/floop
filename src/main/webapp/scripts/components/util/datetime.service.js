@@ -21,7 +21,7 @@ angular.module('floopApp')
          * @return String  String date/time with the space replaced by a T e.g. YYYY-MM-DDTHH:MM
          */
         factory.toDateTimeUTC = function(date, time) {
-            return date + ' T' + time;
+            return date + 'T' + time;
         };
 
         /**
@@ -44,8 +44,8 @@ angular.module('floopApp')
          */
         factory.formatDate = function(date) {
  
-            var formattedDate = date.getFullYear() + '-' + s.lpad((date.getMonth() + 1), 2, '0') + '-';     
-                formattedDate += s.lpad(date.getDate(), 2, '0');
+            var formattedDate = date.getFullYear() + '-' + _.padLeft((date.getMonth() + 1), 2, '0') + '-';     
+                formattedDate += _.padLeft(date.getDate(), 2, '0');
 
             return formattedDate;
         };
@@ -56,7 +56,7 @@ angular.module('floopApp')
          * @return String the formatted time e.g. HH:MM
          */
         factory.formatTime = function(time) {   
-            return s.lpad(time.getHours(), 2, '0') + ':' + s.lpad(time.getMinutes(), 2, '0');                
+            return _.padLeft(time.getHours(), 2, '0') + ':' + _.padLeft(time.getMinutes(), 2, '0');                
         };
 
 

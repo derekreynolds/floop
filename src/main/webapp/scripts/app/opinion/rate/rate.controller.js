@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('RateController', function ($scope, $translate, $timeout, $filter, DateTimeService, Rate) {
+    .controller('RateController', function ($scope, $translate, $timeout, $filter, $compile, DateTimeService, Rate) {
         $scope.success = null;
         $scope.error = null;
         $scope.format = 'YYYY-MM-DD';
@@ -23,6 +23,8 @@ angular.module('floopApp')
         $scope.hstep = 1;
         $scope.mstep = 10;
 
+        var itemCount = 1;
+        var itemIndex = 1;
 
         $scope.addItem = function ($event) {
             $event.preventDefault();
@@ -31,7 +33,24 @@ angular.module('floopApp')
             var target = angular.element($event.target);
             var $grandParent = target.closest('span.input-group');
             var $button = $grandParent.find('button');
-            $grandParent.find('i').removeClass('fa-plus').addClass('fa-minus');
+            var $icon = $grandParent.find('i');
+            if($icon.hasClass('fa-plus')) { 
+                itemCount++;               
+                if(itemCount <= 20) {                    
+                    var addOptionMarkUp = '<add-option entity-name="rate" name="item' + itemIndex++;
+                        addOptionMarkUp += '"></add-option>';
+                    $icon.removeClass('fa-plus').addClass('fa-minus');            
+                    $grandParent.after($compile(addOptionMarkUp)($scope));
+                    $grandParent.after('<div class="voffset2"></div>');
+                } else {
+                    $scope.$emit('event:info', {text:'A maximum of 20 items can be added.'});
+                }
+            } else {
+                if(itemCount > 1) {
+                    itemCount--;
+                    $grandParent.remove();
+                }
+            }
 
         };
 
@@ -46,19 +65,37 @@ angular.module('floopApp')
         };
 
         $scope.create = function() {
-            $scope.rate.startDate = DateTimeService.toDateTimeUTC($scope.rate.startDate, $scope.rate.startDateTime);
-            $scope.rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.endDate, $scope.rate.endDateTime);
-            debugger
-            delete $scope.rate['startDateTime'];
-            delete $scope.rate['endDateTime'];
 
-            Rate.post($scope.rate).then(
+            var items = [];
+            var rate = _.clone($scope.rate);
+
+            delete rate['startDateTime'];
+            delete rate['endDateTime'];
+
+            rate.startDate = DateTimeService.toDateTimeUTC($scope.rate.startDate, 
+                                    DateTimeService.formatTime($scope.rate.startDateTime));
+            rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.endDate, 
+                                    DateTimeService.formatTime($scope.rate.endDateTime));
+            
+            _.forEach(rate, function(value, key) {
+                if(_.startsWith(key, 'item')) {
+                    if(value) {                  
+                        items.push(value);   
+                    }                 
+                    delete rate[key];
+                }                
+            });
+
+            rate['items'] = items;   
+
+            Rate.post(rate).then(
                 function (value, responseHeaders) {
                     $scope.success = 'OK';
                 },
                 function (httpResponse) {                                               
                     $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
-                });
+                }
+            );
 
         };
     });

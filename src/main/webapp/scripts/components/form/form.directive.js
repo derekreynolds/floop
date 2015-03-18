@@ -108,6 +108,26 @@ angular.module('floopApp')
             }
         };
     })
+    .directive('addOption', function(formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            template: '<div class="form-group"></div>',
+            compile: function(element, attr) {
+                //element.append(formService.createLabel(attr));
+                element.append(formService.createAddOptionInput(attr));
+                element.append(formService.createError(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs){
+                    
+                  },
+                  post: function(scope, iElem, iAttrs){
+                   
+                  }
+                }
+            }
+        };
+    })
     .directive('dateTimeInput', function(formService) {
         return {
             restrict: 'E',
