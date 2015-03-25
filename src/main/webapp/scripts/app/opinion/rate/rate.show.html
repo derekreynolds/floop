@@ -1,0 +1,19 @@
+<form-view entity-name="rate">
+    <form-group ng-submit="rate()">
+    		<group-display>
+    			<text-display entity-name="rate" name="title"></text-display>
+    		</group-display> 
+    		<group-display>	 
+    			<text-display entity-name="rate" name="description"></text-display> 
+    		</group-display>          
+
+            <div class="form-group voffset3" ng-repeat="item in rate.items track by item.id">           
+            	<rate-input entity-name="rate" name="item{{item.id}}" item='{{item.name}}'></rate-input>            	
+            </div>
+
+            <div class="form-group voffset4">                               
+            	<button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.rate"></button>                                 
+            </div>                
+    </form-group>
+</form-view>
+

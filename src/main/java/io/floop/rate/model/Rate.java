@@ -6,6 +6,7 @@ package io.floop.rate.model;
 import io.floop.domain.AbstractAuditingEntity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.constraints.Size;
 
@@ -36,8 +37,7 @@ public class Rate extends AbstractAuditingEntity implements Serializable {
     @Field("end_date")
     private DateTime endDate;
     
-    @Size(min = 2, max = 1000)
-    private String item;
+    private List<String> items;
 
     
 	/**
@@ -111,17 +111,17 @@ public class Rate extends AbstractAuditingEntity implements Serializable {
 	}
 
 	/**
-	 * @return the item
+	 * @return the items
 	 */
-	public String getItem() {
-		return item;
+	public List<String> getItems() {
+		return items;
 	}
 
 	/**
-	 * @param item the item to set
+	 * @param item the items to set
 	 */
-	public void setItem(String item) {
-		this.item = item;
+	public void setItems(List<String> items) {
+		this.items = items;
 	}
     
     

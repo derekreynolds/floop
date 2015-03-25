@@ -16,6 +16,8 @@ public interface RateService {
 
 	Slice<Rate> getList(Pageable pageable);
 	
+	Slice<Rate> getTop5(Pageable pageable);
+	
 	Rate getById(String id);
 	
 	void save(Rate rate);

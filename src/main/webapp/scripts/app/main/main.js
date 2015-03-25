@@ -18,8 +18,14 @@ angular.module('floopApp')
                 resolve: {
                     mainTranslatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate,$translatePartialLoader) {
                         $translatePartialLoader.addPart('main');
+                        $translatePartialLoader.addPart('rate');
+                        $translatePartialLoader.addPart('petition');
+                        $translatePartialLoader.addPart('vote');
                         return $translate.refresh();
-                    }]
+                    }],
+                    ratings: function(RateService) {
+                        return RateService.one().customGET('top5');
+                    }
                 }
             });
     });

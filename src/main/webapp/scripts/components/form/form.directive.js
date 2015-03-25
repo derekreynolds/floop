@@ -153,7 +153,8 @@ angular.module('floopApp')
                 }
             }
         };
-    }).directive('dateInput', function(formService) {
+    })
+    .directive('dateInput', function(formService) {
         return {
             restrict: 'E',
             replace: true,
@@ -178,7 +179,36 @@ angular.module('floopApp')
                 }
             }
         };
-    }).directive('startEndDateTimeInput', function(formService, DateTimeService) {
+    })
+    .directive('groupDisplay', function(formService) {
+        return {            
+            replace: true,
+            restrict: 'E',
+            transclude: true,
+            template: '<div class="row" ng-transclude></div>'
+
+        };
+    })
+    .directive('textDisplay',function(formService) {
+        return {            
+            replace: true,
+            restrict: 'E',
+            //templateUrl: '/views/partials/display-control.html',
+            compile: function(element, attr) {                          
+                element.append(formService.createTextDisplay(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs){
+                    
+                  },
+                  post: function(scope, iElem, iAttrs){
+                   
+                  }
+                }               
+            }          
+
+        };
+    })
+    .directive('startEndDateTimeInput', function(formService, DateTimeService) {
         return {
             restrict: 'E',
             replace: true,
@@ -249,6 +279,93 @@ angular.module('floopApp')
                   },
                   post: function(scope, iElem, iAttrs){
                    
+                  }
+                }
+            }
+        };
+    })
+    .directive('rateInput', function($compile, formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: '^form',          
+            compile: function(element, attr) {
+                //element.append(formService.createLabel(attr));
+                //element.append(formService.createRateInput(attr));
+                //element.append(formService.createError(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs){
+                    scope.rateEnter = function(event) {                    
+                        event.preventDefault();
+                        event.stopPropagation();           
+                        
+                        var $target = angular.element(event.target);
+                        var $parent = $target.parent();
+                        var id = parseInt($target.attr('id'));
+                        
+                        _.times(10, function(n) {                            
+                            var $icon = $parent.find('#' + n); 
+                                                       
+                            if(n <= id) {
+                                $icon.removeClass('fa-star-o').addClass('fa-star'); 
+                            } else {
+                                $icon.removeClass('fa-star').addClass('fa-star-o'); 
+                            }
+                        });                        
+                        
+                    };
+                    scope.rateClear = function(event) {
+                        event.preventDefault();
+                        event.stopPropagation();           
+                        
+                        var $target = angular.element(event.target);
+                        var $parent = $target.parent();
+                        var id = parseInt($target.attr('id'));
+                        var $input = $parent.find('input');
+                        $input.val(-1);
+
+                        _.times(10, function(n) {                            
+                            var $icon = $parent.find('#' + n);
+                            if($icon.hasClass('fa-star'))
+                                $icon.removeClass('fa-star').addClass('fa-star-o');                           
+                        });                        
+                        
+                    };
+                    scope.rateLeave = function(event) {
+                        event.preventDefault();
+                        event.stopPropagation();           
+                        
+                        var $target = angular.element(event.target);
+                        var $parent = $target.parent();
+                        var id = parseInt($target.attr('id'));
+                        var $input = $parent.find('input');
+                        var val = $input.val();
+                        val = parseInt(val || -1);
+                        _.times(10, function(n) {                            
+                            var $icon = $parent.find('#' + n);
+                            if(val >= n) {
+                                $icon.removeClass('fa-star-o').addClass('fa-star');
+                            } else {
+                                $icon.removeClass('fa-star').addClass('fa-star-o');
+                            }                           
+                        });                        
+                        
+                    };
+                    scope.rateRecord = function(event) {
+                        event.preventDefault();
+                        event.stopPropagation();           
+                        
+                        var $target = angular.element(event.target);
+                        var $parent = $target.parent();
+                        var id = parseInt($target.attr('id'));
+                        var $input = $parent.find('input');
+                        $input.val(id);
+                                               
+                    };
+                  },
+                  post: function(scope, iElem, iAttrs){
+                   iElem.append(formService.createRateInput(iAttrs));
+                   $compile(iElem.contents())(scope);
                   }
                 }
             }

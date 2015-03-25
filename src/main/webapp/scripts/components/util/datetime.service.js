@@ -61,18 +61,33 @@ angular.module('floopApp')
 
 
         factory.isMomentTimeBefore = function(startTime, endTime) {
-            return this.isTimeBefore(startTime.hours(), startTime.minutes(), startTime.seconds(), 
-                endTime.hours(), endTime.minutes(), endTime.seconds());
+            if(_.isDate(startTime) && _.isDate(endTime)){                
+                return this.isTimeBefore(startTime.getHours(), startTime.getMinutes(), startTime.getSeconds(), 
+                    endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
+            } else {
+                return this.isTimeBefore(startTime.hours(), startTime.minutes(), startTime.seconds(), 
+                    endTime.hours(), endTime.minutes(), endTime.seconds());
+            }
         };
 
         factory.isMomentTimeSame = function(startTime, endTime) {
-            return this.isTimeSame(startTime.hours(), startTime.minutes(), startTime.seconds(), 
-                endTime.hours(), endTime.minutes(), endTime.seconds());
+            if(_.isDate(startTime) && _.isDate(endTime)){   
+                return this.isTimeSame(startTime.getHours(), startTime.getMinutes(), startTime.getSeconds(), 
+                    endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
+            } else {
+                return this.isTimeSame(startTime.hours(), startTime.minutes(), startTime.seconds(), 
+                    endTime.hours(), endTime.minutes(), endTime.seconds());
+            }
         };
 
         factory.isMomentTimeAfter = function(startTime, endTime) {            
-            return this.isTimeAfter(startTime.hours(), startTime.minutes(), startTime.seconds(),
-                endTime.hours(), endTime.minutes(), endTime.seconds());
+            if(_.isDate(startTime) && _.isDate(endTime)){                
+                return this.isTimeAfter(startTime.getHours(), startTime.getMinutes(), startTime.getSeconds(), 
+                    endTime.getHours(), endTime.getMinutes(), endTime.getSeconds());
+            } else {
+                return this.isTimeAfter(startTime.hours(), startTime.minutes(), startTime.seconds(), 
+                    endTime.hours(), endTime.minutes(), endTime.seconds());
+            }
         };
 
         factory.isTimeBefore = function(startHour, startMinute, startSecond, endHour, endMinute, endSecond) {            

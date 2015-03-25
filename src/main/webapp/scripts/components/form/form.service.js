@@ -26,6 +26,16 @@ angular.module('floopApp')
         };
 
         /**
+         * Creates an hidden input.
+         * 
+         * @param  {Object} attributes - The attributes of the input control.
+         * @return {String} A Html text input
+         */
+        factory.createHiddenInput = function(attributes) {
+            return this.createInput(attributes, 'hidden');        
+        };
+
+        /**
          * Creates an text area input.
          * 
          * @param  {Object} attributes - The attributes of the input control.
@@ -213,7 +223,7 @@ angular.module('floopApp')
             error += attributes.name + '.$invalid">'; 
 
             if(attributes.type === 'email') {
-                var errorMessage = $filter('translate')(translationKey + '.validate.email');                       
+                var errorMessage = this.getTranslation(translationKey + '.validate.email');                       
                 error += '<div class="error" ng-message="email">' + errorMessage + '</div>';  
             }          
 
@@ -227,6 +237,56 @@ angular.module('floopApp')
             });
             error += '</div>';
             return error;
+        };
+
+        /**
+         * Creates a rate input.
+         *
+         * @param {Object} attributes - The attributes of the input control.
+         * @return {String} A Html <label> text.
+        */
+        factory.createRateInput = function(attributes) {
+            
+            var input =  '<strong>' + attributes.item + '</strong>';
+                input +=  '<div class="rate voffset1">';
+                    _.times(10, function(n) {
+                      input += '<i id="' + n + '" ng-click="rateRecord($event)"  ng-mouseenter="rateEnter($event)" ng-mouseleave="rateLeave($event)" ng-dblclick="rateClear($event)" class="fa fa-star-o fa-2x fa-fw"></i>';
+                    });
+                input +=   this.createHiddenInput(attributes); 
+                input += '</div>'; 
+
+           return input;
+        };
+
+        /**
+         * Creates a Html text display.
+         * 
+         * @param  {Object} attributes - The attributes of the input control.
+         * @return {String} A Html text display <p>
+         */
+        factory.createTextDisplay = function(attributes) { 
+            var entityField = attributes.entityName + '.' + attributes.name;
+            var textDisplay = '<p class="col-xs-12"><strong>' + this.getTranslation(this.getTranslationKey(attributes) + '.label') + '</strong></p>'            
+            textDisplay += '<p class="col-xs-12">{{' + entityField+ '}}</p>';                        
+            return textDisplay;            
+        };
+
+        /**
+         * Translate the key. Sets to the default if the key isn't 
+         * found in the translated files.
+         * @param  String key                The key to look up.
+         * @param  String defaultTranslation The default to use if the key isn't found. Defaults to ''.
+         * @return String                   The translated text.
+         */
+        factory.getTranslation = function(key, defaultTranslation) {
+            defaultTranslation = defaultTranslation || '';
+            var translation = $filter('translate')(key);
+
+            if(translation === key) {
+                translation = defaultTranslation;
+            }
+
+            return translation;
         };
 
         /**
@@ -256,7 +316,7 @@ angular.module('floopApp')
          * @return {String} 
          */
         factory.getPlaceHolder = function(attributes) {
-            return $filter('translate')(this.getTranslationKey(attributes) + '.placeholder') 
+            return this.getTranslation(this.getTranslationKey(attributes) + '.placeholder');
         };
 
     return factory;

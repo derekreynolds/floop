@@ -32,6 +32,15 @@ public class RateServiceImpl implements RateService {
 	public Slice<Rate> getList(Pageable pageable) {
 		
 		return rateRepository.findAll(pageable);
+	}	
+
+	/* (non-Javadoc)
+	 * @see io.floop.rate.service.RateService#getTop5(org.springframework.data.domain.Pageable)
+	 */
+	@Override
+	public Slice<Rate> getTop5(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return rateRepository.findTop5ByOrderByEndDateDesc(pageable);
 	}
 
 	/* (non-Javadoc)

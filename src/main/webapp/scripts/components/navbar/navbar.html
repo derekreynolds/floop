@@ -7,7 +7,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#"> <span class="navbar-title" translate="global.title">floop.io</span></a>            
+            <a class="navbar-brand" href="#"><span class="navbar-title" translate="global.title">floop.io</span></a>            
         </div>
         
         <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="isAuthenticated()">
@@ -30,10 +30,12 @@
                                 </span>
                     </a>
                     <ul class="dropdown-menu">                        
-                        <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="rate"><span class="fa fa-star-o"></span>
+                        <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="rate.create"><span class="fa fa-star fa-fw"></span>
                             &#xA0;<span translate="global.menu.opinion.rate">Rate</span></a></li>
-                        <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="petition"><span class="fa fa-bullhorn"></span>
+                        <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="petition"><span class="fa fa-bullhorn fa-fw"></span>
                             &#xA0;<span translate="global.menu.opinion.petition">Petition</span></a></li>
+                        <li ui-sref-active="active" ng-switch-when="false"><a ui-sref="vote"><span class="fa fa-check-square-o fa-fw"></span>
+                            &#xA0;<span translate="global.menu.opinion.vote">Vote</span></a></li>
                     </ul>
                 </li>
                 <li ng-class="{active: $state.includes('account')}" class="dropdown pointer">

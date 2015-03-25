@@ -7,7 +7,8 @@
             "opinion": {
                 "main": "Opinion",
                 "rate": "Rate",
-                "petition": "Petition"
+                "petition": "Petition",
+                "vote": "Vote"
             },
             "account": {
                 "main": "Account",
@@ -41,7 +42,8 @@
             "email": "E-mail",
             "email.placeholder": "Your e-mail",
             "create": "<i class=\"fa fa-save\"></i> Create",
-            "cancel": "<i class=\"fa fa-undo\"></i> Cancel"
+            "cancel": "<i class=\"fa fa-undo\"></i> Cancel",
+            "rate": "<i class=\"fa fa-star\"></i> Rate"
         },
         "messages": {
             "info": {

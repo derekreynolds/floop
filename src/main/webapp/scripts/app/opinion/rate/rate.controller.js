@@ -1,21 +1,25 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('RateController', function ($scope, $translate, $timeout, $filter, $compile, DateTimeService, Rate) {
+    .controller('RateController', function ($scope, $stateParams, $translate, $timeout, $filter, $compile, DateTimeService, RateService) {
         $scope.success = null;
         $scope.error = null;
         $scope.format = 'YYYY-MM-DD';
-        $scope.rate = {};
+        
+        if(angular.isDefined($stateParams.id)) {
+            $scope.rate = RateService.one($stateParams.id).get().$object; 
+        } else {            
+            $scope.rate = {};
+            $scope.now = moment();
 
-        $scope.now = moment();
+            $scope.minDate = $scope.now.format($scope.format);
+            $scope.rate.startDate = $scope.now.format($scope.format);
 
-        $scope.minDate = $scope.now.format($scope.format);
-        $scope.rate.startDate = $scope.now.format($scope.format);
+            $scope.rate.endDate = $scope.now.add(1,'d').format($scope.format);
 
-        $scope.rate.endDate = $scope.now.add(1,'d').format($scope.format);
-
-        $scope.rate.startDateTime = new Date();
-        $scope.rate.endDateTime = new Date();
+            $scope.rate.startDateTime = new Date();
+            $scope.rate.endDateTime = new Date();
+        }      
 
         $timeout(function (){angular.element('[ng-model="rate.title"]').focus();});
 
@@ -43,7 +47,7 @@ angular.module('floopApp')
                     $grandParent.after($compile(addOptionMarkUp)($scope));
                     $grandParent.after('<div class="voffset2"></div>');
                 } else {
-                    $scope.$emit('event:info', {text:'A maximum of 20 items can be added.'});
+                    $scope.$emit('event:user.info', {text:'A maximum of 20 items can be added.'});
                 }
             } else {
                 if(itemCount > 1) {
@@ -88,7 +92,7 @@ angular.module('floopApp')
 
             rate['items'] = items;   
 
-            Rate.post(rate).then(
+            RateService.post(rate).then(
                 function (value, responseHeaders) {
                     $scope.success = 'OK';
                 },
@@ -98,4 +102,12 @@ angular.module('floopApp')
             );
 
         };
+    })
+    .controller('ShowRateController', function ($scope, RateService, rate) {
+          
+        $scope.rate = rate;
+        _.forEach($scope.rate.items, function(item, index) {
+            $scope.rate.items[index] = angular.fromJson(item);                   
+        });
+
     });

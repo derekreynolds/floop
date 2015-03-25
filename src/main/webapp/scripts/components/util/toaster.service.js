@@ -28,9 +28,12 @@ angular.module('floopApp')
 			$rootScope.$on('event:resource.error', function(event, message) { 				
 				factory.displayError(factory.translateMessage(message));
 			});	
-			$rootScope.$on('event:info', function(event, message) { 
+			$rootScope.$on('event:user.info', function(event, message) { 
 				factory.displayInfo(factory.translateMessage(message));
 			});		
+			$rootScope.$on('event:user.warn', function(event, message) { 
+				factory.displayWarning(factory.translateMessage(message));
+			});	
 			$rootScope.$on('event:login.error', function(event, message) { 				
 				factory.displayError(factory.translateMessage(message));
 			});
