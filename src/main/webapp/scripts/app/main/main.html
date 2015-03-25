@@ -13,17 +13,15 @@
 	  				<td><a href="petition/{{petition.id}}">{{petition.description}}</a></td>
 				</tr>
 			</table>
-        </div>
-        <div class="col-md-8">
-        	
-        </div>
-        <div class="col-md-2">
-           <h3 translate="vote.title">Vote</h5>
+			<h3 translate="vote.title">Vote</h5>
            <table>            
 	            <tr ng-repeat="vote in votes.content track by vote.id">
 	  				<td><a href="vote/{{vote.id}}">{{vote.description}}</a></td>
 				</tr>
-			</table>           
+			</table>    
+        </div>
+        <div class="col-md-10">
+        	<div ui-view="content"></div>
         </div>
     </div>
 </div>

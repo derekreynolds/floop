@@ -1,25 +1,21 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('RateController', function ($scope, $stateParams, $translate, $timeout, $filter, $compile, DateTimeService, RateService) {
+    .controller('RateController', function ($scope, $translate, $timeout, $filter, $compile, DateTimeService, RateService) {
         $scope.success = null;
         $scope.error = null;
-        $scope.format = 'YYYY-MM-DD';
-        
-        if(angular.isDefined($stateParams.id)) {
-            $scope.rate = RateService.one($stateParams.id).get().$object; 
-        } else {            
-            $scope.rate = {};
-            $scope.now = moment();
+        $scope.format = 'YYYY-MM-DD';        
+           
+        $scope.rate = {};
+        $scope.now = moment();
 
-            $scope.minDate = $scope.now.format($scope.format);
-            $scope.rate.startDate = $scope.now.format($scope.format);
+        $scope.minDate = $scope.now.format($scope.format);
+        $scope.rate.startDate = $scope.now.format($scope.format);
 
-            $scope.rate.endDate = $scope.now.add(1,'d').format($scope.format);
+        $scope.rate.endDate = $scope.now.add(1,'d').format($scope.format);
 
-            $scope.rate.startDateTime = new Date();
-            $scope.rate.endDateTime = new Date();
-        }      
+        $scope.rate.startDateTime = new Date();
+        $scope.rate.endDateTime = new Date();             
 
         $timeout(function (){angular.element('[ng-model="rate.title"]').focus();});
 
@@ -80,7 +76,7 @@ angular.module('floopApp')
                                     DateTimeService.formatTime($scope.rate.startDateTime));
             rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.endDate, 
                                     DateTimeService.formatTime($scope.rate.endDateTime));
-            
+            // Moves the items into an array
             _.forEach(rate, function(value, key) {
                 if(_.startsWith(key, 'item')) {
                     if(value) {                  
@@ -110,4 +106,14 @@ angular.module('floopApp')
             $scope.rate.items[index] = angular.fromJson(item);                   
         });
 
+        $scope.save = function() {
+            RateService.post(rate).then(
+                function (value, responseHeaders) {
+                    $scope.success = 'OK';
+                },
+                function (httpResponse) {                                               
+                    $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
+                }
+            );
+        }
     });

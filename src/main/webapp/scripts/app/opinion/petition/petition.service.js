@@ -2,7 +2,7 @@
 'use strict';
 
 angular.module('floopApp')    
-    .factory('Petition', ['Restangular',
+    .factory('PetitionService', ['Restangular',
     function (Restangular) {
         return Restangular.service('api/petition');
     }]);

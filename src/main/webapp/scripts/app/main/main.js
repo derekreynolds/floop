@@ -10,7 +10,7 @@ angular.module('floopApp')
                     roles: []
                 },
                 views: {
-                    'content@': {
+                    'main@': {
                         templateUrl: 'scripts/app/main/main.html',
                         controller: 'MainController'
                     }

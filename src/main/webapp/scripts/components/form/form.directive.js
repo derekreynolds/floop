@@ -307,9 +307,11 @@ angular.module('floopApp')
                             var $icon = $parent.find('#' + n); 
                                                        
                             if(n <= id) {
-                                $icon.removeClass('fa-star-o').addClass('fa-star'); 
+                                if($icon.hasClass('fa-star-o'))
+                                    $icon.removeClass('fa-star-o').addClass('fa-star'); 
                             } else {
-                                $icon.removeClass('fa-star').addClass('fa-star-o'); 
+                                if($icon.hasClass('fa-star'))
+                                    $icon.removeClass('fa-star').addClass('fa-star-o'); 
                             }
                         });                        
                         

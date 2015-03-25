@@ -1,0 +1,15 @@
+<form-view entity-name="petition">
+    <form-group ng-submit="save()">
+    		<group-display>
+    			<text-display entity-name="petition" name="title"></text-display>
+    		</group-display> 
+    		<group-display>	 
+    			<text-display entity-name="petition" name="description"></text-display> 
+    		</group-display>          
+
+            <div class="form-group voffset4">                               
+            	<button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.sign"></button>                                
+            </div>                
+    </form-group>
+</form-view>
+

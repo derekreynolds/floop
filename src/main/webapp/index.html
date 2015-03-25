@@ -28,13 +28,15 @@
         <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div>
         <div ui-view="navbar" ng-cloak=""></div>
         <div class="container">
-            <div ui-view="content"></div>
+            <div ui-view="main"></div>
         </div>
-
+        <div class="voffset5"></div>
         <footer class="footer text-muted">
-            <div class="container">
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+              <div class="container">
                 <p translate="footer">This is your footer</p>
-            </div>
+              </div>
+            </nav>
         </footer>
         <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
         <script>

@@ -4,7 +4,7 @@ angular.module('floopApp')
     .config(function ($stateProvider) {
         $stateProvider
             .state('rate', {
-                parent: 'site',
+                parent: 'home',
                 url: '/rate',
                 data: {
                     roles: []
@@ -20,7 +20,7 @@ angular.module('floopApp')
             .state('rate.create', {
                 url: "/create",
                 views: {
-                    'content@': {
+                    'content@home': {
                         templateUrl: 'scripts/app/opinion/rate/rate.html',
                         controller: 'RateController'
                     }
@@ -42,7 +42,7 @@ angular.module('floopApp')
                     }
                 },
                 views: {
-                    'content@': {
+                    'content@home': {
                         templateUrl: 'scripts/app/opinion/rate/rate.show.html',
                         controller: 'ShowRateController'
                     }

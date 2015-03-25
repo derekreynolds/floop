@@ -64,4 +64,22 @@ angular.module('floopApp')
         }
     };
     
+    })
+    .controller('ShowPetitionController', function ($scope, PetitionService, petition) {
+          
+        $scope.rate = rate;
+        _.forEach($scope.rate.items, function(item, index) {
+            $scope.rate.items[index] = angular.fromJson(item);                   
+        });
+
+        $scope.save = function() {
+            PetitionService.post(rate).then(
+                function (value, responseHeaders) {
+                    $scope.success = 'OK';
+                },
+                function (httpResponse) {                                               
+                    $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
+                }
+            );
+        }
     });

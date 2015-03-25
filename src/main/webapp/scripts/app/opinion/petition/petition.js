@@ -4,13 +4,13 @@ angular.module('floopApp')
     .config(function ($stateProvider) {
         $stateProvider
             .state('petition', {
-                parent: 'site',
+                parent: 'home',
                 url: '/petition',
                 data: {
                     roles: []
                 },
                 views: {
-                    'content@': {
+                    'content@home': {
                         templateUrl: 'scripts/app/opinion/petition/petition.html',
                         controller: 'PetitionController'
                     }
