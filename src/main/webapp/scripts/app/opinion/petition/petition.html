@@ -1,7 +1,7 @@
 <form-view entity-name="petition">
     <form-group ng-submit="create()">           
             <text-input entity-name="petition" name="title" ng-minlength=2 ng-maxlength=250 ng-required="true"></text-input>
-            <text-area-input entity-name="petition" name="description" rows="5" ngRequired="true" ngMinlength="2" ngMaxlength="2500"></text-area-input>
+            <text-area-input entity-name="petition" name="description" rows="5" ng-required="true" ng-minlength="2" ng-maxlength="2500"></text-area-input>
             <text-input entity-name="petition" name="hashtag" ng-minlength=2 ng-maxlength=140 ng-required="true"></text-input>
             <start-end-date-time-input entity-name="petition" min-date="{{minDate}}"></start-end-date-time-input>
             <div class="voffset2"></div>

@@ -1,15 +1,14 @@
 'use strict';
 
 angular.module('floopApp')
-    .config(function ($stateProvider) {
+    .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('rate', {
                 parent: 'home',
                 url: '/rate',
                 data: {
                     roles: []
-                },
-                controller: 'RateController',
+                },                
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('rate');
@@ -17,12 +16,32 @@ angular.module('floopApp')
                     }]
                 }
             })
-            .state('rate.create', {
+            .state('rate.create', {              
                 url: "/create",
                 views: {
                     'content@home': {
-                        templateUrl: 'scripts/app/opinion/rate/rate.html',
-                        controller: 'RateController'
+                        template: '<div ui-view></div>',
+                        controller: 'CreateRateController'
+                    }
+                }                      
+            }) 
+            .state('rate.create.detail', {
+                parent: 'rate.create',              
+                url: "/detail",
+                views: {
+                    '': {
+                        templateUrl: 'scripts/app/opinion/rate/rate.detail.html',
+                        controller: 'CreateRateController'
+                    }
+                }                      
+            })            
+            .state('rate.create.option', {
+                parent: 'rate.create',
+                url: "/option",
+                views: {
+                    '': {
+                        templateUrl: 'scripts/app/opinion/rate/rate.option.html',
+                        controller: 'CreateRateController'
                     }
                 }
             })
@@ -47,5 +66,6 @@ angular.module('floopApp')
                         controller: 'ShowRateController'
                     }
                 }
-            })
+            });
+            
     });

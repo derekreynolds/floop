@@ -42,7 +42,7 @@ angular.module('floopApp')
             replace: true,
             transclude: true,
             restrict: 'E',
-            templateUrl: '/scripts/components/form/form-group.html'
+            templateUrl: '/scripts/components/form/form-control.html'
         };
     })
     .directive('textInput', function(formService) {
@@ -50,7 +50,7 @@ angular.module('floopApp')
             restrict: 'E',
             replace: true,
             require: '^form', 
-            template: '<div class="form-group"></div>',
+            templateUrl: '/scripts/components/form/form-group.html',
             compile: function(element, attr) {
                 element.append(formService.createLabel(attr));
                 element.append(formService.createTextInput(attr));
@@ -71,10 +71,31 @@ angular.module('floopApp')
             restrict: 'E',
             replace: true,
             require: '^form', 
-            template: '<div class="form-group"></div>',
+            templateUrl: '/scripts/components/form/form-group.html',
             compile: function(element, attr) {
                 element.append(formService.createLabel(attr));
                 element.append(formService.createTextAreaInput(attr));
+                element.append(formService.createError(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs){
+                    
+                  },
+                  post: function(scope, iElem, iAttrs){
+                   
+                  }
+                }
+            }
+        };
+    })
+    .directive('numberInput', function(formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: '^form', 
+            templateUrl: '/scripts/components/form/form-group.html',
+            compile: function(element, attr) {
+                element.append(formService.createLabel(attr));
+                element.append(formService.createNumberInput(attr));
                 element.append(formService.createError(attr));
                 return {
                   pre: function(scope, iElem, iAttrs){
@@ -91,8 +112,9 @@ angular.module('floopApp')
         return {
             restrict: 'E',
             replace: true,
-            require: '^form', 
-            template: '<div class="form-group"></div>',
+            require: '^form',
+            controller: 'AddOptionInputController', 
+            templateUrl: '/scripts/components/form/form-group.html',
             compile: function(element, attr) {
                 element.append(formService.createLabel(attr));
                 element.append(formService.createAddOptionInput(attr));
@@ -112,7 +134,9 @@ angular.module('floopApp')
         return {
             restrict: 'E',
             replace: true,
-            template: '<div class="form-group"></div>',
+            require: '^form',
+            controller: 'AddOptionInputController',
+            templateUrl: '/scripts/components/form/form-group.html',
             compile: function(element, attr) {
                 //element.append(formService.createLabel(attr));
                 element.append(formService.createAddOptionInput(attr));
@@ -288,88 +312,98 @@ angular.module('floopApp')
         return {
             restrict: 'E',
             replace: true,
-            require: '^form',          
-            compile: function(element, attr) {
-                //element.append(formService.createLabel(attr));
-                //element.append(formService.createRateInput(attr));
-                //element.append(formService.createError(attr));
+            require: ['^form'],
+            scope: {
+                model: '=',
+                index: '@'
+            },
+            templateUrl: '/scripts/components/form/rating.html',
+            controller: 'RateInputController',
+            compile: function(element, attr) {                               
                 return {
                   pre: function(scope, iElem, iAttrs){
-                    scope.rateEnter = function(event) {                    
-                        event.preventDefault();
-                        event.stopPropagation();           
-                        
-                        var $target = angular.element(event.target);
-                        var $parent = $target.parent();
-                        var id = parseInt($target.attr('id'));
-                        
-                        _.times(10, function(n) {                            
-                            var $icon = $parent.find('#' + n); 
-                                                       
-                            if(n <= id) {
-                                if($icon.hasClass('fa-star-o'))
-                                    $icon.removeClass('fa-star-o').addClass('fa-star'); 
-                            } else {
-                                if($icon.hasClass('fa-star'))
-                                    $icon.removeClass('fa-star').addClass('fa-star-o'); 
-                            }
-                        });                        
-                        
-                    };
-                    scope.rateClear = function(event) {
-                        event.preventDefault();
-                        event.stopPropagation();           
-                        
-                        var $target = angular.element(event.target);
-                        var $parent = $target.parent();
-                        var id = parseInt($target.attr('id'));
-                        var $input = $parent.find('input');
-                        $input.val(-1);
-
-                        _.times(10, function(n) {                            
-                            var $icon = $parent.find('#' + n);
-                            if($icon.hasClass('fa-star'))
-                                $icon.removeClass('fa-star').addClass('fa-star-o');                           
-                        });                        
-                        
-                    };
-                    scope.rateLeave = function(event) {
-                        event.preventDefault();
-                        event.stopPropagation();           
-                        
-                        var $target = angular.element(event.target);
-                        var $parent = $target.parent();
-                        var id = parseInt($target.attr('id'));
-                        var $input = $parent.find('input');
-                        var val = $input.val();
-                        val = parseInt(val || -1);
-                        _.times(10, function(n) {                            
-                            var $icon = $parent.find('#' + n);
-                            if(val >= n) {
-                                $icon.removeClass('fa-star-o').addClass('fa-star');
-                            } else {
-                                $icon.removeClass('fa-star').addClass('fa-star-o');
-                            }                           
-                        });                        
-                        
-                    };
-                    scope.rateRecord = function(event) {
-                        event.preventDefault();
-                        event.stopPropagation();           
-                        
-                        var $target = angular.element(event.target);
-                        var $parent = $target.parent();
-                        var id = parseInt($target.attr('id'));
-                        var $input = $parent.find('input');
-                        $input.val(id);
-                                               
-                    };
+                    //iElem.append(formService.createRateInput(iAttrs)); 
                   },
                   post: function(scope, iElem, iAttrs){
-                   iElem.append(formService.createRateInput(iAttrs));
-                   $compile(iElem.contents())(scope);
+                   //iElem.append(formService.createRateInput(iAttrs));
+                   //$compile(iElem.contents())(scope);
+                  }
+                }        
+            }
+        };
+    })
+    .directive('switchInput', function($compile, formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: '^form',
+            scope: {
+                model: '='
+            },
+            templateUrl: '/scripts/components/form/form-group.html',
+            compile: function(element, attr) {
+                element.append(formService.createLabel(attr));
+                element.append(formService.createSwitchInput(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs){
+                   
+                  
+                  },
+                  post: function(scope, iElem, iAttrs){
+                   
                   }
                 }
+            }            
+    
+        };
+    })
+    .directive('binaryOptionInput', function($compile, $filter, formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: '^form',
+            scope: {
+                model: '='
+            },
+            templateUrl: '/scripts/components/form/form-group.html',
+            compile: function(element, attr) {  
+                element.append(formService.createLabel(attr));
+                element.append(formService.createBinaryOptionInput(attr));   
+                return {
+                  pre: function(scope, iElem, iAttrs){
+                    scope.toggle = function() {
+                        scope.model = !scope.model;
+                        scope.setButtonText();
+                    };
+                    scope.setButtonText = function() {
+                        var $button = iElem.find('button');
+                        if(scope.model) {
+                            $button.html($filter('translate')('global.form.on'));                            
+                        } else {
+                            $button.html($filter('translate')('global.form.off'));
+                        }
+                    };
+                    scope.setButtonText();
+                  },
+                  post: function(scope, iElem, iAttrs){
+                        
+                  }
+                }
+            }            
+    
+        };
+    })
+    .directive('geoLocationInput', function($compile, formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: ['^form'],
+            templateUrl: '/scripts/components/form/geo-location.html',
+            controller: 'GeoLocationController',
+            link: function(scope, element, attrs, ctrls) {
+                //element.append(formService.createGeoLocationInput(attrs));
+                //$compile(element.contents())(scope);
             }
+    
         };
     });

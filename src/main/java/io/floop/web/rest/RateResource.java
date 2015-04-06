@@ -67,12 +67,25 @@ public class RateResource {
 	            method = RequestMethod.POST,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	    @Timed
-	    public ResponseEntity<?> saveAccount(@RequestBody Rate rate) {
+	    public ResponseEntity<?> save(@RequestBody Rate rate) {
 	    	log.debug("Create a new rate.");	      
 	    	
 	        rateService.save(rate);
 
 	        return new ResponseEntity<>(HttpStatus.CREATED);
+	        
+	    }
+	    
+	    @RequestMapping(value = "/rate",
+	            method = RequestMethod.PUT,
+	            produces = MediaType.APPLICATION_JSON_VALUE)
+	    @Timed
+	    public ResponseEntity<?> update(@RequestBody Rate rate) {
+	    	log.debug("Create a new rate.");	      
+	    	
+	        rateService.save(rate);
+
+	        return new ResponseEntity<>(HttpStatus.OK);
 	        
 	    }
 }

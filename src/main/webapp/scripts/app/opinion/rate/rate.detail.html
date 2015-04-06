@@ -1,0 +1,15 @@
+<form-view entity-name="rate">
+    <form-group ng-submit="next()">           
+            <text-input entity-name="rate" name="title" ng-minlength=2 ng-maxlength=250 ng-required="true"></text-input>
+            <text-area-input entity-name="rate" name="description" rows="5" ng-required="true" ng-minlength="2" ng-maxlength="2500"></text-area-input>
+            <start-end-date-time-input entity-name="rate" min-date="{{minDate}}"></start-end-date-time-input>
+            <add-option-input entity-name="rate" name="item" ng-required="true"></add-option-input>            
+            <div class="form-group pull-right"> 
+            <a ui-sref="^.option" class="btn btn-block btn-info">
+    Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span>
+    </a>                              
+                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.next"></button>                                 
+            </div>                
+    </form-group>
+</form-view>
+

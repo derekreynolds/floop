@@ -31,8 +31,13 @@ angular.module('floopApp')
          * @param  {Object} attributes - The attributes of the input control.
          * @return {String} A Html text input
          */
-        factory.createHiddenInput = function(attributes) {
-            return this.createInput(attributes, 'hidden');        
+        factory.createHiddenInput = function(attributes) {   
+                 
+            var input =  '<input type="text" class="form-control" ng-model="';
+                input +=  this.getModelKey(attributes) + '" name="' + attributes.name + '"';
+                input += ' style="display: none;"/>';
+           return input;
+           
         };
 
         /**
@@ -240,19 +245,56 @@ angular.module('floopApp')
         };
 
         /**
-         * Creates a rate input.
+         * Creates a switch input.
+         *
+         * @param Object attributes - The attributes of the input control.
+         * @return String a Switch input text.
+        */
+        factory.createSwitchInput = function(attributes) {
+            
+            var tooltip = this.getTooltip(attributes);
+            var input =  '<div class="switch">';                    
+                input += '<i id="switcher" class="fa fa-2x fa-fw" ng-class="model ? \'fa-toggle-on\': \'fa-toggle-off\'"';
+                if(tooltip !== '') {
+                    input += 'tooltip-placement="right" tooltip="' + tooltip + '"';
+                }
+                input += 'ng-click="model = !model"></i>';                
+                input += '</div>'; 
+
+           return input;
+        };
+
+        /**
+         * Creates a binary option input.
+         *
+         * @param Object attributes - The attributes of the input control.
+         * @return String a Switch input text.
+        */
+        factory.createBinaryOptionInput = function(attributes) {
+            
+            var tooltip = this.getTooltip(attributes);
+            var input =  '<div class="binary">';
+                input += '<button type="button" class="btn" ng-class="model ? \'btn-primary\' : \'btn-default\'" ng-click="toggle()"' ; 
+                if(tooltip !== '') {
+                    input += 'tooltip-placement="right" tooltip="' + tooltip + '"';
+                }   
+                input += '>';
+                input += '</button>'               
+                input += '</div>'; 
+
+           return input;
+        };
+
+        /**
+         * Creates a geo location input.
          *
          * @param {Object} attributes - The attributes of the input control.
          * @return {String} A Html <label> text.
         */
-        factory.createRateInput = function(attributes) {
-            
-            var input =  '<strong>' + attributes.item + '</strong>';
-                input +=  '<div class="rate voffset1">';
-                    _.times(10, function(n) {
-                      input += '<i id="' + n + '" ng-click="rateRecord($event)"  ng-mouseenter="rateEnter($event)" ng-mouseleave="rateLeave($event)" ng-dblclick="rateClear($event)" class="fa fa-star-o fa-2x fa-fw"></i>';
-                    });
-                input +=   this.createHiddenInput(attributes); 
+        factory.createGeoLocationInput = function(attributes) {
+
+            var tooltip = this.getTooltip(attributes);
+            var input =  '<div class="geolocation" ng-click="toggle($event)">';                
                 input += '</div>'; 
 
            return input;
@@ -300,13 +342,31 @@ angular.module('floopApp')
         };
 
         /**
+         * Returns the entity name from the attributes
+         * @param  Object attributes associated with the directive.
+         * @return String entity name
+         */
+        factory.getEntityName = function(attributes) {
+            return attributes.entityName;
+        }
+
+        /**
+         * Returns the input name from the attributes
+         * @param  Object attributes associated with the directive.
+         * @return String input name
+         */
+        factory.getName = function(attributes) {
+            return attributes.name;
+        }
+
+        /**
          * Builds the translation key based on the attributes.
          * 
          * @param  {Object} attributes - The attributes to build the key from.
          * @return {String} 
          */
         factory.getModelKey = function(attributes) {
-            return attributes.entityName + "." + attributes.name;
+            return this.getEntityName(attributes) + "." + this.getName(attributes);
         };
 
         /**
@@ -319,5 +379,40 @@ angular.module('floopApp')
             return this.getTranslation(this.getTranslationKey(attributes) + '.placeholder');
         };
 
+        /**
+         * Builds the tooltip text.
+         * 
+         * @param  {Object} attributes - The attributes to build the key from.
+         * @return {String} 
+         */
+        factory.getTooltip = function(attributes) {
+            return this.getTranslation(this.getTranslationKey(attributes) + '.tooltip');
+        };
+
     return factory;
-});
+    })
+    .factory('MapInitializer', function($window, $q){
+
+        //Google's url for async maps initialization accepting callback function
+        var asyncUrl = 'http://maps.googleapis.com/maps/api/js?sensor=false&callback=',
+            mapsDefer = $q.defer();
+
+        //Callback function - resolving promise after maps successfully loaded
+        $window.googleMapsInitialized = mapsDefer.resolve; // removed ()
+
+        //Async loader
+        var asyncLoad = function(asyncUrl, callbackName) {
+          var script = document.createElement('script');
+          //script.type = 'text/javascript';
+          script.src = asyncUrl + callbackName;
+          document.body.appendChild(script);
+        };
+        //Start loading google maps
+        asyncLoad(asyncUrl, 'googleMapsInitialized');
+
+        //Usage: Initializer.mapsInitialized.then(callback)
+        return {
+            mapsInitialized : mapsDefer.promise
+        };
+        
+    });

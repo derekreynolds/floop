@@ -38,6 +38,9 @@ module.exports = function (config) {
             'main/webapp/bower_components/moment/moment.js',
             'main/webapp/bower_components/ng-file-upload/angular-file-upload.js',
             'main/webapp/bower_components/ng-file-upload-shim/angular-file-upload-shim.js',
+            'main/webapp/bower_components/angular-animate/angular-animate.js',
+            'main/webapp/bower_components/angular-ui-select/dist/select.js',
+            'main/webapp/bower_components/angular-google-maps/dist/angular-google-maps.js',
             'main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'main/webapp/scripts/app/app.js',

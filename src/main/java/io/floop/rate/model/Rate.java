@@ -37,7 +37,10 @@ public class Rate extends AbstractAuditingEntity implements Serializable {
     @Field("end_date")
     private DateTime endDate;
     
-    private List<String> items;
+    @Field("option")
+    private Option option;
+    
+    private List<RateItem> items;
 
     
 	/**
@@ -113,14 +116,14 @@ public class Rate extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * @return the items
 	 */
-	public List<String> getItems() {
+	public List<RateItem> getItems() {
 		return items;
 	}
 
 	/**
 	 * @param item the items to set
 	 */
-	public void setItems(List<String> items) {
+	public void setItems(List<RateItem> items) {
 		this.items = items;
 	}
     

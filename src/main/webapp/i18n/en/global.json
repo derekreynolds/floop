@@ -42,8 +42,12 @@
             "email": "E-mail",
             "email.placeholder": "Your e-mail",
             "create": "<i class=\"fa fa-save\"></i> Create",
+            "next": "Next <i class=\"fa fa-caret-right\"></i>",
+            "previous": "Previous <i class=\"fa fa-caret-left\"></i>",
             "cancel": "<i class=\"fa fa-undo\"></i> Cancel",
-            "rate": "<i class=\"fa fa-star\"></i> Rate"
+            "rate": "<i class=\"fa fa-star\"></i> Rate",
+            "on": "<i class=\"fa fa-power-off fa-fw\"></i> On",
+            "off": "<i class=\"fa fa-power-off fa-fw\"></i> Off"
         },
         "messages": {
             "info": {

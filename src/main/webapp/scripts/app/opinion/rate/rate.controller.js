@@ -1,12 +1,23 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('RateController', function ($scope, $translate, $timeout, $filter, $compile, DateTimeService, RateService) {
+    .controller('CreateRateController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, RateService) {
+        
+        if(!angular.isDefined($scope.rate)) {
+            $scope.rate = {
+                'option' : {
+                    'publiclyViewable': true, 
+                    'anonymous': true, 
+                    'location': false
+                }
+            };
+            $state.go('.detail');
+        }
+
         $scope.success = null;
         $scope.error = null;
         $scope.format = 'YYYY-MM-DD';        
-           
-        $scope.rate = {};
+        
         $scope.now = moment();
 
         $scope.minDate = $scope.now.format($scope.format);
@@ -23,46 +34,7 @@ angular.module('floopApp')
         $scope.hstep = 1;
         $scope.mstep = 10;
 
-        var itemCount = 1;
-        var itemIndex = 1;
 
-        $scope.addItem = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            var target = angular.element($event.target);
-            var $grandParent = target.closest('span.input-group');
-            var $button = $grandParent.find('button');
-            var $icon = $grandParent.find('i');
-            if($icon.hasClass('fa-plus')) { 
-                itemCount++;               
-                if(itemCount <= 20) {                    
-                    var addOptionMarkUp = '<add-option entity-name="rate" name="item' + itemIndex++;
-                        addOptionMarkUp += '"></add-option>';
-                    $icon.removeClass('fa-plus').addClass('fa-minus');            
-                    $grandParent.after($compile(addOptionMarkUp)($scope));
-                    $grandParent.after('<div class="voffset2"></div>');
-                } else {
-                    $scope.$emit('event:user.info', {text:'A maximum of 20 items can be added.'});
-                }
-            } else {
-                if(itemCount > 1) {
-                    itemCount--;
-                    $grandParent.remove();
-                }
-            }
-
-        };
-
-        $scope.enableAddButton = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            var target = angular.element($event.target);
-            var $grandParent = target.closest('span.input-group');
-            var $button = $grandParent.find('button');
-            
-        };
 
         $scope.create = function() {
 
@@ -76,11 +48,13 @@ angular.module('floopApp')
                                     DateTimeService.formatTime($scope.rate.startDateTime));
             rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.endDate, 
                                     DateTimeService.formatTime($scope.rate.endDateTime));
+            var counter = 0;
             // Moves the items into an array
             _.forEach(rate, function(value, key) {
                 if(_.startsWith(key, 'item')) {
                     if(value) {                  
-                        items.push(value);   
+                        items.push({'ordinal': counter, 'name': value});
+                        counter++;  
                     }                 
                     delete rate[key];
                 }                
@@ -99,17 +73,19 @@ angular.module('floopApp')
 
         };
     })
-    .controller('ShowRateController', function ($scope, RateService, rate) {
+    .controller('ShowRateController', function ($state, $scope, RateService, rate) {
           
         $scope.rate = rate;
         _.forEach($scope.rate.items, function(item, index) {
-            $scope.rate.items[index] = angular.fromJson(item);                   
+            $scope.rate.items[index] = angular.fromJson(item); 
+            $scope.rate.items[index].score = 0;                  
         });
 
-        $scope.save = function() {
-            RateService.post(rate).then(
+        $scope.save = function() {            
+            RateService.put().then(
                 function (value, responseHeaders) {
                     $scope.success = 'OK';
+                    $state.go('home');
                 },
                 function (httpResponse) {                                               
                     $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
