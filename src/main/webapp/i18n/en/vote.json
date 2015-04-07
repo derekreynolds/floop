@@ -25,7 +25,25 @@
             "item": {
                 "label": "Item",
                 "placeholder": "Item you want rated"
-            }            
+            },
+            "option":{
+                "anonymous": {
+                    "label": "Anonymous",
+                    "tooltip": "The rating will be anonymous. No user information will be recorded."
+                },
+                "resultViewable":{
+                    "label": "Result Viewable",
+                    "tooltip": "The result will be viewable to raters and general public, if anonymous on."
+                },
+                "private": {
+                    "label": "Private Rating",
+                    "tooltip": "The rating will be private. You must invite raters from the friends." 
+                },
+                "restrictedLocation": {
+                    "label": "Restrict Location",
+                    "tooltip": "Restrict where the rating is acccessible from." 
+                }
+            }                    
         },
         "messages": {
             "validate": {

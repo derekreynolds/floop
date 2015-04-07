@@ -8,7 +8,9 @@
                 "main": "Opinion",
                 "rate": "Rate",
                 "petition": "Petition",
-                "vote": "Vote"
+                "vote": "Vote",
+                "gauge": "Gauge",
+                "survey": "Survey"
             },
             "account": {
                 "main": "Account",
