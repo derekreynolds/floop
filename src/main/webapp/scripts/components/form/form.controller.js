@@ -171,16 +171,16 @@ angular.module('floopApp')
         $scope.showError = function (error) {
             switch (error.code) {
                 case error.PERMISSION_DENIED:
-                    $scope.error = "User denied the request for Geolocation."
+                    $scope.$emit('event:resource.error', {text:'geo.error.title', title:'geo.error.permission.text'});                     
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    $scope.error = "Location information is unavailable."
+                    $scope.$emit('event:resource.error', {text:'geo.error.title', title:'geo.error.position.text'});
                     break;
                 case error.TIMEOUT:
-                    $scope.error = "The request to get user location timed out."
+                    $scope.$emit('event:resource.error', {text:'geo.error.title', title:'geo.error.timeout.text'});
                     break;
                 case error.UNKNOWN_ERROR:
-                    $scope.error = "An unknown error occurred."
+                    $scope.$emit('event:resource.error', {text:'geo.error.title', title:'geo.error.unkown.text'});
                     break;
             }
      
@@ -191,6 +191,7 @@ angular.module('floopApp')
                 navigator.geolocation.getCurrentPosition($scope.showPosition, $scope.showError);
             }
             else {
+                $scope.$emit('event:resource.error', {text:'geo.error.title', title:'geo.error.unknown.text'}); 
                 $scope.error = "Geolocation is not supported by this browser.";
             }
         };

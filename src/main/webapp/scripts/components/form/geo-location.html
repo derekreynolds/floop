@@ -3,7 +3,7 @@
 		<div class="col-md-6">	
 			<table>
 				<tbody>
-					<tr><td colspan="7"><label for="latitude">Coordinates</label></td></tr>
+					<tr><td colspan="7"><label for="latitude" translate="geo.form.coordinates.label">Coordinates</label></td></tr>
 					<tr>
 						<td class="form-group">					
 							<input style="width:150px;" type="number" ng-model="geo.center.latitude" name="latitude" class="form-control text-center" ng-readonly="true">
@@ -19,7 +19,7 @@
 			</table>
 		</div>
 		<div class="col-md-6">
-			<label for="distance">Distance</label>
+			<label for="distance" translate="geo.form.distance.label">Distance</label>
 			<select class="form-control" ng-model="geo.distance" name="distance" ng-change="changeDistance()">
 				<option ng-repeat="distance in distances"
             			value="{{distance.meters}}">

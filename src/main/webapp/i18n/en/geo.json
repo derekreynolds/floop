@@ -1,0 +1,30 @@
+{
+    "geo": {
+    	"error": {
+    		"title": "Error: Unable to geo-location",
+    		"permission": {
+    			"text": "User has not allowed geo-location your position."
+    		},
+    		"position": {
+    			"text": "Unable to get geo-location position at this time."
+    		},
+    		"timeout": {
+    			"text": "Ge-locaton timed out. Please try again later."
+    		},
+    		"support": {
+    			"text": "Your browser boesn't support geo-location."
+    		},
+    		"unknown": {
+    			"text": "Unknown error occurred while attempting geo-location"
+    		}
+    	},
+    	"form": {
+    		"distance": {
+    			"label": "Distance"
+    		},
+    		"coordinates": {
+    			"label": "Coordinates"
+    		}
+    	}
+    }
+}

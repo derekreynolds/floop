@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('CreateRateController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, RateService) {
+    .controller('CreateVoteController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, RateService) {
         
-        if(!angular.isDefined($scope.rate)) {
-            $scope.rate = {
+        if(!angular.isDefined($scope.vote)) {
+            $scope.vote = {
                 'option' : {
                     'private': true, 
                     'anonymous': true, 
@@ -20,14 +20,14 @@ angular.module('floopApp')
         $scope.now = moment();
 
         $scope.minDate = $scope.now.format($scope.format);
-        $scope.rate.startDate = $scope.now.format($scope.format);
+        $scope.vote.startDate = $scope.now.format($scope.format);
 
-        $scope.rate.endDate = $scope.now.add(1,'d').format($scope.format);
+        $scope.vote.endDate = $scope.now.add(1,'d').format($scope.format);
 
-        $scope.rate.startDateTime = new Date();
-        $scope.rate.endDateTime = new Date();             
+        $scope.vote.startDateTime = new Date();
+        $scope.vote.endDateTime = new Date();             
 
-        $timeout(function (){angular.element('[ng-model="rate.title"]').focus();});
+        $timeout(function (){angular.element('[ng-model="vote.title"]').focus();});
 
         $scope.ismeridian = false; 
         $scope.hstep = 1;
@@ -36,32 +36,32 @@ angular.module('floopApp')
         $scope.create = function() {
 
             var items = [];
-            var rate = _.clone($scope.rate);
+            var vote = _.clone($scope.vote);
 
-            delete rate['startDateTime'];
-            delete rate['endDateTime'];
+            delete vote['startDateTime'];
+            delete vote['endDateTime'];
 
-            rate.startDate = DateTimeService.toDateTimeUTC($scope.rate.startDate, 
-                                    DateTimeService.formatTime($scope.rate.startDateTime));
-            rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.endDate, 
-                                    DateTimeService.formatTime($scope.rate.endDateTime));
+            vote.startDate = DateTimeService.toDateTimeUTC($scope.vote.startDate, 
+                                    DateTimeService.formatTime($scope.vote.startDateTime));
+            vote.endDate = DateTimeService.toDateTimeUTC($scope.vote.endDate, 
+                                    DateTimeService.formatTime($scope.vote.endDateTime));
             var counter = 0;
             // Moves the items into an array
-            _.forEach(rate, function(value, key) {
+            _.forEach(vote, function(value, key) {
                 if(_.startsWith(key, 'item')) {
                     if(value) {                  
                         items.push({'ordinal': counter, 'name': value});
                         counter++;  
                     }                 
-                    delete rate[key];
+                    delete vote[key];
                 }                
             });
 
-            rate['items'] = items;   
+            vote['items'] = items;   
 
-            RateService.post(rate).then(
+            RateService.post(vote).then(
                 function (value, responseHeaders) {
-                    $scope.success = 'OK';
+        
                 },
                 function (httpResponse) {                                               
                     $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
@@ -70,18 +70,17 @@ angular.module('floopApp')
 
         };
     })
-    .controller('ShowRateController', function ($state, $scope, RateService, rate) {
+    .controller('ShowVoteController', function ($state, $scope, VoteService, vote) {
           
-        $scope.rate = rate;
-        _.forEach($scope.rate.items, function(item, index) {
-            $scope.rate.items[index] = angular.fromJson(item); 
-            $scope.rate.items[index].score = 0;                  
+        $scope.vote = vote;
+        _.forEach($scope.vote.items, function(item, index) {
+            $scope.vote.items[index] = angular.fromJson(item); 
+            $scope.vote.items[index].score = 0;                  
         });
 
         $scope.save = function() {            
-            RateService.put().then(
+            VoteService.put().then(
                 function (value, responseHeaders) {
-                    $scope.success = 'OK';
                     $state.go('home');
                 },
                 function (httpResponse) {                                               
