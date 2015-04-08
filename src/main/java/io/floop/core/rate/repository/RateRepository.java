@@ -1,7 +1,7 @@
-package io.floop.rate.repository;
+package io.floop.core.rate.repository;
 
 
-import io.floop.rate.model.Rate;
+import io.floop.core.rate.model.Rate;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

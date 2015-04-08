@@ -1,7 +1,7 @@
 /**
  * 
  */
-package io.floop.rate.model;
+package io.floop.core.common.model;
 
 import org.springframework.data.geo.Point;
 

@@ -1,9 +1,9 @@
 /**
  * 
  */
-package io.floop.rate.service;
+package io.floop.core.rate.service;
 
-import io.floop.rate.model.Rate;
+import io.floop.core.rate.model.Rate;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

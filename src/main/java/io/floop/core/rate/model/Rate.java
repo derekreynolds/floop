@@ -1,8 +1,9 @@
 /**
  * 
  */
-package io.floop.rate.model;
+package io.floop.core.rate.model;
 
+import io.floop.core.common.model.Option;
 import io.floop.domain.AbstractAuditingEntity;
 
 import java.io.Serializable;

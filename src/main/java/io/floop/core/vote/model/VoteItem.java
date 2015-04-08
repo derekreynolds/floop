@@ -1,11 +1,11 @@
-package io.floop.rate.model;
+package io.floop.core.vote.model;
 
 /**
  * 
  * @author Derek Reynolds
  *
  */
-public class RateItem {
+public class VoteItem {
 
 	private Integer ordinal;
 	

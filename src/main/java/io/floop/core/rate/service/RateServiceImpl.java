@@ -1,10 +1,10 @@
 /**
  * 
  */
-package io.floop.rate.service;
+package io.floop.core.rate.service;
 
-import io.floop.rate.model.Rate;
-import io.floop.rate.repository.RateRepository;
+import io.floop.core.rate.model.Rate;
+import io.floop.core.rate.repository.RateRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
