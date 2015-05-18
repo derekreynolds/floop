@@ -1,4 +1,7 @@
 <form-view entity-name="vote">
+
+    <participant-visibility-message model="{{vote.option.anonymous}}"></participant-visibility-message>
+
     <form-group ng-submit="save()">
     		<group-display>
     			<text-display entity-name="vote" name="title"></text-display>
@@ -8,7 +11,7 @@
     		</group-display>          
 
             <div class="form-group voffset3" ng-repeat="item in vote.items track by item.ordinal">           
-            	<vote-input entity-name="vote" model="vote.items" index="{{$index}}"></vote-input>            	
+                <rate-input entity-name="vote" model="vote.items" index="{{$index}}"></rate-input>              
             </div>
 
             <div class="form-group voffset4">                               

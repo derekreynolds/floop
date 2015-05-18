@@ -4,8 +4,14 @@ angular.module('floopApp')
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('vote', {
-                parent: 'home',
+                parent: 'site',
                 url: '/vote',
+                views: {
+                    'main@': {
+                        templateUrl: 'scripts/app/opinion/vote/vote.list.html',
+                        controller: 'ListVoteController'
+                    }
+                },  
                 data: {
                     roles: []
                 },                
@@ -14,13 +20,16 @@ angular.module('floopApp')
                         $translatePartialLoader.addPart('vote');
                         $translatePartialLoader.addPart('geo');
                         return $translate.refresh();
-                    }]
+                    }],
+                    votings: function(VoteService) {
+                        return VoteService.one().customGET('top5');
+                    }
                 }
             })
             .state('vote.create', {              
                 url: "/create",
                 views: {
-                    'content@home': {
+                    'main@': {
                         template: '<div ui-view></div>',
                         controller: 'CreateVoteController'
                     }
@@ -62,7 +71,7 @@ angular.module('floopApp')
                     }
                 },
                 views: {
-                    'content@home': {
+                    'main@': {
                         templateUrl: 'scripts/app/opinion/vote/vote.show.html',
                         controller: 'ShowVoteController'
                     }

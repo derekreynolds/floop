@@ -9,7 +9,7 @@ public class RateItem {
 
 	private Integer ordinal;
 	
-	private String name;
+	private String item;
 
 	/**
 	 * @return the ordinal
@@ -26,17 +26,17 @@ public class RateItem {
 	}
 
 	/**
-	 * @return the name
+	 * @return the item
 	 */
-	public String getName() {
-		return name;
+	public String getItem() {
+		return item;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param item the item to set
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setItem(String item) {
+		this.item = item;
 	}
 	
 	

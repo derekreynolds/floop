@@ -1,5 +1,5 @@
 <div>
-	<strong>{{model[index].name}}</strong>
+	<strong>{{model[index].item}}</strong>
 	<div class="rate voffset1" ng-dblclick="rateClear($event)">
 	    <i ng-repeat="i in starCount track by i" id="{{i}}" ng-click="rateRecord($event,i)" ng-mouseleave="rateLeave($event)"
 	        ng-mouseenter="rateEnter($event,i)" class="fa fa-star-o fa-2x fa-fw"></i>                

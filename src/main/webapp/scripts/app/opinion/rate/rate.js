@@ -4,8 +4,14 @@ angular.module('floopApp')
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('rate', {
-                parent: 'home',
+                parent: 'site',
                 url: '/rate',
+                views: {
+                    'main@': {
+                        templateUrl: 'scripts/app/opinion/rate/rate.list.html',
+                        controller: 'ListRateController'
+                    }
+                },    
                 data: {
                     roles: []
                 },                
@@ -14,13 +20,16 @@ angular.module('floopApp')
                         $translatePartialLoader.addPart('rate');
                         $translatePartialLoader.addPart('geo');
                         return $translate.refresh();
-                    }]
+                    }],
+                    ratings: function(RateService) {
+                        return RateService.one().customGET('top5');
+                    }
                 }
             })
             .state('rate.create', {              
                 url: "/create",
                 views: {
-                    'content@home': {
+                    'main@': {
                         template: '<div ui-view></div>',
                         controller: 'CreateRateController'
                     }
@@ -62,7 +71,7 @@ angular.module('floopApp')
                     }
                 },
                 views: {
-                    'content@home': {
+                    'main@': {
                         templateUrl: 'scripts/app/opinion/rate/rate.show.html',
                         controller: 'ShowRateController'
                     }

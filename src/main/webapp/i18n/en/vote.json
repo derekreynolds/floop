@@ -10,11 +10,13 @@
                 "label": "Description",
                 "placeholder": "Description for vote"
             },
-            "startDate": {
-                "label": "Start Date"
-            },
-            "endDate": {
-                "label": "End Date"
+            "timeBox": {
+                "startDate": {
+                    "label": "Start Date"
+                },
+                "endDate": {
+                    "label": "End Date"
+                }
             },
             "range": {
                 "label": "Range"
@@ -22,28 +24,38 @@
             "step": {
                 "label": "Step"
             },
-            "item": {
+            "items": {
                 "label": "Item",
                 "placeholder": "Item you want rated"
             },
             "option":{
                 "anonymous": {
                     "label": "Anonymous",
-                    "tooltip": "The rating will be anonymous. No user information will be recorded."
+                    "tooltip": "Click to change the state from on to off. ",
+                    "info": "The rating will be anonymous. No user information will be available to you. The participants in this rating will be advised that the rating is anonymous."
                 },
                 "resultViewable":{
                     "label": "Result Viewable",
-                    "tooltip": "The result will be viewable to raters and general public, if anonymous on."
+                    "tooltip": "Click to change the state from on to off.",
+                    "info": "The result will be available to the participants while the rating is active. If the rating is not private then all the public will see the result."
                 },
                 "private": {
                     "label": "Private Rating",
-                    "tooltip": "The rating will be private. You must invite raters from the friends." 
+                    "tooltip": "The rating will be private. You must invite raters from the friends.",
+                    "info": "By making the rating private you can select from your friend list the people you want to rate."
                 },
-                "restrictedLocation": {
+                "location": {                   
                     "label": "Restrict Location",
-                    "tooltip": "Restrict where the rating is acccessible from." 
+                    "tooltip": "Restrict where the rating is acccessible from."                    
+                },
+                "socialize": {
+                    "label": "Socialize Rating",
+                    "tooltip": "Publish this rating to your social network.",
+                    "count" : {
+                        "label":"Number of characters {{count}}"
+                    }
                 }
-            }                    
+            }                     
         },
         "messages": {
             "validate": {

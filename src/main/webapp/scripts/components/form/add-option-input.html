@@ -1,0 +1,12 @@
+<div class="form-group">
+	<label for="item" translate="{{label}}">Items</label>
+	<span class="input-group">
+        <input type="text" name="item" class="form-control" ng-keypress="enableAddButton($event)"/>
+        <span class="input-group-btn">
+	        <button type="button" class="btn btn-default" ng-click="addItem($event)" ng-disabled="buttonEnabled !== true">
+	        	<i class="fa fa-plus"></i>
+	        </button>                             
+		</span>		
+	</span>
+	<add-option name="item{{$index}}" ng-repeat="item in model" value="{{item.item}}" model="model" index="{{$index}}"></add-option>
+ </div>

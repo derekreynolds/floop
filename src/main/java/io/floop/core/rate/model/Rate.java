@@ -45,6 +45,20 @@ public class Rate extends AbstractAuditingEntity implements Serializable {
 
     
 	/**
+	 * @return the option
+	 */
+	public Option getOption() {
+		return option;
+	}
+
+	/**
+	 * @param option the option to set
+	 */
+	public void setOption(Option option) {
+		this.option = option;
+	}
+
+	/**
 	 * @return the id
 	 */
 	public String getId() {

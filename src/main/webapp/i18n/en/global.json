@@ -45,11 +45,16 @@
             "email.placeholder": "Your e-mail",
             "create": "<i class=\"fa fa-save\"></i> Create",
             "next": "Next <i class=\"fa fa-caret-right\"></i>",
-            "previous": "Previous <i class=\"fa fa-caret-left\"></i>",
+            "previous": "<i class=\"fa fa-caret-left\"></i> Previous",
             "cancel": "<i class=\"fa fa-undo\"></i> Cancel",
             "rate": "<i class=\"fa fa-star\"></i> Rate",
+            "vote":"<i class=\"fa fa-check-square-o\"></i> Vote",
             "on": "<i class=\"fa fa-power-off fa-fw\"></i> On",
             "off": "<i class=\"fa fa-power-off fa-fw\"></i> Off"
+        },
+        "anonymous": {
+            "true": "This feedback loop is anonymous. Your user details will NOT be available to other participants or creator.",
+            "false": "Your feedback is NOT anonymous. The creator of the feedback loop will be able to see your user name."
         },
         "messages": {
             "info": {
@@ -98,4 +103,5 @@
         }
     },
     "footer": "&copy; 2015 floop.io"
+
 }

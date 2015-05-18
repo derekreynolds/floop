@@ -3,8 +3,6 @@
  */
 package io.floop.core.common.model;
 
-import org.springframework.data.geo.Point;
-
 /**
  * @author Derek Reynolds
  *
@@ -14,23 +12,38 @@ public class Option {
 	private boolean anonymous;
 	
 	private boolean publiclyViewable;
+		
+	private Location location;
 	
-	private boolean restrictedLocation;
-	
-	private Point location;
-	
+	private Socialize socialize;
+
+
+
+	/**
+	 * @return the socialize
+	 */
+	public Socialize getSocialize() {
+		return socialize;
+	}
+
+	/**
+	 * @param socialize the socialize to set
+	 */
+	public void setSocialize(Socialize socialize) {
+		this.socialize = socialize;
+	}
 
 	/**
 	 * @return the location
 	 */
-	public Point getLocation() {
+	public Location getLocation() {
 		return location;
 	}
 
 	/**
 	 * @param location the location to set
 	 */
-	public void setLocation(Point location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 
@@ -61,21 +74,6 @@ public class Option {
 	public void setPubliclyViewable(boolean publiclyViewable) {
 		this.publiclyViewable = publiclyViewable;
 	}
-
-	/**
-	 * @return the restrictedLocation
-	 */
-	public boolean isRestrictedLocation() {
-		return restrictedLocation;
-	}
-
-	/**
-	 * @param restrictedLocation the restrictedLocation to set
-	 */
-	public void setRestrictedLocation(boolean restrictedLocation) {
-		this.restrictedLocation = restrictedLocation;
-	}
-	
 	
 	
 }

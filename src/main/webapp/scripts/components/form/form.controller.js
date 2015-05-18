@@ -5,10 +5,7 @@ angular.module('floopApp')
     .controller('RateInputController', function ($scope) {
 
         if(!angular.isDefined($scope.starCount)) {
-            $scope.starCount = [];
-            _.times(10, function(i) {
-                $scope.starCount.push(i + 1);
-            });
+            $scope.starCount = _.range(1, 11);     
         }
 
         $scope.rateEnter = function(event, index) {
@@ -64,51 +61,8 @@ angular.module('floopApp')
         };
 
     })
-    .controller('AddOptionInputController', function ($scope, $compile) {
-
-        var itemCount = 1;
-        var itemIndex = 1;
-
-        $scope.addItem = function ($event) {
-       
-            var target = angular.element($event.target);
-            var $grandParent = target.closest('span.input-group');
-            var $button = $grandParent.find('button');
-            var $icon = $grandParent.find('i');
-            if($icon.hasClass('fa-plus')) { 
-                itemCount++;               
-                if(itemCount <= 20) {                    
-                    var addOptionMarkUp = '<add-option entity-name="rate" name="item' + itemIndex++;
-                        addOptionMarkUp += '"></add-option>';
-                    $icon.removeClass('fa-plus').addClass('fa-minus');            
-                    $grandParent.after($compile(addOptionMarkUp)($scope));
-                    $grandParent.after('<div class="voffset2"></div>');
-                } else {
-                    $scope.$emit('event:user.info', {text:'A maximum of 20 items can be added.'});
-                }
-            } else {
-                if(itemCount > 1) {
-                    itemCount--;
-                    $grandParent.remove();
-                }
-            }
-
-        };
-
-        $scope.enableAddButton = function($event) {
-          
-            var target = angular.element($event.target);
-            var $grandParent = target.closest('span.input-group');
-            var $button = $grandParent.find('button');
-            
-        };
-    })
-    .controller('GeoLocationController', function($scope, $modal) {
-
-        $scope.showMap = false;
-
+    .controller('GeoLocationController', function($scope, uiGmapGoogleMapApi) {
         $scope.distances = [
-            {'name': '100m', 'meters':100, "zoom":17},
             {'name': '250m', 'meters':250, "zoom":16},
             {'name': '500m', 'meters': 500, "zoom":15},
             {'name': '750m', 'meters': 750, "zoom":15},
@@ -119,22 +73,23 @@ angular.module('floopApp')
             {'name': '20km', 'meters': 20000, "zoom":10},
             {'name': '50km', 'meters': 50000, "zoom":9},
             {'name': '100km', 'meters': 100000, "zoom":8},
-            {'name': '250km', 'meters': 250000, "zoom":6}
+            {'name': '250km', 'meters': 250000, "zoom":6},
+            {'name': '500km', 'meters': 500000, "zoom":5},
+            {'name': '1000km', 'meters': 1000000, "zoom":4}
         ];
 
-
-        $scope.geo = { 
+        $scope.model.geo = { 
             center: { 
                 latitude: 53.3497, 
                 longitude: -6.2603 
             }, 
-            zoom: 17,
-            distance: 100 
+            zoom: 16,
+            distance: 250 
         };
        
         $scope.c = {
-            center: $scope.geo.center,
-            radius: $scope.geo.distance,
+            center: $scope.model.geo.center,
+            radius: $scope.model.geo.distance,
             stroke: {
                 color: '#708090',
                 weight: 1,
@@ -152,20 +107,24 @@ angular.module('floopApp')
             control: {}
         };
 
+        var cmaps;
+        uiGmapGoogleMapApi.then(function(maps) {
+            
+            cmaps = maps;
+        });
+
 
         $scope.changeDistance = function() {
-            $scope.geo.distance = parseInt($scope.geo.distance)
-            $scope.geo.zoom = _.result(_.findWhere($scope.distances, { 'meters': $scope.geo.distance}), 'zoom');
-            $scope.c.radius = $scope.geo.distance;
+            $scope.model.geo.distance = parseInt($scope.model.geo.distance)
+            $scope.model.geo.zoom = _.result(_.findWhere($scope.distances, { 'meters': $scope.model.geo.distance}), 'zoom');
+            $scope.c.radius = $scope.model.geo.distance;
            
         };
 
         $scope.showPosition = function (position) {               
-            $scope.geo.center.latitude = position.coords.latitude;
-            $scope.geo.center.longitude = position.coords.longitude;
-            $scope.geo.accuracy = position.coords.accuracy;            
-            $scope.showMap = true;
-                       
+            $scope.model.geo.center.latitude = position.coords.latitude;
+            $scope.model.geo.center.longitude = position.coords.longitude;
+            $scope.model.geo.accuracy = position.coords.accuracy;                    
         };
  
         $scope.showError = function (error) {
@@ -199,6 +158,33 @@ angular.module('floopApp')
 
         $scope.getLocation();
         
+
+    })
+    .controller('SocializeInputController', function ($scope) {
+        $scope.count = 0;
+        
+        $scope.$watch('model.message', function() {
+            $scope.count = $scope.model.message.length;
+        });
+        $scope.characterCount = function(event) {                  
+            if($scope.count >= 120) {                
+                // allow delete and backspace
+                if((event.keyCode !== 8) && (event.keyCode !== 46)) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                }
+            }            
+        };
+
+    }) 
+    .controller('DateTimeInputController', function ($scope) {
+       $scope.dateDialogOpened = false;
+        $scope.openDateDialog = function(event) { 
+            event.preventDefault();
+            event.stopPropagation();
+                        
+            $scope.dateDialogOpened = true;
+        };
 
     });
 

@@ -1,27 +1,3 @@
 <div ng-cloak>
-    <div class="row">
-        <div class="col-md-3">
-           <h3 translate="rate.title">Rate</h5>
-           <ol>            
-	            <li ng-repeat="rate in ratings.content track by rate.ordinal">
-	  				<a ui-sref="rate.show({id: rate.id})"><p>{{rate.description}}</p></a>
-				</li>
-			</ol>
-			<h3 translate="petition.title">Petition</h5>
-           	<table>            
-	            <tr ng-repeat="petition in petition.content track by petition.id">
-	  				<td><a href="petition/{{petition.id}}">{{petition.description}}</a></td>
-				</tr>
-			</table>
-			<h3 translate="vote.title">Vote</h5>
-           <table>            
-	            <tr ng-repeat="vote in votes.content track by vote.id">
-	  				<td><a href="vote/{{vote.id}}">{{vote.description}}</a></td>
-				</tr>
-			</table>    
-        </div>
-        <div class="col-md-9">
-        	<div id="form-views" ui-view="content"></div>
-        </div>
-    </div>
+    
 </div>

@@ -5,10 +5,6 @@ package io.floop.web.rest;
 
 import io.floop.core.rate.model.Rate;
 import io.floop.core.rate.service.RateService;
-import io.floop.security.SecurityUtils;
-import io.floop.social.service.TwitterService;
-import io.floop.web.rest.dto.UserDTO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.social.twitter.api.TwitterProfile;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

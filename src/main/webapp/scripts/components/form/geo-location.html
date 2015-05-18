@@ -1,5 +1,6 @@
 <div class="form-group">
-	<div class="row">
+	<switch-input ng-model="model.option.location.selected"></switch-input>
+	<div class="row" ng-show="model.option.location.selected">
 		<div class="col-md-6">	
 			<table>
 				<tbody>
@@ -28,7 +29,7 @@
 			</select>
 		</div>
 	</div>
-	<div  ng-if="showMap" class="voffset3">
+	<div ng-if="showMap" class="voffset3">
 		<ui-gmap-google-map center='geo.center' zoom='geo.zoom'>
 			<ui-gmap-circle center="c.center" stroke="c.stroke" fill="c.fill" radius="c.radius"
 	            visible="c.visible" geodesic="c.geodesic" editable="c.editable" draggable="c.draggable" clickable="c.clickable" control="c.control">

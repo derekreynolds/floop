@@ -1,0 +1,9 @@
+<div>
+	<h3 translate="rate.title">Rate</h5>
+	<a class="btn btn-primary pull-right" ui-sref="rate.create" role="button" translate="rate.title">Create</a>
+	<ol>            
+	    <li ng-repeat="rate in ratings.content track by rate.id">
+	        <a ui-sref="rate.show({id: rate.id})"><p>{{rate.description}}</p></a>
+	    </li>
+	</ol>
+</div>

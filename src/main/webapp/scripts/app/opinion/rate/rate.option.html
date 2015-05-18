@@ -2,10 +2,11 @@
     <form-group ng-submit="create()">
         <binary-option-input entity-name="rate" name="option.anonymous" model="rate.option.anonymous"></binary-option-input>
         <binary-option-input entity-name="rate" name="option.resultViewable" model="rate.option.resultViewable"></binary-option-input>
-        <switch-input entity-name="rate" name="option.private" model="rate.option.private"></switch-input>
-        <switch-input entity-name="rate" name="option.restrictedLocation" model="rate.option.restrictedLocation"></switch-input>
-        <geo-location-input entity-name="rate" name="geolocation" ng-show="rate.option.restrictedLocation"></geo-location-input>
-        <div class="form-group pull-right">                               
+        <switch-input entity-name="rate" name="option.private" model="rate.option.private"></switch-input>        
+        <geo-location-input model="rate.option.location"></geo-location-input>        
+        <socialize-input entity-name="rate" name="option.socialize" model="rate.option.socialize" ></socialize-input> 
+        <div class="form-group pull-right"> 
+        	<a ui-sref="^.detail"ng-disabled="form.$invalid" class="btn btn-default" translate="global.form.previous"></a>                                
             <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.create"></button>                                 
         </div>                
     </form-group>    

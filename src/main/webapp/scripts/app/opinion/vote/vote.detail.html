@@ -1,9 +1,9 @@
 <form-view entity-name="vote">
-    <form-group ng-submit="next()">           
-            <text-input entity-name="vote" name="title" ng-minlength=2 ng-maxlength=250 ng-required="true"></text-input>
-            <text-area-input entity-name="vote" name="description" rows="5" ng-required="true" ng-minlength="2" ng-maxlength="2500"></text-area-input>
-            <start-end-date-time-input entity-name="vote" min-date="{{minDate}}"></start-end-date-time-input>
-            <add-option-input entity-name="vote" name="item" ng-required="true"></add-option-input>            
+    <form-group>           
+            <text-input model="vote.title" ng-minlength=2 ng-maxlength=250 ng-required="true"></text-input>
+            <text-area-input model="vote.description" rows="5" ng-required="true" ng-minlength="2" ng-maxlength="2500"></text-area-input>
+            <start-end-date-time-input model="vote.timeBox" min-date="{{minDate}}"></start-end-date-time-input>
+            <add-option-input model="vote.items"></add-option-input>            
             <div class="form-group pull-right"> 
                 <a ui-sref="^.option"ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.next"></a>
             </div>                

@@ -49,9 +49,13 @@ angular.module('floopApp')
         return {
             restrict: 'E',
             replace: true,
-            require: '^form', 
+            require: '^form',
+            scope: {
+                model: '='
+            }, 
             templateUrl: '/scripts/components/form/form-group.html',
-            compile: function(element, attr) {
+            compile: function(element, attr) {                
+                formService.extractAttributesFromModel(attr);
                 element.append(formService.createLabel(attr));
                 element.append(formService.createTextInput(attr));
                 element.append(formService.createError(attr));
@@ -71,9 +75,15 @@ angular.module('floopApp')
             restrict: 'E',
             replace: true,
             require: '^form', 
+            scope: {
+                model: '='
+            },
             templateUrl: '/scripts/components/form/form-group.html',
-            compile: function(element, attr) {
-                element.append(formService.createLabel(attr));
+            compile: function(element, attr) {  
+                formService.extractAttributesFromModel(attr);              
+                if(_.isUndefined(attr.hideLabel)) {
+                    element.append(formService.createLabel(attr));
+                }
                 element.append(formService.createTextAreaInput(attr));
                 element.append(formService.createError(attr));
                 return {
@@ -91,9 +101,13 @@ angular.module('floopApp')
         return {
             restrict: 'E',
             replace: true,
-            require: '^form', 
+            require: '^form',
+            scope: {
+                model: '='
+            }, 
             templateUrl: '/scripts/components/form/form-group.html',
             compile: function(element, attr) {
+                formService.extractAttributesFromModel(attr);
                 element.append(formService.createLabel(attr));
                 element.append(formService.createNumberInput(attr));
                 element.append(formService.createError(attr));
@@ -108,20 +122,48 @@ angular.module('floopApp')
             }
         };
     })
-    .directive('addOptionInput', function(formService) {
+    .directive('addOptionInput', function($compile, formService) {
         return {
             restrict: 'E',
             replace: true,
-            require: '^form',
-            controller: 'AddOptionInputController', 
-            templateUrl: '/scripts/components/form/form-group.html',
+            scope: {
+                model: '='
+            }, 
+            templateUrl: '/scripts/components/form/add-option-input.html',
             compile: function(element, attr) {
-                element.append(formService.createLabel(attr));
-                element.append(formService.createAddOptionInput(attr));
-                element.append(formService.createError(attr));
+                formService.extractAttributesFromModel(attr);
+                //if(_.isUndefined(attr.hideLabel)) {
+                //    element.append(formService.createLabel(attr));
+                //}
+                //element.append(formService.createAddOptionInput(attr));
+                //element.append(formService.createError(attr));
                 return {
-                  pre: function(scope, iElem, iAttrs){
-                    
+                  pre: function($scope, iElem, iAttrs){
+                    $scope.label  = iAttrs.entityName + '.form.' + iAttrs.name + '.label';
+                    var itemCount = 1;
+                    var itemIndex = 1; 
+                    $scope.addItem = function ($event) {
+                   
+                        var target = angular.element($event.target);
+                        var $grandParent = target.closest('span.input-group');
+                        var $input = $grandParent.find('input');
+                       
+                        itemCount++;               
+                        if(itemCount <= 20) { 
+                            var value = $input.val();
+                            $scope.model.push({ordinal: itemIndex, item: value});             
+                            
+                            $input.val('');
+                            $scope.buttonEnabled = false;
+                        } else {
+                            $scope.$emit('event:user.info', {text:'A maximum of 20 items can be added.'});
+                        }
+
+                    };
+
+                    $scope.enableAddButton = function($event) {          
+                        $scope.buttonEnabled = true;            
+                    };
                   },
                   post: function(scope, iElem, iAttrs){
                    
@@ -135,40 +177,18 @@ angular.module('floopApp')
             restrict: 'E',
             replace: true,
             require: '^form',
-            controller: 'AddOptionInputController',
-            templateUrl: '/scripts/components/form/form-group.html',
+            scope: {
+                name: '@',
+                value: '@',
+                index: '@',
+                model: '='
+            }, 
+            templateUrl: '/scripts/components/form/add-option.html',
             compile: function(element, attr) {
-                //element.append(formService.createLabel(attr));
-                element.append(formService.createAddOptionInput(attr));
-                element.append(formService.createError(attr));
                 return {
-                  pre: function(scope, iElem, iAttrs){
-                    
-                  },
-                  post: function(scope, iElem, iAttrs){
-                   
-                  }
-                }
-            }
-        };
-    })
-    .directive('dateTimeInput', function(formService) {
-        return {
-            restrict: 'E',
-            replace: true,
-            require: '^form',          
-            compile: function(element, attr) {
-                //element.append(formService.createLabel(attr));
-                element.append(formService.createDateTimeInput(attr));
-                //element.append(formService.createError(attr));
-                return {
-                  pre: function(scope, iElem, iAttrs){
-                    var dateDialogFunctionName = 'open' + iAttrs.name + 'Dialog';
-                    scope[dateDialogFunctionName] = function($event) {
-                        $event.preventDefault();
-                        $event.stopPropagation();
-
-                        scope[iAttrs.name + 'Opened'] = true;
+                  pre: function($scope, iElem, iAttrs){                    
+                    $scope.removeItem = function () {
+                        _.pullAt($scope.model, $scope.index);
                     };
                   },
                   post: function(scope, iElem, iAttrs){
@@ -178,12 +198,137 @@ angular.module('floopApp')
             }
         };
     })
+    .directive('startEndDateTimeInput', function(formService, DateTimeService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: '^form',  
+            compile: function(element, attr) {                
+                formService.extractAttributesFromModel(attr);                
+                element.append(formService.createStartEndDateTimeInput(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs) {
+                    var timeBox = scope[iAttrs.entityName][iAttrs.name]; 
+                    scope.startDateDialogOpened = false;
+
+                    scope.openStartDateDialog = function(event) { 
+                        event.preventDefault();
+                        event.stopPropagation();
+                                    
+                        scope.startDateDialogOpened = true;
+                    }; 
+
+                    scope.endDateDialogOpened = false;
+
+                    scope.openEndDateDialog = function(event) { 
+                        event.preventDefault();
+                        event.stopPropagation();
+                                    
+                        scope.endDateDialogOpened = true;
+                    };
+
+                    scope.startDateChange = function() {                               
+                           
+                        var startDate = moment(timeBox.startDate);
+                        var startTime = moment(timeBox.startTime);
+                        var endDate = moment(timeBox.endDate);
+                        var endTime = moment(timeBox.endTime);
+
+                        if(startDate.isAfter(endDate)) {
+                            timeBox.endDate = DateTimeService.formatDate(timeBox.startDate);
+                            timeBox.endTime = startTime.add(1, 'h').toDate();                
+                        } else if(startDate.isSame(endDate) && (startTime.isAfter(endTime) 
+                            || startTime.isSame(endTime))) {
+                            timeBox.endTime = startTime.add(1, 'h').toDate();
+                        }         
+                    };
+
+                    scope.endDateChange = function() {
+            
+                        var startDate = moment(timeBox.startDate);
+                        var startTime = moment(timeBox.startTime);
+                        var endDate = moment(timeBox.endDate);
+                        var endTime = moment(timeBox.endTime);
+
+                        if(endDate.isBefore(startDate)) {
+                            timeBox.endDate = DateTimeService.formatDate(timeBox.startDate);
+                            timeBox.endTime = startTime.add(1, 'h').toDate(); 
+                        } else if(endDate.isSame(startDate) && (endTime.isAfter(startTime) 
+                            || endTime.isSame(startTime))) {                
+                            timeBox.endTime = startTime.add(1, 'h').toDate();
+                        }   
+                    };
+
+                    scope.startTimeChange = function() {
+                        
+                        var startDate = moment(timeBox.startDate);
+                        var startTime = moment(timeBox.startTime);
+                        var endDate = moment(timeBox.endDate);
+                        var endTime = moment(timeBox.endTime);
+                
+                        if(endDate.isSame(startDate) && (DateTimeService.isMomentTimeAfter(startTime, endTime))
+                            || (DateTimeService.isMomentTimeSame(startTime, endTime))) {
+                            timeBox.endTime = startTime.add(1, 'h').toDate();
+                        }
+                    };
+
+                    scope.endTimeChange = function() {
+                        
+                        var startDate = moment(timeBox.startDate);
+                        var startTime = moment(timeBox.startTime);
+                        var endDate = moment(timeBox.endDate);
+                        var endTime = moment(timeBox.endTime);
+
+                        if(endDate.isSame(startDate) && (DateTimeService.isMomentTimeAfter(startTime, endTime))
+                            || (DateTimeService.isMomentTimeSame(startTime, endTime))) {
+                            timeBox.endTime = startTime.add(1, 'h').toDate();
+                        }
+                    };   
+                  },
+                  post: function(scope, iElem, iAttrs) {
+                    
+                  }
+                }
+            }
+        };
+    })
+    .directive('dateTimeInput', function(formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {
+                dateModel: '=',
+                timeModel: '=',
+                dateChange: '&',
+                timeChange: '&'
+            },         
+            compile: function(element, attr) {
+                formService.extractAttributesFromModel(attr);                
+                element.append(formService.createDateTimeInput(attr));               
+                return {
+                  pre: function(scope, iElem, iAttrs){ 
+                    scope.dateDialogOpened = false;
+                    scope.openDateDialog = function(event) { 
+                        event.preventDefault();
+                        event.stopPropagation();
+                                    
+                        scope.dateDialogOpened = true;
+                    };                    
+                  },
+                  post: function(scope, iElem, iAttrs){                   
+                  }
+                }
+            }
+        };
+    })
     .directive('dateInput', function(formService) {
         return {
             restrict: 'E',
             replace: true,
-            require: '^form',          
+            require: '^form',
+            controller: 'DateInputController',            
             compile: function(element, attr) {
+                formService.extractAttributesFromModel(attr);
                 element.append(formService.createLabel(attr));
                 element.append(formService.createDateInput(attr));
                 //element.append(formService.createError(attr));
@@ -232,80 +377,23 @@ angular.module('floopApp')
 
         };
     })
-    .directive('startEndDateTimeInput', function(formService, DateTimeService) {
-        return {
-            restrict: 'E',
+    .directive('infoDisplay',function(formService) {
+        return {            
             replace: true,
-            require: '^form',         
-            compile: function(element, attr) {
-                //element.append(formService.createLabel(attr));
-                element.append(formService.createStartEndDateTimeInput(attr));
-                //element.append(formService.createError(attr));
+            restrict: 'E',
+            //templateUrl: '/views/partials/display-control.html',
+            compile: function(element, attr) {                          
+                element.append(formService.createInfoDisplay(attr));
                 return {
                   pre: function(scope, iElem, iAttrs){
-
-                    scope.startDateChange = function() { 
-                        
-                        var startDate = moment(scope[iAttrs.entityName].startDate);
-                        var startDateTime = moment(scope[iAttrs.entityName].startDateTime);
-                        var endDate = moment(scope[iAttrs.entityName].endDate);
-                        var endDateTime = moment(scope[iAttrs.entityName].endDateTime);
-
-                        if(startDate.isAfter(endDate)) {
-                            scope[iAttrs.entityName].endDate = DateTimeService.formatDate(scope[iAttrs.entityName].startDate);
-                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();                
-                        } else if(startDate.isSame(endDate) && (startDateTime.isAfter(endDateTime) 
-                            || startDateTime.isSame(endDateTime))) {
-                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();
-                        }         
-                    };
-
-                    scope.endDateChange = function() {
-
-                        var startDate = moment(scope[iAttrs.entityName].startDate);
-                        var startDateTime = moment(scope[iAttrs.entityName].startDateTime);
-                        var endDate = moment(scope[iAttrs.entityName].endDate);
-                        var endDateTime = moment(scope[iAttrs.entityName].endDateTime);
-
-                        if(endDate.isBefore(startDate)) {
-                            scope[iAttrs.entityName].endDate = DateTimeService.formatDate(scope[iAttrs.entityName].startDate);
-                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate(); 
-                        } else if(endDate.isSame(startDate) && (endDateTime.isAfter(startDateTime) 
-                            || endDateTime.isSame(startDateTime))) {                
-                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();
-                        }   
-                    };
-
-                    scope.startDateTimeChange = function() {
-                        var startDate = moment(scope[iAttrs.entityName].startDate);
-                        var startDateTime = moment(scope[iAttrs.entityName].startDateTime);
-                        var endDate = moment(scope[iAttrs.entityName].endDate);
-                        var endDateTime = moment(scope[iAttrs.entityName].endDateTime);
-                
-                        if(endDate.isSame(startDate) && (DateTimeService.isMomentTimeAfter(startDateTime, endDateTime))
-                            || (DateTimeService.isMomentTimeSame(startDateTime, endDateTime))) {
-                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();
-                        }
-                    };
-
-                    scope.endDateTimeChange = function() {
-                        var startDate = moment(scope[iAttrs.entityName].startDate);
-                        var startDateTime = moment(scope[iAttrs.entityName].startDateTime);
-                        var endDate = moment(scope[iAttrs.entityName].endDate);
-                        var endDateTime = moment(scope[iAttrs.entityName].endDateTime);
-
-                        if(endDate.isSame(startDate) && (DateTimeService.isMomentTimeAfter(startDateTime, endDateTime))
-                            || (DateTimeService.isMomentTimeSame(startDateTime, endDateTime))) {
-                            scope[iAttrs.entityName].endDateTime = startDateTime.add(1, 'h').toDate();
-                        }
-                    };
-
+                    
                   },
                   post: function(scope, iElem, iAttrs){
                    
                   }
-                }
-            }
+                }               
+            }          
+
         };
     })
     .directive('rateInput', function($compile, formService) {
@@ -322,11 +410,10 @@ angular.module('floopApp')
             compile: function(element, attr) {                               
                 return {
                   pre: function(scope, iElem, iAttrs){
-                    //iElem.append(formService.createRateInput(iAttrs)); 
+                   
                   },
                   post: function(scope, iElem, iAttrs){
-                   //iElem.append(formService.createRateInput(iAttrs));
-                   //$compile(iElem.contents())(scope);
+                  
                   }
                 }        
             }
@@ -342,6 +429,7 @@ angular.module('floopApp')
             },
             templateUrl: '/scripts/components/form/form-group.html',
             compile: function(element, attr) {
+                formService.extractAttributesFromModel(attr);
                 element.append(formService.createLabel(attr));
                 element.append(formService.createSwitchInput(attr));
                 return {
@@ -398,11 +486,71 @@ angular.module('floopApp')
             restrict: 'E',
             replace: true,
             require: ['^form'],
-            templateUrl: '/scripts/components/form/geo-location.html',
+            scope: {
+                model: '='
+            },
+            templateUrl: '/scripts/components/form/form-group.html',
             controller: 'GeoLocationController',
-            link: function(scope, element, attrs, ctrls) {
-                //element.append(formService.createGeoLocationInput(attrs));
-                //$compile(element.contents())(scope);
+            compile: function(element, attr) { 
+                formService.extractAttributesFromModel(attr);
+                element.append(formService.createGeoLocationInput(attr)); 
+                return {
+                  pre: function(scope, iElem, iAttrs){
+                   
+                  },
+                  post: function(scope, iElem, iAttrs){
+                  
+                  }
+                }    
+            }
+    
+        };
+    })
+    .directive('participantVisibilityMessage', function(formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            scope: {
+                model: '@'
+            },
+            templateUrl: '/scripts/components/form/form-group.html',
+            compile: function(element, attr) {                 
+                element.append(formService.createInfoDisplay(attr)); 
+                return {
+                  pre: function(scope, iElem, iAttrs){                    
+                    
+                  },
+                  post: function(scope, iElem, iAttrs){
+                  
+                  }
+                }    
+            }
+    
+        };
+    })
+    .directive('socializeInput', function($compile, formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: ['^form'],
+            scope: {
+                model: '='
+            },
+            controller: 'SocializeInputController',
+            templateUrl: '/scripts/components/form/form-group.html',
+            compile: function(element, attr) {
+                formService.extractAttributesFromModel(attr);
+                element.append(formService.createLabel(attr));
+                element.append(formService.createSocializeInput(attr));
+                return {
+                  pre: function(scope, iElem, iAttrs){                    
+
+                  },
+                  post: function(scope, iElem, iAttrs){
+                  
+                  }
+                }                   
+                
             }
     
         };

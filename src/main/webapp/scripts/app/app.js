@@ -2,7 +2,7 @@
 
 angular.module('floopApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'ngAnimate', 'ui.select',
     'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster','ui.bootstrap', 
-    'restangular', 'underscore.string', 'uiGmapgoogle-maps'])
+    'restangular', 'underscore.string', 'uiGmapgoogle-maps', 'ui.utils', 'wu.masonry'])
 
     .run(function ($rootScope, $location, $http, $state, $translate, Auth, Principal, Language, Restangular, ToasterService, ENV, VERSION) {
         $rootScope.ENV = ENV;

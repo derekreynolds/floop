@@ -3,29 +3,47 @@
 angular.module('floopApp')
     .controller('CreateRateController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, RateService) {
         
-        if(!angular.isDefined($scope.rate)) {
+        if(_.isUndefined($scope.rate)) {
             $scope.rate = {
                 'option' : {
-                    'private': true, 
-                    'anonymous': true, 
-                    "resultViewable": true,
-                    'location': false
-                }
+                    'private':false,
+                    'anonymous': false,
+                    'resultViewable':true,
+                    'location': {
+                        'selected': false,
+                        'geo': {
+                            'center' : {
+                                'latitude': 0,
+                                'longitude': 0
+                            },
+                            'accuracy': 0,
+                            'zoom': 0,
+                            'distance': 0 
+                        }
+                    },
+                    'socialize': {
+                        'selected': true,
+                        'message': ''
+                    }
+                }, 
+                'timeBox' : {
+                    
+                },
+                'items': []
             };
+            $scope.format = 'YYYY-MM-DD';  
+            $scope.now = moment();
+            $scope.minDate = $scope.now.format($scope.format);
+            $scope.rate.timeBox.startDate = $scope.now.format($scope.format);
+
+            $scope.rate.timeBox.endDate = $scope.now.add(1,'d').format($scope.format);
+
+            $scope.rate.timeBox.startTime = new Date();
+            $scope.rate.timeBox.endTime = new Date(); 
+
             $state.go('.detail');
-        }
-
-        $scope.format = 'YYYY-MM-DD';        
-        
-        $scope.now = moment();
-
-        $scope.minDate = $scope.now.format($scope.format);
-        $scope.rate.startDate = $scope.now.format($scope.format);
-
-        $scope.rate.endDate = $scope.now.add(1,'d').format($scope.format);
-
-        $scope.rate.startDateTime = new Date();
-        $scope.rate.endDateTime = new Date();             
+        }        
+                   
 
         $timeout(function (){angular.element('[ng-model="rate.title"]').focus();});
 
@@ -34,34 +52,17 @@ angular.module('floopApp')
         $scope.mstep = 10;
 
         $scope.create = function() {
-
-            var items = [];
+debugger
             var rate = _.clone($scope.rate);
-
-            delete rate['startDateTime'];
-            delete rate['endDateTime'];
-
-            rate.startDate = DateTimeService.toDateTimeUTC($scope.rate.startDate, 
-                                    DateTimeService.formatTime($scope.rate.startDateTime));
-            rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.endDate, 
-                                    DateTimeService.formatTime($scope.rate.endDateTime));
-            var counter = 0;
-            // Moves the items into an array
-            _.forEach(rate, function(value, key) {
-                if(_.startsWith(key, 'item')) {
-                    if(value) {                  
-                        items.push({'ordinal': counter, 'name': value});
-                        counter++;  
-                    }                 
-                    delete rate[key];
-                }                
-            });
-
-            rate['items'] = items;   
+            delete rate['timeBox'];
+            rate.startDate = DateTimeService.toDateTimeUTC($scope.rate.timeBox.startDate, 
+                                    DateTimeService.formatTime($scope.rate.timeBox.startTime));
+            rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.timeBox.endDate, 
+                                    DateTimeService.formatTime($scope.rate.timeBox.endTime));
 
             RateService.post(rate).then(
                 function (value, responseHeaders) {
-                    $scope.success = 'OK';
+                    $state.go('home');
                 },
                 function (httpResponse) {                                               
                     $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
@@ -70,7 +71,7 @@ angular.module('floopApp')
 
         };
     })
-    .controller('ShowRateController', function ($state, $scope, RateService, rate) {
+    .controller('ShowRateController', function ($scope, RateService, rate) {
           
         $scope.rate = rate;
         _.forEach($scope.rate.items, function(item, index) {
@@ -89,4 +90,7 @@ angular.module('floopApp')
                 }
             );
         }
+    })
+    .controller('ListRateController', function ($scope, ratings) {          
+        $scope.ratings = ratings;       
     });
