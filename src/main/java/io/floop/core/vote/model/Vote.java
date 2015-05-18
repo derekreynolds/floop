@@ -52,6 +52,20 @@ public class Vote extends AbstractAuditingEntity implements Serializable {
 	}
 
 	/**
+	 * @return the option
+	 */
+	public Option getOption() {
+		return option;
+	}
+
+	/**
+	 * @param option the option to set
+	 */
+	public void setOption(Option option) {
+		this.option = option;
+	}
+
+	/**
 	 * @param id the id to set
 	 */
 	public void setId(String id) {
