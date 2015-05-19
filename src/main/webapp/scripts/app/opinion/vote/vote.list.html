@@ -1,6 +1,6 @@
 <div>
 	<h3 translate="vote.title">Vote</h5>
-	<a class="btn btn-primary pull-right" ui-sref="vote.create" role="button" translate="vote.title">Create</a>
+	<a class="btn btn-primary pull-right" ui-sref="vote.create" role="button" translate="global.form.create">Create</a>
 	<ol>            
 	    <li ng-repeat="vote in votings.content track by vote.id">
 	        <a ui-sref="vote.show({id: vote.id})"><p>{{vote.description}}</p></a>

@@ -140,18 +140,16 @@ angular.module('floopApp')
                 return {
                   pre: function($scope, iElem, iAttrs){
                     $scope.label  = iAttrs.entityName + '.form.' + iAttrs.name + '.label';
-                    var itemCount = 1;
-                    var itemIndex = 1; 
+
                     $scope.addItem = function ($event) {
                    
                         var target = angular.element($event.target);
                         var $grandParent = target.closest('span.input-group');
                         var $input = $grandParent.find('input');
-                       
-                        itemCount++;               
-                        if(itemCount <= 20) { 
+                                      
+                        if($scope.model.length <= 20) { 
                             var value = $input.val();
-                            $scope.model.push({ordinal: itemIndex, item: value});             
+                            $scope.model.push({ordinal: $scope.model.length, item: value});             
                             
                             $input.val('');
                             $scope.buttonEnabled = false;
@@ -411,6 +409,40 @@ angular.module('floopApp')
                 return {
                   pre: function(scope, iElem, iAttrs){
                    
+                  },
+                  post: function(scope, iElem, iAttrs){
+                  
+                  }
+                }        
+            }
+        };
+    })
+    .directive('voteInput', function($compile, formService) {
+        return {
+            restrict: 'E',
+            replace: true,
+            require: ['^form'],
+            scope: {
+                model: '=',
+                index: '@'
+            },
+            templateUrl: '/scripts/components/form/voting.html',
+            compile: function(element, attr) {                             
+                return {
+                  pre: function($scope, iElem, iAttrs){
+
+                    $scope.voteRecord = function(event, index) {
+                        var $parent = getParent(event);                        
+                        var $icon = $parent.find('#' + index);
+
+                        $icon.removeClass('fa-square-o').addClass('fa-check-square-o');           
+                        $scope.model[$scope.index].score = index;                                   
+                    };
+
+                    function getParent(event) {
+                        return angular.element(event.target).parent(); 
+                    };
+
                   },
                   post: function(scope, iElem, iAttrs){
                   

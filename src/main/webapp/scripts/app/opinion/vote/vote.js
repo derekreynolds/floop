@@ -66,7 +66,7 @@ angular.module('floopApp')
             .state('vote.show', {
                 url: "/show/:id",
                 resolve: {
-                    vote: function ($stateParams, RateService) {
+                    vote: function ($stateParams, VoteService) {
                         return VoteService.one($stateParams.id).get();
                     }
                 },

@@ -74,10 +74,7 @@ angular.module('floopApp')
     .controller('ShowVoteController', function ($state, $scope, VoteService, vote) {
           
         $scope.vote = vote;
-        _.forEach($scope.vote.items, function(item, index) {
-            $scope.vote.items[index] = angular.fromJson(item); 
-            $scope.vote.items[index].score = 0;                  
-        });
+
 
         $scope.save = function() {            
             VoteService.put().then(

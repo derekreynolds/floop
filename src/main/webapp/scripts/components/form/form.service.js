@@ -31,8 +31,7 @@ angular.module('floopApp')
          * @param  {Object} attributes - The attributes of the input control.
          * @return {String} A Html text input
          */
-        factory.createHiddenInput = function(attributes) {   
-                 
+        factory.createHiddenInput = function(attributes) {                 
             var input =  '<input type="text" class="form-control" ng-model="';
                 input +=  this.getModelKey(attributes) + '" name="' + attributes.name + '"';
                 input += ' style="display: none;"/>';
@@ -462,7 +461,7 @@ angular.module('floopApp')
          * @return {String} A Html text display
          */
         factory.createInfoDisplay = function(attributes) { 
-            debugger
+            
             var translationKey = 'global.anonymous.' + (attributes.model ? 'true' : 'false');
             var textDisplay = '<p class="col-xs-12"><div class="alert" ng-class="$model ? \'alert-info\' : \'alert-warning\'" role="alert">' 
             textDisplay += this.getTranslation(translationKey) + '</div></p>';       

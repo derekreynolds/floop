@@ -1,7 +1,7 @@
-<div>
-	<strong>{{model[index].item}}</strong>
-	<div class="vote voffset1" ng-dblclick="voteClear($event)">
-	    <i ng-click="voteRecord($event,i)" ng-mouseleave="voteLeave($event)"
-	        ng-mouseenter="voteEnter($event,i)" class="fa fa-check-square-o fa-2x fa-fw"></i>                
+<div class="row">
+	<div class="col-md-3">Image</div>
+	<div class="col-md-8"><strong>{{model[index].item}}</strong></div>
+	<div class="col-md-1">
+	    <i id="{{index}}" ng-click="voteRecord($event, index)" class="fa fa-square-o fa-2x fa-fw"></i>                
 	</div>
 <div>
