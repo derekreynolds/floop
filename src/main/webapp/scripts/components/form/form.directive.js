@@ -432,11 +432,10 @@ angular.module('floopApp')
                   pre: function($scope, iElem, iAttrs){
 
                     $scope.voteRecord = function(event, index) {
-                        var $parent = getParent(event);                        
-                        var $icon = $parent.find('#' + index);
-
-                        $icon.removeClass('fa-square-o').addClass('fa-check-square-o');           
-                        $scope.model[$scope.index].score = index;                                   
+                       _.forEach($scope.model, function(object, n) {                        
+                          object.selected = false;
+                        });        
+                        $scope.model[$scope.index].selected = true;                                   
                     };
 
                     function getParent(event) {

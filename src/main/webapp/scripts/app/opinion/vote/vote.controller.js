@@ -88,5 +88,7 @@ angular.module('floopApp')
         }
     })
     .controller('ListVoteController', function ($scope, votings) {          
-        $scope.votings = votings;       
+        $scope.votings = _.map(votings, function(element) { 
+            return _.extend({}, element, {selected: false});
+        });      
     });
