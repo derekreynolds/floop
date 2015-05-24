@@ -3,7 +3,7 @@
  */
 package io.floop.core.gauge.service;
 
-import io.floop.core.gauge.model.Gauge;
+import io.floop.core.gauge.model.GaugeTemplate;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -14,12 +14,12 @@ import org.springframework.data.domain.Slice;
  */
 public interface GaugeService {
 
-	Slice<Gauge> getList(Pageable pageable);
+	Slice<GaugeTemplate> getList(Pageable pageable);
 	
-	Slice<Gauge> getTop5(Pageable pageable);
+	Slice<GaugeTemplate> getTop5(Pageable pageable);
 	
-	Gauge getById(String id);
+	GaugeTemplate getById(String id);
 	
-	void save(Gauge gauge);
+	void save(GaugeTemplate gauge);
 	
 }

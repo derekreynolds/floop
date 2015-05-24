@@ -3,7 +3,7 @@
  */
 package io.floop.core.rate.service;
 
-import io.floop.core.rate.model.Rate;
+import io.floop.core.rate.model.RateTemplate;
 import io.floop.core.rate.repository.RateRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class RateServiceImpl implements RateService {
 	 * @see io.floop.rate.service.RateService#getList(org.springframework.data.domain.Pageable)
 	 */
 	@Override
-	public Slice<Rate> getList(Pageable pageable) {
+	public Slice<RateTemplate> getList(Pageable pageable) {
 		
 		return rateRepository.findAll(pageable);
 	}	
@@ -38,7 +38,7 @@ public class RateServiceImpl implements RateService {
 	 * @see io.floop.rate.service.RateService#getTop5(org.springframework.data.domain.Pageable)
 	 */
 	@Override
-	public Slice<Rate> getTop5(Pageable pageable) {
+	public Slice<RateTemplate> getTop5(Pageable pageable) {
 		// TODO Auto-generated method stub
 		return rateRepository.findTop5ByOrderByEndDateDesc(pageable);
 	}
@@ -47,7 +47,7 @@ public class RateServiceImpl implements RateService {
 	 * @see io.floop.rate.service.RateService#getById(java.lang.String)
 	 */
 	@Override
-	public Rate getById(String id) {
+	public RateTemplate getById(String id) {
 		
 		return rateRepository.findOne(id);
 	}
@@ -56,7 +56,7 @@ public class RateServiceImpl implements RateService {
 	 * @see io.floop.rate.service.RateService#save(io.floop.rate.model.Rate)
 	 */
 	@Override
-	public void save(Rate rate) {
+	public void save(RateTemplate rate) {
 		rateRepository.save(rate);		
 	}
 

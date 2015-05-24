@@ -1,0 +1,14 @@
+<form-view entity-name="petition">
+    <form-group ng-submit="create()">
+        <binary-option-input entity-name="petition" name="option.anonymous" model="petition.option.anonymous"></binary-option-input>
+        <binary-option-input entity-name="petition" name="option.resultViewable" model="petition.option.resultViewable"></binary-option-input>
+        <switch-input entity-name="petition" name="option.private" model="petition.option.private"></switch-input>        
+        <geo-location-input model="petition.option.location"></geo-location-input>        
+        <socialize-input entity-name="petition" name="option.socialize" model="petition.option.socialize" ></socialize-input>  
+        <div class="form-group pull-right">  
+            <a ui-sref="^.detail"ng-disabled="form.$invalid" class="btn btn-default" translate="global.form.previous"></a>                             
+            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.create"></button>                                 
+        </div>                
+    </form-group>    
+</form-view>
+

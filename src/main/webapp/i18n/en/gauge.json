@@ -1,14 +1,14 @@
 {
-    "petition": {
-        "title": "Petition",
+    "gauge": {
+        "title": "Gauge",
         "form": {
             "title": {
                 "label": "Title",
-                "placeholder": "Title for petition"
+                "placeholder": "Title for gauge"
             },
             "description": {
                 "label": "Description",
-                "placeholder": "Description for petition"
+                "placeholder": "Description for gauge"
             },
             "timeBox": {
                 "startDate": {
@@ -24,16 +24,9 @@
             "step": {
                 "label": "Step"
             },
-            "buttonText": {
-                "label": "Button Text",
-                "placeholder": "Select the text for the petition button.",
-                "options": {
-                    "sign": "<i class=\"fa fa-pencil\"> Sign Up", 
-                    "count": "<i class=\"fa fa-plus\"> Count Me In",
-                    "like": "<i class=\"fa fa-thumbs-o-up\"> Like"
-                }
-
-                
+            "items": {
+                "label": "Item",
+                "placeholder": "Item you want rated"
             },
             "option":{
                 "anonymous": {
@@ -47,8 +40,8 @@
                     "info": "The result will be available to the participants while the rating is active. If the rating is not private then all the public will see the result."
                 },
                 "private": {
-                    "label": "Private Petition",
-                    "tooltip": "The petition will be private. You must invite raters from the friends.",
+                    "label": "Private Rating",
+                    "tooltip": "The rating will be private. You must invite raters from the friends.",
                     "info": "By making the rating private you can select from your friend list the people you want to rate."
                 },
                 "location": {                   
@@ -56,13 +49,13 @@
                     "tooltip": "Restrict where the rating is acccessible from."                    
                 },
                 "socialize": {
-                    "label": "Socialize Petition",
-                    "tooltip": "Publish this petition to your social network.",
+                    "label": "Socialize Rating",
+                    "tooltip": "Publish this rating to your social network.",
                     "count" : {
                         "label":"Number of characters {{count}}"
                     }
                 }
-            }         
+            }                     
         },
         "messages": {
             "validate": {
@@ -76,7 +69,7 @@
                     "minlength": "A description must be greate than 1 character.",
                     "maxlength": "A description must be less then 250 characters."
                 },
-                "items": {
+                "item": {
                     "required": "A item is required."
                 }
             },

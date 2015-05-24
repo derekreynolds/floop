@@ -2,8 +2,8 @@
 'use strict';
 
 angular.module('floopApp')    
-    .factory('RateService', ['Restangular',
+    .factory('RateTemplateService', ['Restangular',
     function (Restangular) {
-        return Restangular.service('api/rate');
+        return Restangular.service('api/rate/template');
     }]);
 

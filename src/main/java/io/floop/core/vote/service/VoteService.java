@@ -3,7 +3,7 @@
  */
 package io.floop.core.vote.service;
 
-import io.floop.core.vote.model.Vote;
+import io.floop.core.vote.model.VoteTemplate;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -14,12 +14,12 @@ import org.springframework.data.domain.Slice;
  */
 public interface VoteService {
 
-	Slice<Vote> getList(Pageable pageable);
+	Slice<VoteTemplate> getList(Pageable pageable);
 	
-	Slice<Vote> getTop5(Pageable pageable);
+	Slice<VoteTemplate> getTop5(Pageable pageable);
 	
-	Vote getById(String id);
+	VoteTemplate getById(String id);
 	
-	void save(Vote vote);
+	void save(VoteTemplate vote);
 	
 }

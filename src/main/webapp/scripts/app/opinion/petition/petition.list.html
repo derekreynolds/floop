@@ -1,0 +1,9 @@
+<div>
+	<h3 translate="petition.title">Petition</h5>
+	<a class="btn btn-primary pull-right" ui-sref="petition.create" role="button" translate="global.form.create">Create</a>
+	<ol>            
+	    <li ng-repeat="petition in petitions.content track by petition.id">
+	        <a ui-sref="petition.show({id: petition.id})"><p>{{petition.description}}</p></a>
+	    </li>
+	</ol>
+</div>

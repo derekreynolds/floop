@@ -1,0 +1,14 @@
+<form-view entity-name="gauge">
+    <form-group ng-submit="create()">
+        <binary-option-input entity-name="gauge" name="option.anonymous" model="gauge.option.anonymous"></binary-option-input>
+        <binary-option-input entity-name="gauge" name="option.resultViewable" model="gauge.option.resultViewable"></binary-option-input>
+        <switch-input entity-name="gauge" name="option.private" model="gauge.option.private"></switch-input>        
+        <geo-location-input model="gauge.option.location"></geo-location-input>        
+        <socialize-input entity-name="gauge" name="option.socialize" model="gauge.option.socialize" ></socialize-input>  
+        <div class="form-group pull-right">  
+            <a ui-sref="^.detail"ng-disabled="form.$invalid" class="btn btn-default" translate="global.form.previous"></a>                             
+            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.create"></button>                                 
+        </div>                
+    </form-group>    
+</form-view>
+

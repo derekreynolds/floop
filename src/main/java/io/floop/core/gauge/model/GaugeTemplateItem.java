@@ -5,7 +5,7 @@ package io.floop.core.gauge.model;
  * @author Derek Reynolds
  *
  */
-public class GaugeItem {
+public class GaugeTemplateItem {
 
 	private Integer ordinal;
 	

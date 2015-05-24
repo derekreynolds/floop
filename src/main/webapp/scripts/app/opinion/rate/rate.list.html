@@ -1,8 +1,13 @@
 <div>
 	<h3 translate="rate.title">Rate</h5>
+	<ul class="nav nav-pills">
+	  <li role="presentation" class="active"><a href="#">Trending</a></li>
+	  <li role="presentation"><a href="#">My Rate</a></li>
+	  <li role="presentation"><a href="#">Action</a></li>
+	</ul>
 	<a class="btn btn-primary pull-right" ui-sref="rate.create" role="button" translate="rate.title">Create</a>
 	<ol>            
-	    <li ng-repeat="rate in ratings.content track by rate.id">
+	    <li ng-repeat="rate in rates.content track by rate.id">
 	        <a ui-sref="rate.show({id: rate.id})"><p>{{rate.description}}</p></a>
 	    </li>
 	</ol>

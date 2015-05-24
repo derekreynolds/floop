@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('CreateRateController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, RateTemplateService) {
+    .controller('CreateGaugeController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, GaugeTemplateService) {
         
-        if(_.isUndefined($scope.rate)) {
-            $scope.rate = {
+        if(_.isUndefined($scope.gauge)) {
+            $scope.gauge = {
                 'option' : {
                     'private':false,
                     'anonymous': false,
@@ -34,33 +34,33 @@ angular.module('floopApp')
             $scope.format = 'YYYY-MM-DD';  
             $scope.now = moment();
             $scope.minDate = $scope.now.format($scope.format);
-            $scope.rate.timeBox.startDate = $scope.now.format($scope.format);
+            $scope.gauge.timeBox.startDate = $scope.now.format($scope.format);
 
-            $scope.rate.timeBox.endDate = $scope.now.add(1,'d').format($scope.format);
+            $scope.gauge.timeBox.endDate = $scope.now.add(1,'d').format($scope.format);
 
-            $scope.rate.timeBox.startTime = new Date();
-            $scope.rate.timeBox.endTime = new Date(); 
+            $scope.gauge.timeBox.startTime = new Date();
+            $scope.gauge.timeBox.endTime = new Date(); 
 
             $state.go('.detail');
-        }        
-                   
+        }       
 
-        $timeout(function (){angular.element('[ng-model="rate.title"]').focus();});
+   
+        $timeout(function (){angular.element('[ng-model="gauge.title"]').focus();});
 
         $scope.ismeridian = false; 
         $scope.hstep = 1;
         $scope.mstep = 10;
 
         $scope.create = function() {
-debugger
-            var rate = _.clone($scope.rate);
-            delete rate['timeBox'];
-            rate.startDate = DateTimeService.toDateTimeUTC($scope.rate.timeBox.startDate, 
-                                    DateTimeService.formatTime($scope.rate.timeBox.startTime));
-            rate.endDate = DateTimeService.toDateTimeUTC($scope.rate.timeBox.endDate, 
-                                    DateTimeService.formatTime($scope.rate.timeBox.endTime));
 
-            RateTemplateService.post(rate).then(
+            var gauge = _.clone($scope.gauge);
+            delete gauge['timeBox'];
+            gauge.startDate = DateTimeService.toDateTimeUTC($scope.gauge.timeBox.startDate, 
+                                    DateTimeService.formatTime($scope.gauge.timeBox.startTime));
+            gauge.endDate = DateTimeService.toDateTimeUTC($scope.gauge.timeBox.endDate, 
+                                    DateTimeService.formatTime($scope.gauge.timeBox.endTime));
+
+            GaugeTemplateService.post(gauge).then(
                 function (value, responseHeaders) {
                     $state.go('home');
                 },
@@ -71,19 +71,14 @@ debugger
 
         };
     })
-    .controller('ShowRateController', function ($scope, RateTemplateService, rate) {
+    .controller('ShowGaugeController', function ($state, $scope, GaugeTemplateService, gauge) {
           
-        $scope.rate = rate;
-        _.forEach($scope.rate.items, function(item, index) {
-            $scope.rate.items[index] = angular.fromJson(item); 
-            $scope.rate.items[index].score = 0;                  
-        });
+        $scope.gauge = gauge;
 
         $scope.save = function() {            
-            RateTemplateService.put().then(
+            GaugeTemplateService.put().then(
                 function (value, responseHeaders) {
-                    $scope.success = 'OK';
-                    $state.go('home');
+                    $state.go('gauge');
                 },
                 function (httpResponse) {                                               
                     $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
@@ -91,6 +86,7 @@ debugger
             );
         }
     })
-    .controller('ListRateController', function ($scope, rates) {          
-        $scope.rates = rates;       
+    .controller('ListGaugeController', function ($scope, gauges) { 
+
+        $scope.gauges = gauges;
     });

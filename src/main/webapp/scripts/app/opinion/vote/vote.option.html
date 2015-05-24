@@ -5,7 +5,8 @@
         <switch-input entity-name="vote" name="option.private" model="vote.option.private"></switch-input>        
         <geo-location-input model="vote.option.location"></geo-location-input>        
         <socialize-input entity-name="vote" name="option.socialize" model="vote.option.socialize" ></socialize-input>  
-        <div class="form-group pull-right">                               
+        <div class="form-group pull-right">  
+            <a ui-sref="^.detail"ng-disabled="form.$invalid" class="btn btn-default" translate="global.form.previous"></a>                             
             <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.create"></button>                                 
         </div>                
     </form-group>    

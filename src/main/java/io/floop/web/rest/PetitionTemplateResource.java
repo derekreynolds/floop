@@ -3,8 +3,9 @@
  */
 package io.floop.web.rest;
 
-import io.floop.core.gauge.model.Gauge;
-import io.floop.core.gauge.service.GaugeService;
+import io.floop.core.petition.model.PetitionTemplate;
+import io.floop.core.petition.service.PetitionService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,58 +28,58 @@ import com.codahale.metrics.annotation.Timed;
  */
 @RestController
 @RequestMapping("/api")
-public class GaugeResource {
+public class PetitionTemplateResource {
 
 	   protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	   private final GaugeService gaugeService;
+	   private final PetitionService petitionService;
 	   
 	   @Autowired
-	   public GaugeResource(final GaugeService gaugeService) {
-		   this.gaugeService = gaugeService;
+	   public PetitionTemplateResource(final PetitionService petitionService) {
+		   this.petitionService = petitionService;
 	   }
 	   
-	   @RequestMapping(value = "/gauge/{id}",
+	   @RequestMapping(value = "/petition/template/{id}",
 	            method = RequestMethod.GET,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	   @Timed
-	   public ResponseEntity<Gauge> get(@PathVariable String id) {
-	        log.debug("REST request to get gauge : {}", id);	        
+	   public ResponseEntity<PetitionTemplate> get(@PathVariable String id) {
+	        log.debug("REST request to get petition : {}", id);	        
 	        
-	        return new ResponseEntity<>(gaugeService.getById(id), HttpStatus.OK);
+	        return new ResponseEntity<>(petitionService.getById(id), HttpStatus.OK);
 	   }
 	   
-	   @RequestMapping(value = "/gauge/top5",
+	   @RequestMapping(value = "/petition/template/top5",
 	            method = RequestMethod.GET,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	   @Timed
-	   public ResponseEntity<Slice<Gauge>> list(Pageable pageable) {
-	        log.debug("REST request to get gauge list");	        
+	   public ResponseEntity<Slice<PetitionTemplate>> list(Pageable pageable) {
+	        log.debug("REST request to get petition list");	        
 	        
-	        return new ResponseEntity<>(gaugeService.getTop5(pageable), HttpStatus.OK);
+	        return new ResponseEntity<>(petitionService.getTop5(pageable), HttpStatus.OK);
 	   }
 
-	    @RequestMapping(value = "/gauge",
+	    @RequestMapping(value = "/petition/template",
 	            method = RequestMethod.POST,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	    @Timed
-	    public ResponseEntity<?> save(@RequestBody Gauge gauge) {
-	    	log.debug("Create a new gauge.");	      
+	    public ResponseEntity<?> save(@RequestBody PetitionTemplate petitionTemplate) {
+	    	log.debug("Create a new petition.");	      
 	    	
-	        gaugeService.save(gauge);
+	        petitionService.save(petitionTemplate);
 
 	        return new ResponseEntity<>(HttpStatus.CREATED);
 	        
 	    }
 	    
-	    @RequestMapping(value = "/gauge",
+	    @RequestMapping(value = "/petition/template",
 	            method = RequestMethod.PUT,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	    @Timed
-	    public ResponseEntity<?> update(@RequestBody Gauge gauge) {
-	    	log.debug("Create a new gauge.");	      
+	    public ResponseEntity<?> update(@RequestBody PetitionTemplate petitionTemplate) {
+	    	log.debug("Create a new petition.");	      
 	    	
-	        gaugeService.save(gauge);
+	        petitionService.save(petitionTemplate);
 
 	        return new ResponseEntity<>(HttpStatus.OK);
 	        

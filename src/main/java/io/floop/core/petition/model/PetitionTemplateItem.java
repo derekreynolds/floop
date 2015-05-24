@@ -1,15 +1,15 @@
-package io.floop.core.vote.model;
+package io.floop.core.petition.model;
 
 /**
  * 
  * @author Derek Reynolds
  *
  */
-public class VoteItem {
+public class PetitionTemplateItem {
 
 	private Integer ordinal;
 	
-	private String item;
+	private String name;
 
 	/**
 	 * @return the ordinal
@@ -26,17 +26,17 @@ public class VoteItem {
 	}
 
 	/**
-	 * @return the item
+	 * @return the name
 	 */
-	public String getItem() {
-		return item;
+	public String getName() {
+		return name;
 	}
 
 	/**
-	 * @param name the item to set
+	 * @param name the name to set
 	 */
-	public void setItem(String item) {
-		this.item = item;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

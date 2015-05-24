@@ -3,77 +3,77 @@
 angular.module('floopApp')
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('rate', {
+            .state('gauge', {
                 parent: 'site',
-                url: '/rate',
+                url: '/gauge',
                 views: {
                     'main@': {
-                        templateUrl: 'scripts/app/opinion/rate/rate.list.html',
-                        controller: 'ListRateController'
+                        templateUrl: 'scripts/app/opinion/gauge/gauge.list.html',
+                        controller: 'ListGaugeController'
                     }
-                },    
+                },  
                 data: {
                     roles: []
                 },                
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('rate');
+                        $translatePartialLoader.addPart('gauge');
                         $translatePartialLoader.addPart('geo');
                         return $translate.refresh();
                     }],
-                    rates: function(RateTemplateService) {
-                        return RateTemplateService.one().customGET('top5');
+                    gauges: function(GaugeTemplateService) {
+                        return GaugeTemplateService.one().customGET('top5');
                     }
                 }
             })
-            .state('rate.create', {              
+            .state('gauge.create', {              
                 url: "/create",
                 views: {
                     'main@': {
                         template: '<div ui-view></div>',
-                        controller: 'CreateRateController'
+                        controller: 'CreateGaugeController'
                     }
                 }                      
             }) 
-            .state('rate.create.detail', {
-                parent: 'rate.create',              
+            .state('gauge.create.detail', {
+                parent: 'gauge.create',              
                 url: "/detail",
                 views: {
                     '': {
-                        templateUrl: 'scripts/app/opinion/rate/rate.detail.html',
-                        controller: 'CreateRateController'
+                        templateUrl: 'scripts/app/opinion/gauge/gauge.detail.html',
+                        controller: 'CreateGaugeController'
                     }
                 }                      
             })            
-            .state('rate.create.option', {
-                parent: 'rate.create',
+            .state('gauge.create.option', {
+                parent: 'gauge.create',
                 url: "/option",
                 views: {
                     '': {
-                        templateUrl: 'scripts/app/opinion/rate/rate.option.html',
-                        controller: 'CreateRateController'
+                        templateUrl: 'scripts/app/opinion/gauge/gauge.option.html',
+                        controller: 'CreateGaugeController'
                     }
                 }
             })
-            .state('rate.edit', {
+            .state('gauge.edit', {
                 url: "/edit/:id",
-                templateUrl: 'scripts/app/opinion/rate/rate.html'
+                templateUrl: 'scripts/app/opinion/gauge/gauge.html'
             })
-            .state('rate.delete', {
+            .state('gauge.delete', {
                 url: "/delete/:id",
-                templateUrl: 'scripts/app/opinion/rate/rate.html'
+                templateUrl: 'scripts/app/opinion/gauge/gauge.html'
             })
-            .state('rate.show', {
+            .state('gauge.show', {
                 url: "/show/:id",
                 resolve: {
-                    rate: function ($stateParams, RateTemplateService) {
-                        return RateTemplateService.one($stateParams.id).get();
+                    gauge: function ($stateParams, GaugeTemplateService) {
+                        return GaugeTemplateService.one($stateParams.id).get();
                     }
                 },
                 views: {
                     'main@': {
-                        templateUrl: 'scripts/app/opinion/rate/rate.show.html',
-                        controller: 'ShowRateController'
+                        templateUrl: 'scripts/app/opinion/gauge/gauge.show.html',
+                        controller: 'ShowGaugeController'
                     }
                 }
             });

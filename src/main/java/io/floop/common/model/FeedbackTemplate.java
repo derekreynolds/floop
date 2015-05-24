@@ -1,13 +1,12 @@
 /**
  * 
  */
-package io.floop.core.rate.model;
+package io.floop.common.model;
+
+import java.io.Serializable;
 
 import io.floop.core.common.model.Option;
 import io.floop.domain.AbstractAuditingEntity;
-
-import java.io.Serializable;
-import java.util.List;
 
 import javax.validation.constraints.Size;
 
@@ -20,29 +19,26 @@ import org.springframework.data.mongodb.core.mapping.Field;
  * @author Derek Reynolds
  *
  */
-@Document(collection = "RATE")
-public class Rate extends AbstractAuditingEntity implements Serializable {
+@Document(collection = "FEEDBACK_TEMPLATE")
+public abstract class FeedbackTemplate extends AbstractAuditingEntity implements Serializable  {
 
     @Id
     private String id;
     
-    @Size(min = 2, max = 1000)
+    @Size(min = 1, max = 1000)
     private String title;
     
-    @Size(min = 2, max = 1000)
+    @Size(min = 1, max = 5000)
     private String description;
     
     @Field("start_date")
     private DateTime startDate;
     
     @Field("end_date")
-    private DateTime endDate;
+    private DateTime endDate;    
     
     @Field("option")
     private Option option;
-    
-    private List<RateItem> items;
-
     
 	/**
 	 * @return the option
@@ -127,21 +123,5 @@ public class Rate extends AbstractAuditingEntity implements Serializable {
 	public void setEndDate(DateTime endDate) {
 		this.endDate = endDate;
 	}
-
-	/**
-	 * @return the items
-	 */
-	public List<RateItem> getItems() {
-		return items;
-	}
-
-	/**
-	 * @param item the items to set
-	 */
-	public void setItems(List<RateItem> items) {
-		this.items = items;
-	}
-    
-    
 	
 }

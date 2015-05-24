@@ -21,8 +21,8 @@ angular.module('floopApp')
                         $translatePartialLoader.addPart('geo');
                         return $translate.refresh();
                     }],
-                    votings: function(VoteService) {
-                        return VoteService.one().customGET('top5');
+                    votes: function(VoteTemplateService) {
+                        return VoteTemplateService.one().customGET('top5');
                     }
                 }
             })
@@ -66,8 +66,8 @@ angular.module('floopApp')
             .state('vote.show', {
                 url: "/show/:id",
                 resolve: {
-                    vote: function ($stateParams, VoteService) {
-                        return VoteService.one($stateParams.id).get();
+                    vote: function ($stateParams, VoteTemplateService) {
+                        return VoteTemplateService.one($stateParams.id).get();
                     }
                 },
                 views: {

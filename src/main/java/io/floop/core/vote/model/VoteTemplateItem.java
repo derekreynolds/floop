@@ -1,11 +1,11 @@
-package io.floop.core.rate.model;
+package io.floop.core.vote.model;
 
 /**
  * 
  * @author Derek Reynolds
  *
  */
-public class RateItem {
+public class VoteTemplateItem {
 
 	private Integer ordinal;
 	
@@ -33,7 +33,7 @@ public class RateItem {
 	}
 
 	/**
-	 * @param item the item to set
+	 * @param name the item to set
 	 */
 	public void setItem(String item) {
 		this.item = item;

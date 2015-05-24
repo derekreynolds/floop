@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('CreateVoteController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, VoteService) {
+    .controller('CreateVoteController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, VoteTemplateService) {
         
         if(_.isUndefined($scope.vote)) {
             $scope.vote = {
@@ -60,7 +60,7 @@ angular.module('floopApp')
             vote.endDate = DateTimeService.toDateTimeUTC($scope.vote.timeBox.endDate, 
                                     DateTimeService.formatTime($scope.vote.timeBox.endTime));
 
-            VoteService.post(vote).then(
+            VoteTemplateService.post(vote).then(
                 function (value, responseHeaders) {
                     $state.go('home');
                 },
@@ -71,15 +71,14 @@ angular.module('floopApp')
 
         };
     })
-    .controller('ShowVoteController', function ($state, $scope, VoteService, vote) {
+    .controller('ShowVoteController', function ($state, $scope, VoteTemplateService, vote) {
           
         $scope.vote = vote;
 
-
         $scope.save = function() {            
-            VoteService.put().then(
+            VoteTemplateService.put().then(
                 function (value, responseHeaders) {
-                    $state.go('home');
+                    $state.go('vote');
                 },
                 function (httpResponse) {                                               
                     $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
@@ -87,8 +86,6 @@ angular.module('floopApp')
             );
         }
     })
-    .controller('ListVoteController', function ($scope, votings) {          
-        $scope.votings = _.map(votings, function(element) { 
-            return _.extend({}, element, {selected: false});
-        });      
+    .controller('ListVoteController', function ($scope, votes) { 
+        $scope.votes = votes;
     });

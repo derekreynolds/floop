@@ -1,0 +1,9 @@
+<div>
+	<h3 translate="gauge.title">Gauge</h5>
+	<a class="btn btn-primary pull-right" ui-sref="gauge.create" role="button" translate="global.form.create">Create</a>
+	<ol>            
+	    <li ng-repeat="gauge in gauges.content track by gauge.id">
+	        <a ui-sref="gauge.show({id: gauge.id})"><p>{{gauge.description}}</p></a>
+	    </li>
+	</ol>
+</div>

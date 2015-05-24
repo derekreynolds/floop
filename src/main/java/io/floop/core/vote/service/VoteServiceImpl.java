@@ -5,7 +5,7 @@ package io.floop.core.vote.service;
 
 
 
-import io.floop.core.vote.model.Vote;
+import io.floop.core.vote.model.VoteTemplate;
 import io.floop.core.vote.repository.VoteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class VoteServiceImpl implements VoteService {
 	 * @see io.floop.vote.service.VoteService#getList(org.springframework.data.domain.Pageable)
 	 */
 	@Override
-	public Slice<Vote> getList(Pageable pageable) {
+	public Slice<VoteTemplate> getList(Pageable pageable) {
 		
 		return voteRepository.findAll(pageable);
 	}	
@@ -40,7 +40,7 @@ public class VoteServiceImpl implements VoteService {
 	 * @see io.floop.vote.service.VoteService#getTop5(org.springframework.data.domain.Pageable)
 	 */
 	@Override
-	public Slice<Vote> getTop5(Pageable pageable) {
+	public Slice<VoteTemplate> getTop5(Pageable pageable) {
 		
 		return voteRepository.findTop5ByOrderByEndDateDesc(pageable);
 	}
@@ -49,7 +49,7 @@ public class VoteServiceImpl implements VoteService {
 	 * @see io.floop.vote.service.VoteService#getById(java.lang.String)
 	 */
 	@Override
-	public Vote getById(String id) {
+	public VoteTemplate getById(String id) {
 		
 		return voteRepository.findOne(id);
 	}
@@ -58,7 +58,7 @@ public class VoteServiceImpl implements VoteService {
 	 * @see io.floop.vote.service.VoteService#save(io.floop.vote.model.Vote)
 	 */
 	@Override
-	public void save(Vote vote) {
+	public void save(VoteTemplate vote) {
 		voteRepository.save(vote);		
 	}
 

@@ -3,8 +3,8 @@
  */
 package io.floop.web.rest;
 
-import io.floop.core.vote.model.Vote;
-import io.floop.core.vote.service.VoteService;
+import io.floop.core.gauge.model.GaugeTemplate;
+import io.floop.core.gauge.service.GaugeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,58 +27,58 @@ import com.codahale.metrics.annotation.Timed;
  */
 @RestController
 @RequestMapping("/api")
-public class VoteResource {
+public class GaugeTemplateResource {
 
 	   protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	   private final VoteService voteService;
+	   private final GaugeService gaugeService;
 	   
 	   @Autowired
-	   public VoteResource(final VoteService voteService) {
-		   this.voteService = voteService;
+	   public GaugeTemplateResource(final GaugeService gaugeService) {
+		   this.gaugeService = gaugeService;
 	   }
 	   
-	   @RequestMapping(value = "/vote/{id}",
+	   @RequestMapping(value = "/gauge/template/{id}",
 	            method = RequestMethod.GET,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	   @Timed
-	   public ResponseEntity<Vote> get(@PathVariable String id) {
-	        log.debug("REST request to get Voting : {}", id);	        
+	   public ResponseEntity<GaugeTemplate> get(@PathVariable String id) {
+	        log.debug("REST request to get gauge : {}", id);	        
 	        
-	        return new ResponseEntity<>(voteService.getById(id), HttpStatus.OK);
+	        return new ResponseEntity<>(gaugeService.getById(id), HttpStatus.OK);
 	   }
 	   
-	   @RequestMapping(value = "/vote/top5",
+	   @RequestMapping(value = "/gauge/template/top5",
 	            method = RequestMethod.GET,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	   @Timed
-	   public ResponseEntity<Slice<Vote>> list(Pageable pageable) {
-	        log.debug("REST request to get Voting list");	        
+	   public ResponseEntity<Slice<GaugeTemplate>> list(Pageable pageable) {
+	        log.debug("REST request to get gauge list");	        
 	        
-	        return new ResponseEntity<>(voteService.getTop5(pageable), HttpStatus.OK);
+	        return new ResponseEntity<>(gaugeService.getTop5(pageable), HttpStatus.OK);
 	   }
 
-	    @RequestMapping(value = "/vote",
+	    @RequestMapping(value = "/gauge/template",
 	            method = RequestMethod.POST,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	    @Timed
-	    public ResponseEntity<?> save(@RequestBody Vote vote) {
-	    	log.debug("Create a new vote.");	      
+	    public ResponseEntity<?> save(@RequestBody GaugeTemplate gauge) {
+	    	log.debug("Create a new gauge.");	      
 	    	
-	        voteService.save(vote);
+	        gaugeService.save(gauge);
 
 	        return new ResponseEntity<>(HttpStatus.CREATED);
 	        
 	    }
 	    
-	    @RequestMapping(value = "/vote",
+	    @RequestMapping(value = "/gauge/template",
 	            method = RequestMethod.PUT,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	    @Timed
-	    public ResponseEntity<?> update(@RequestBody Vote vote) {
-	    	log.debug("Create a new vote.");	      
+	    public ResponseEntity<?> update(@RequestBody GaugeTemplate gauge) {
+	    	log.debug("Create a new gauge.");	      
 	    	
-	        voteService.save(vote);
+	        gaugeService.save(gauge);
 
 	        return new ResponseEntity<>(HttpStatus.OK);
 	        

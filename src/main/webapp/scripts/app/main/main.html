@@ -1,3 +1,7 @@
 <div ng-cloak>
-    
+    <ol>            
+	    <li ng-repeat="vote in feedbacks.content track by vote.id">
+	        <a ui-sref="vote.show({id: vote.id})"><p>{{vote.description}}</p></a>
+	    </li>
+	</ol>
 </div>

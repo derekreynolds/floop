@@ -23,8 +23,8 @@ angular.module('floopApp')
                         $translatePartialLoader.addPart('vote');
                         return $translate.refresh();
                     }],
-                    ratings: function(RateService) {
-                        return RateService.one().customGET('top5');
+                    feedbacks: function(FeedbackTemplateService) {
+                        return FeedbackTemplateService.one().customGET('');
                     }
                 }
             });

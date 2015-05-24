@@ -3,8 +3,8 @@
  */
 package io.floop.web.rest;
 
-import io.floop.core.rate.model.Rate;
-import io.floop.core.rate.service.RateService;
+import io.floop.core.vote.model.VoteTemplate;
+import io.floop.core.vote.service.VoteService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,63 +22,63 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 /**
- * @author reno
+ * @author Derek Reynolds
  *
  */
 @RestController
 @RequestMapping("/api")
-public class RateResource {
+public class VoteTemplateResource {
 
 	   protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	   private final RateService rateService;
+	   private final VoteService voteService;
 	   
 	   @Autowired
-	   public RateResource(final RateService rateService) {
-		   this.rateService = rateService;
+	   public VoteTemplateResource(final VoteService voteService) {
+		   this.voteService = voteService;
 	   }
 	   
-	   @RequestMapping(value = "/rate/{id}",
+	   @RequestMapping(value = "/vote/template/{id}",
 	            method = RequestMethod.GET,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	   @Timed
-	   public ResponseEntity<Rate> get(@PathVariable String id) {
-	        log.debug("REST request to get Rating : {}", id);	        
+	   public ResponseEntity<VoteTemplate> get(@PathVariable String id) {
+	        log.debug("REST request to get Voting : {}", id);	        
 	        
-	        return new ResponseEntity<>(rateService.getById(id), HttpStatus.OK);
+	        return new ResponseEntity<>(voteService.getById(id), HttpStatus.OK);
 	   }
 	   
-	   @RequestMapping(value = "/rate/top5",
+	   @RequestMapping(value = "/vote/template/top5",
 	            method = RequestMethod.GET,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	   @Timed
-	   public ResponseEntity<Slice<Rate>> list(Pageable pageable) {
-	        log.debug("REST request to get Rating list");	        
+	   public ResponseEntity<Slice<VoteTemplate>> list(Pageable pageable) {
+	        log.debug("REST request to get Voting list");	        
 	        
-	        return new ResponseEntity<>(rateService.getTop5(pageable), HttpStatus.OK);
+	        return new ResponseEntity<>(voteService.getTop5(pageable), HttpStatus.OK);
 	   }
 
-	    @RequestMapping(value = "/rate",
+	    @RequestMapping(value = "/vote/template",
 	            method = RequestMethod.POST,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	    @Timed
-	    public ResponseEntity<?> save(@RequestBody Rate rate) {
-	    	log.debug("Create a new rate.");	      
+	    public ResponseEntity<?> save(@RequestBody VoteTemplate vote) {
+	    	log.debug("Create a new vote.");	      
 	    	
-	        rateService.save(rate);
+	        voteService.save(vote);
 
 	        return new ResponseEntity<>(HttpStatus.CREATED);
 	        
 	    }
 	    
-	    @RequestMapping(value = "/rate",
+	    @RequestMapping(value = "/vote/template",
 	            method = RequestMethod.PUT,
 	            produces = MediaType.APPLICATION_JSON_VALUE)
 	    @Timed
-	    public ResponseEntity<?> update(@RequestBody Rate rate) {
-	    	log.debug("Create a new rate.");	      
+	    public ResponseEntity<?> update(@RequestBody VoteTemplate vote) {
+	    	log.debug("Create a new vote.");	      
 	    	
-	        rateService.save(rate);
+	        voteService.save(vote);
 
 	        return new ResponseEntity<>(HttpStatus.OK);
 	        

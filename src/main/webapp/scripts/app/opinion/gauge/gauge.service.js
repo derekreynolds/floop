@@ -2,8 +2,8 @@
 'use strict';
 
 angular.module('floopApp')    
-    .factory('VoteTemplateService', ['Restangular',
+    .factory('GaugeTemplateService', ['Restangular',
     function (Restangular) {
-        return Restangular.service('api/vote/template');
+        return Restangular.service('api/gauge/template');
     }]);
 

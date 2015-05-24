@@ -3,7 +3,7 @@
  */
 package io.floop.core.gauge.service;
 
-import io.floop.core.gauge.model.Gauge;
+import io.floop.core.gauge.model.GaugeTemplate;
 import io.floop.core.gauge.repository.GaugeRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class GaugeServiceImpl implements GaugeService {
 	 * @see io.floop.gauge.service.GaugeService#getList(org.springframework.data.domain.Pageable)
 	 */
 	@Override
-	public Slice<Gauge> getList(Pageable pageable) {
+	public Slice<GaugeTemplate> getList(Pageable pageable) {
 		
 		return gaugeRepository.findAll(pageable);
 	}	
@@ -38,7 +38,7 @@ public class GaugeServiceImpl implements GaugeService {
 	 * @see io.floop.gauge.service.GaugeService#getTop5(org.springframework.data.domain.Pageable)
 	 */
 	@Override
-	public Slice<Gauge> getTop5(Pageable pageable) {
+	public Slice<GaugeTemplate> getTop5(Pageable pageable) {
 		// TODO Auto-genegauged method stub
 		return gaugeRepository.findTop5ByOrderByEndDateDesc(pageable);
 	}
@@ -47,7 +47,7 @@ public class GaugeServiceImpl implements GaugeService {
 	 * @see io.floop.gauge.service.GaugeService#getById(java.lang.String)
 	 */
 	@Override
-	public Gauge getById(String id) {
+	public GaugeTemplate getById(String id) {
 		
 		return gaugeRepository.findOne(id);
 	}
@@ -56,7 +56,7 @@ public class GaugeServiceImpl implements GaugeService {
 	 * @see io.floop.gauge.service.GaugeService#save(io.floop.gauge.model.Gauge)
 	 */
 	@Override
-	public void save(Gauge gauge) {
+	public void save(GaugeTemplate gauge) {
 		gaugeRepository.save(gauge);		
 	}
 

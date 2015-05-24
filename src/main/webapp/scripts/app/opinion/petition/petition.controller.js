@@ -1,85 +1,101 @@
 'use strict';
 
-
 angular.module('floopApp')
-    .controller('PetitionController', function ($scope, $translate, $timeout, Auth) {
-        $scope.success = null;
-        $scope.error = null;
-        $scope.format = 'YYYY-MM-DD';
-        $scope.petition = {};
+    .controller('CreatePetitionController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, PetitionTemplateService) {
         
-        $scope.now = moment();
+        if(_.isUndefined($scope.petition)) {
+            $scope.petition = {
+                'option' : {
+                    'private':false,
+                    'anonymous': false,
+                    'resultViewable':true,
+                    'location': {
+                        'selected': false,
+                        'geo': {
+                            'center' : {
+                                'latitude': 0,
+                                'longitude': 0
+                            },
+                            'accuracy': 0,
+                            'zoom': 0,
+                            'distance': 0 
+                        }
+                    },
+                    'socialize': {
+                        'selected': true,
+                        'message': ''
+                    }
+                }, 
+                'timeBox' : {
+                    
+                },
+                'items': []
+            };
+            $scope.format = 'YYYY-MM-DD';  
+            $scope.now = moment();
+            $scope.minDate = $scope.now.format($scope.format);
+            $scope.petition.timeBox.startDate = $scope.now.format($scope.format);
 
-        $scope.petition.startDate = $scope.now.format($scope.format);
+            $scope.petition.timeBox.endDate = $scope.now.add(1,'d').format($scope.format);
 
-        $scope.petition.endDate = $scope.now.add(1,'d').format($scope.format);
+            $scope.petition.timeBox.startTime = new Date();
+            $scope.petition.timeBox.endTime = new Date(); 
 
-        $scope.petition.startDateTime = new Date();
-        $scope.petition.endDateTime = new Date();
+            $translate(['petition.form.buttonText.options.sign', 'petition.form.buttonText.options.count', 
+                'petition.form.buttonText.options.like']).then(function (options) {
+                debugger
+                $scope.buttonText = [];
+                $scope.buttonText.push({text: options['petition.form.buttonText.options.sign']});
+                $scope.buttonText.push({text: options['petition.form.buttonText.options.count']});
+                $scope.buttonText.push({text: options['petition.form.buttonText.options.like']});
 
+            });
+
+            $state.go('.detail');
+        }       
+
+   
         $timeout(function (){angular.element('[ng-model="petition.title"]').focus();});
 
-        $scope.ismeridian = true; 
+        $scope.ismeridian = false; 
         $scope.hstep = 1;
-        $scope.mstep = 5;
+        $scope.mstep = 10;
 
+        $scope.create = function() {
 
-        $scope.toggleMode = function() {
-            $scope.ismeridian = ! $scope.ismeridian;
-        };
+            var petition = _.clone($scope.petition);
+            delete petition['timeBox'];
+            petition.startDate = DateTimeService.toDateTimeUTC($scope.petition.timeBox.startDate, 
+                                    DateTimeService.formatTime($scope.petition.timeBox.startTime));
+            petition.endDate = DateTimeService.toDateTimeUTC($scope.petition.timeBox.endDate, 
+                                    DateTimeService.formatTime($scope.petition.timeBox.endTime));
 
-        $scope.openTimeCalendar = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            $scope.timeOpen = true;
-        };
-
-        $scope.open = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-
-            $scope.opened = true;
-        };
-
-        $scope.select = function () {
-            
-        };
-
-        $scope.upload = function (files) {
-        if (files && files.length) {
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                $upload.upload({
-                    url: 'upload/url',
-                    fields: {'username': $scope.username},
-                    file: file
-                }).progress(function (evt) {
-                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                    console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-                }).success(function (data, status, headers, config) {
-                    console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-                });
-            }
-        }
-    };
-    
-    })
-    .controller('ShowPetitionController', function ($scope, PetitionService, petition) {
-          
-        $scope.rate = rate;
-        _.forEach($scope.rate.items, function(item, index) {
-            $scope.rate.items[index] = angular.fromJson(item);                   
-        });
-
-        $scope.save = function() {
-            PetitionService.post(rate).then(
+            PetitionTemplateService.post(petition).then(
                 function (value, responseHeaders) {
-                    $scope.success = 'OK';
+                    $state.go('home');
+                },
+                function (httpResponse) {                                               
+                    $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
+                }
+            );
+
+        };
+    })
+    .controller('ShowPetitionController', function ($state, $scope, PetitionTemplateService, petition) {
+          
+        $scope.petition = petition;
+
+        $scope.save = function() {            
+            PetitionTemplateService.put().then(
+                function (value, responseHeaders) {
+                    $state.go('petition');
                 },
                 function (httpResponse) {                                               
                     $scope.$emit('event:resource.error', {text:'Unknown error', title:'Error'});                   
                 }
             );
         }
+    })
+    .controller('ListPetitionController', function ($scope, petitions) { 
+        $scope.petitions = petitions;
     });
