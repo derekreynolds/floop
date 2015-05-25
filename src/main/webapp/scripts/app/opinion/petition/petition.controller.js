@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('CreatePetitionController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, PetitionTemplateService) {
+    .controller('CreatePetitionController', function ($scope, $translate, $timeout, $filter, $state, $sce, DateTimeService, PetitionTemplateService) {
         
         if(_.isUndefined($scope.petition)) {
             $scope.petition = {
@@ -43,11 +43,13 @@ angular.module('floopApp')
 
             $translate(['petition.form.buttonText.options.sign', 'petition.form.buttonText.options.count', 
                 'petition.form.buttonText.options.like']).then(function (options) {
-                debugger
+                var sign = options['petition.form.buttonText.options.sign'];
+                var count = options['petition.form.buttonText.options.count'];
+                var like = options['petition.form.buttonText.options.like'];
                 $scope.buttonText = [];
-                $scope.buttonText.push({text: options['petition.form.buttonText.options.sign']});
-                $scope.buttonText.push({text: options['petition.form.buttonText.options.count']});
-                $scope.buttonText.push({text: options['petition.form.buttonText.options.like']});
+                $scope.buttonText.push({id: 'petition.form.buttonText.options.sign', text: sign});
+                $scope.buttonText.push({id: 'petition.form.buttonText.options.count', text: count});
+                $scope.buttonText.push({id: 'petition.form.buttonText.options.like', text: like});
 
             });
 
@@ -62,9 +64,12 @@ angular.module('floopApp')
         $scope.mstep = 10;
 
         $scope.create = function() {
-
+            debugger
             var petition = _.clone($scope.petition);
             delete petition['timeBox'];
+            delete petition['buttonText'];
+            petition['buttonText'] = $scope.petition['buttonText'].id;
+
             petition.startDate = DateTimeService.toDateTimeUTC($scope.petition.timeBox.startDate, 
                                     DateTimeService.formatTime($scope.petition.timeBox.startTime));
             petition.endDate = DateTimeService.toDateTimeUTC($scope.petition.timeBox.endDate, 

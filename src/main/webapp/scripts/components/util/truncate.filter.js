@@ -44,4 +44,9 @@ angular.module('floopApp')
             }
             return input;
         };
-    });
+    })
+    .filter("sanitize", ['$sce', function($sce) {
+        return function(htmlCode){
+            return $sce.trustAsHtml(htmlCode);
+        }
+    }]);

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('floopApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'ngAnimate', 'ui.select',
+angular.module('floopApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'ngAnimate', 'ui.select','ngSanitize',
     'ngResource', 'ui.router', 'ngCookies', 'pascalprecht.translate', 'ngCacheBuster','ui.bootstrap', 
     'restangular', 'underscore.string', 'uiGmapgoogle-maps', 'ui.utils', 'wu.masonry'])
 

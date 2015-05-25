@@ -8,14 +8,10 @@
     		</group-display> 
     		<group-display>	 
     			<text-display entity-name="petition" name="description"></text-display> 
-    		</group-display>          
-
-            <div class="form-group voffset3" ng-repeat="item in petition.items track by item.ordinal">           
-                <petition-input model="petition.items" index="{{$index}}"></petition-input>              
-            </div>
+    		</group-display>
 
             <div class="form-group voffset4 pull-right">                               
-            	<button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.petition"></button>                                 
+            	<button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" translate="{{petition.buttonText}}"></button>                            
             </div>                
     </form-group>
 </form-view>

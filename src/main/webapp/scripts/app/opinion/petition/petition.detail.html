@@ -6,7 +6,7 @@
             <ui-select ng-model="petition.buttonText" theme="bootstrap">
             <ui-select-match placeholder="petition.buttonText.placeholder">{{$select.selected.text}}</ui-select-match>
 	            <ui-select-choices repeat="item in buttonText">
-	              <div>{{item.text}}</div>	              
+	              <div ng-bind-html="item.text | sanitize"></div>	              
 	            </ui-select-choices>
           	</ui-select>         
             <div class="form-group voffset2 pull-right"> 

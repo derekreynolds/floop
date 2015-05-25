@@ -28,9 +28,9 @@
                 "label": "Button Text",
                 "placeholder": "Select the text for the petition button.",
                 "options": {
-                    "sign": "<i class=\"fa fa-pencil\"> Sign Up", 
-                    "count": "<i class=\"fa fa-plus\"> Count Me In",
-                    "like": "<i class=\"fa fa-thumbs-o-up\"> Like"
+                    "sign": "<i class=\"fa fa-pencil\"></i> Sign Up", 
+                    "count": "<i class=\"fa fa-plus\"></i> Count Me In",
+                    "like": "<i class=\"fa fa-thumbs-o-up\"></i> Like"
                 }
 
                 

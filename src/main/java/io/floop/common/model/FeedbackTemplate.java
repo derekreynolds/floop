@@ -26,9 +26,11 @@ public abstract class FeedbackTemplate extends AbstractAuditingEntity implements
     private String id;
     
     @Size(min = 1, max = 1000)
+    @Field("title")
     private String title;
     
     @Size(min = 1, max = 5000)
+    @Field("description")
     private String description;
     
     @Field("start_date")
