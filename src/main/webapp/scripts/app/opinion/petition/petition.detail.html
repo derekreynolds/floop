@@ -3,12 +3,16 @@
             <text-input model="petition.title" ng-minlength=2 ng-maxlength=250 ng-required="true"></text-input>
             <text-area-input model="petition.description" rows="5" ng-required="true" ng-minlength="2" ng-maxlength="2500"></text-area-input>
             <start-end-date-time-input model="petition.timeBox" min-date="{{minDate}}"></start-end-date-time-input>
-            <ui-select ng-model="petition.buttonText" theme="bootstrap">
-            <ui-select-match placeholder="petition.buttonText.placeholder">{{$select.selected.text}}</ui-select-match>
-	            <ui-select-choices repeat="item in buttonText">
-	              <div ng-bind-html="item.text | sanitize"></div>	              
-	            </ui-select-choices>
-          	</ui-select>         
+            
+            <div class="form-group">
+	            <label translate="petition.form.buttonText.label">Button Text</label>	           
+	            <ui-select ng-model="petition.buttonText" theme="bootstrap">
+	            	<ui-select-match placeholder="{{petition.form.buttonText.placeholder | translate}}"><span ng-bind-html="$select.selected.text"></span></ui-select-match>
+		            <ui-select-choices repeat="item in buttonText">
+		              <div ng-bind-html="item.text | sanitize"></div>	              
+		            </ui-select-choices>
+	          	</ui-select>	          
+	        </div>
             <div class="form-group voffset2 pull-right"> 
                 <a ui-sref="^.option"ng-disabled="form.$invalid" class="btn btn-primary" translate="global.form.next"></a>
             </div>                

@@ -41,6 +41,21 @@ angular.module('floopApp')
             $scope.gauge.timeBox.startTime = new Date();
             $scope.gauge.timeBox.endTime = new Date(); 
 
+
+            $translate(['gauge.form.type.options.hot', 'gauge.form.type.options.happy', 
+                'gauge.form.type.options.positive', 'gauge.form.type.options.like']).then(function (options) {
+                var hot = options['gauge.form.type.options.hot'];
+                var happy = options['gauge.form.type.options.happy'];
+                var positive = options['gauge.form.type.options.positive'];
+                var like = options['gauge.form.type.options.like'];                
+                $scope.types = [];
+                $scope.types.push({id: 'gauge.form.type.options.hot', text: hot});
+                $scope.types.push({id: 'gauge.form.type.options.happy', text: happy});
+                $scope.types.push({id: 'gauge.form.type.options.positive', text: positive});
+                $scope.types.push({id: 'gauge.form.type.options.like', text: like});
+
+            });
+
             $state.go('.detail');
         }       
 

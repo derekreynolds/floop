@@ -24,9 +24,15 @@
             "step": {
                 "label": "Step"
             },
-            "items": {
-                "label": "Item",
-                "placeholder": "Item you want rated"
+            "type": {
+                "label": "Type",
+                "placeholder": "The type of gauge to show",
+                 "options": {
+                    "hot": "<i class=\"fa fa-sun-o fa-fw\"></i> Hot or Not <i class=\"fa fa-sun-o fa-fw\"></i>", 
+                    "happy": "<i class=\"fa fa-smile-o fa-fw\"></i> Happy or Sad <i class=\"fa fa-meh-o fa-fw\"></i>",
+                    "positive": "<i class=\"fa fa-plus\"></i> Positive or Negative <i class=\"fa fa-minus fa-fw\"></i>",
+                    "like": "<i class=\"fa fa-thumbs-o-up fa-fw\"></i> Like or Dislike <i class=\"fa fa-thumbs-o-down fa-fw\"></i>"
+                }
             },
             "option":{
                 "anonymous": {

@@ -28,12 +28,10 @@
                 "label": "Button Text",
                 "placeholder": "Select the text for the petition button.",
                 "options": {
-                    "sign": "<i class=\"fa fa-pencil\"></i> Sign Up", 
-                    "count": "<i class=\"fa fa-plus\"></i> Count Me In",
-                    "like": "<i class=\"fa fa-thumbs-o-up\"></i> Like"
-                }
-
-                
+                    "sign": "<i class=\"fa fa-pencil fa-fw\"></i> Sign Up", 
+                    "count": "<i class=\"fa fa-plus fa-fw\"></i> Count Me In",
+                    "like": "<i class=\"fa fa-thumbs-o-up fa-fw\"></i> Like"
+                }                
             },
             "option":{
                 "anonymous": {
