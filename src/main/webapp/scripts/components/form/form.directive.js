@@ -132,26 +132,23 @@ angular.module('floopApp')
             templateUrl: '/scripts/components/form/add-option-input.html',
             compile: function(element, attr) {
                 formService.extractAttributesFromModel(attr);
-                //if(_.isUndefined(attr.hideLabel)) {
-                //    element.append(formService.createLabel(attr));
-                //}
-                //element.append(formService.createAddOptionInput(attr));
-                //element.append(formService.createError(attr));
                 return {
                   pre: function($scope, iElem, iAttrs){
+
+                    $scope.item = {
+                        text: '',
+                        file: ''
+                    };
+
                     $scope.label  = iAttrs.entityName + '.form.' + iAttrs.name + '.label';
 
                     $scope.addItem = function ($event) {
-                   
-                        var target = angular.element($event.target);
-                        var $grandParent = target.closest('span.input-group');
-                        var $input = $grandParent.find('input');
-                                      
-                        if($scope.model.length <= 20) { 
-                            var value = $input.val();
-                            $scope.model.push({ordinal: $scope.model.length, item: value});             
+
+                        if($scope.model.length <= 20) {                             
+                            $scope.model.push({ordinal: $scope.model.length, item: $scope.item.text, image: $scope.item.file});             
                             
-                            $input.val('');
+                            $scope.item.text = '';
+                            $scope.item.file = '';
                             $scope.buttonEnabled = false;
                         } else {
                             $scope.$emit('event:user.info', {text:'A maximum of 20 items can be added.'});
@@ -161,6 +158,14 @@ angular.module('floopApp')
 
                     $scope.enableAddButton = function($event) {          
                         $scope.buttonEnabled = true;            
+                    };
+
+                    $scope.updateImageUpload = function() {
+                        
+                        var $icon = element.find('i.fa-upload');
+                        $icon.removeClass('fa-upload');
+                        $icon.addClass('fa-file-image-o');       
+
                     };
                   },
                   post: function(scope, iElem, iAttrs){
@@ -178,6 +183,7 @@ angular.module('floopApp')
             scope: {
                 name: '@',
                 value: '@',
+                image: '@',
                 index: '@',
                 model: '='
             }, 
@@ -233,7 +239,7 @@ angular.module('floopApp')
                         var endTime = moment(timeBox.endTime);
 
                         if(startDate.isAfter(endDate)) {
-                            timeBox.endDate = DateTimeService.formatDate(timeBox.startDate);
+                            timeBox.endDate = DateTimeService.formatDate(startDate.toDate());
                             timeBox.endTime = startTime.add(1, 'h').toDate();                
                         } else if(startDate.isSame(endDate) && (startTime.isAfter(endTime) 
                             || startTime.isSame(endTime))) {
@@ -249,12 +255,12 @@ angular.module('floopApp')
                         var endTime = moment(timeBox.endTime);
 
                         if(endDate.isBefore(startDate)) {
-                            timeBox.endDate = DateTimeService.formatDate(timeBox.startDate);
+                            timeBox.endDate = DateTimeService.formatDate(startDate.toDate());
                             timeBox.endTime = startTime.add(1, 'h').toDate(); 
                         } else if(endDate.isSame(startDate) && (endTime.isAfter(startTime) 
                             || endTime.isSame(startTime))) {                
                             timeBox.endTime = startTime.add(1, 'h').toDate();
-                        }   
+                        } 
                     };
 
                     scope.startTimeChange = function() {
@@ -401,7 +407,8 @@ angular.module('floopApp')
             require: ['^form'],
             scope: {
                 model: '=',
-                index: '@'
+                index: '@',
+                onRateClick: '&'
             },
             templateUrl: '/scripts/components/form/rating.html',
             controller: 'RateInputController',
@@ -585,4 +592,29 @@ angular.module('floopApp')
             }
     
         };
-    });
+    })
+    .directive("fileread", [function () {
+        return {
+            scope: {
+                fileread: "="
+            },
+            link: function (scope, element, attributes) {
+                element.bind("change", function (changeEvent) {
+                    if(changeEvent.target.files[0].size > 1000000) {
+                        scope.$emit('event:user.error', {title: 'file.upload.error.title', text:'file.upload.error.message'});
+                        return;
+                    }
+                    var reader = new FileReader();
+                    
+                    reader.onload = function (loadEvent) {
+
+                        scope.$apply(function () {
+                            scope.fileread = loadEvent.target.result;
+                        });
+                    }
+
+                    reader.readAsDataURL(changeEvent.target.files[0]);
+                });
+            }
+        }
+    }]);

@@ -3,10 +3,7 @@
  */
 package io.floop.core.rate.service;
 
-import io.floop.core.rate.model.RateTemplate;
-
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
+import io.floop.core.rate.model.Rate;
 
 /**
  * @author Derek Reynolds
@@ -14,12 +11,6 @@ import org.springframework.data.domain.Slice;
  */
 public interface RateService {
 
-	Slice<RateTemplate> getList(Pageable pageable);
-	
-	Slice<RateTemplate> getTop5(Pageable pageable);
-	
-	RateTemplate getById(String id);
-	
-	void save(RateTemplate rate);
+	void save(Rate rate);
 	
 }

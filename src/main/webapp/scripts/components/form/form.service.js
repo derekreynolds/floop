@@ -257,33 +257,7 @@ angular.module('floopApp')
            return input;
 
      
-        };
-
-        factory.createAddOptionInput = function(attributes) {
-            
-            var input = '<div ng-controller="AddOptionInputController">';
-                input += '<span class="input-group">';
-                input += '<input type="text" name="item" class="form-control" ng-keypress="enableAddButton($event)"/>';
-                input += '<span class="input-group-btn">';
-                input += '<button type="button" class="btn btn-default" ng-click="addItem($event)"';
-                input += 'ng-disabled="buttonEnabled !== true"><i class="fa fa-plus"></i></button>';                               
-                input += '</span>';
-                input += '</div>';
-
-            return input;           
-        } 
-
-        factory.createAddOption = function(attributes) {
-            
-            var input = '<span class="input-group">';
-                input += '<input type="text" name="' + attributes.name + '" value="' + attributes.value + '" class="form-control" ng-readonly="true"/>';
-                input += '<span class="input-group-btn">';
-                input += '<button type="button" class="btn btn-default" ng-click="removeItem($event)">';
-                input += '<i class="fa fa-minus"></i></button>';                                
-                input += '</span>';
-
-            return input;           
-        }           
+        };           
 
         /**
          * Creates an error message output area.

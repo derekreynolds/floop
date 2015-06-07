@@ -40,6 +40,7 @@
         <spring-security-oauth2.version>2.0.1.RELEASE</spring-security-oauth2.version>
         <swagger-springmvc.version>0.8.8</swagger-springmvc.version>
         <usertype-core.version>3.2.0.GA</usertype-core.version>
+        <maxmind.version>2.2.0</maxmind.version>
     </properties>
 
     <dependencies>
@@ -217,6 +218,11 @@
             <artifactId>mongeez</artifactId>
             <version>0.9.4</version>
         </dependency>
+        <dependency>
+		    <groupId>com.maxmind.geoip2</groupId>
+		    <artifactId>geoip2</artifactId>
+		    <version>${maxmind.version}</version>
+		</dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>

@@ -5,5 +5,9 @@ angular.module('floopApp')
     .factory('RateTemplateService', ['Restangular',
     function (Restangular) {
         return Restangular.service('api/rate/template');
+    }])
+    .factory('RateService', ['Restangular',
+    function (Restangular) {
+        return Restangular.service('api/rate');
     }]);
 

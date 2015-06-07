@@ -4,7 +4,7 @@
 package io.floop.web.rest;
 
 import io.floop.core.rate.model.RateTemplate;
-import io.floop.core.rate.service.RateService;
+import io.floop.core.rate.service.RateTemplateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 /**
- * @author reno
+ * @author Derek Reynolds
  *
  */
 @RestController
@@ -31,11 +31,11 @@ public class RateTemplateResource {
 
 	   protected final Logger log = LoggerFactory.getLogger(getClass());
 
-	   private final RateService rateService;
+	   private final RateTemplateService rateTemplateService;
 	   
 	   @Autowired
-	   public RateTemplateResource(final RateService rateService) {
-		   this.rateService = rateService;
+	   public RateTemplateResource(final RateTemplateService rateTemplateService) {
+		   this.rateTemplateService = rateTemplateService;
 	   }
 	   
 	   @RequestMapping(value = "/rate/template/{id}",
@@ -45,7 +45,7 @@ public class RateTemplateResource {
 	   public ResponseEntity<RateTemplate> get(@PathVariable String id) {
 	        log.debug("REST request to get Rating : {}", id);	        
 	        
-	        return new ResponseEntity<>(rateService.getById(id), HttpStatus.OK);
+	        return new ResponseEntity<>(rateTemplateService.getById(id), HttpStatus.OK);
 	   }
 	   
 	   @RequestMapping(value = "/rate/template/top5",
@@ -55,7 +55,7 @@ public class RateTemplateResource {
 	   public ResponseEntity<Slice<RateTemplate>> list(Pageable pageable) {
 	        log.debug("REST request to get Rating list");	        
 	        
-	        return new ResponseEntity<>(rateService.getTop5(pageable), HttpStatus.OK);
+	        return new ResponseEntity<>(rateTemplateService.getTop5(pageable), HttpStatus.OK);
 	   }
 
 	    @RequestMapping(value = "/rate/template",
@@ -65,7 +65,7 @@ public class RateTemplateResource {
 	    public ResponseEntity<?> save(@RequestBody RateTemplate rate) {
 	    	log.debug("Create a new rate.");	      
 	    	
-	        rateService.save(rate);
+	        rateTemplateService.save(rate);
 
 	        return new ResponseEntity<>(HttpStatus.CREATED);
 	        
@@ -78,7 +78,7 @@ public class RateTemplateResource {
 	    public ResponseEntity<?> update(@RequestBody RateTemplate rate) {
 	    	log.debug("Create a new rate.");	      
 	    	
-	        rateService.save(rate);
+	        rateTemplateService.save(rate);
 
 	        return new ResponseEntity<>(HttpStatus.OK);
 	        

@@ -102,6 +102,14 @@
             "title": "Confirm delete operation"
         }
     },
+    "file": {
+        "upload": {
+            "error": {
+                "title" : "File Upload Error",
+                "message": "File must be less than 1 megabyte."
+            } 
+        }
+    },
     "footer": "&copy; 2015 floop.io"
 
 }

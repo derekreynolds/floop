@@ -30,6 +30,9 @@ angular.module('floopApp')
 			});	
 			$rootScope.$on('event:user.info', function(event, message) { 
 				factory.displayInfo(factory.translateMessage(message));
+			});	
+			$rootScope.$on('event:user.error', function(event, message) { 
+				factory.displayError(factory.translateMessage(message));
 			});		
 			$rootScope.$on('event:user.warn', function(event, message) { 
 				factory.displayWarning(factory.translateMessage(message));
@@ -74,8 +77,8 @@ angular.module('floopApp')
 	    factory.translateMessage = function(message) {
 	    	if(message.title)
 	    		message.title = $filter('translate')(message.title);
-	    	else
-	    		message.text = $filter('translate')(message.text);
+	    	
+	    	message.text = $filter('translate')(message.text);
 
 	    	return message;
 	    };

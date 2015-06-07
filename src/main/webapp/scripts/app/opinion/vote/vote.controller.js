@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('CreateVoteController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, VoteTemplateService) {
+    .controller('CreateVoteController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, DateUtilService, VoteTemplateService) {
         
         if(_.isUndefined($scope.vote)) {
             $scope.vote = {
@@ -31,12 +31,12 @@ angular.module('floopApp')
                 },
                 'items': []
             };
-            $scope.format = 'YYYY-MM-DD';  
-            $scope.now = moment();
-            $scope.minDate = $scope.now.format($scope.format);
-            $scope.vote.timeBox.startDate = $scope.now.format($scope.format);
 
-            $scope.vote.timeBox.endDate = $scope.now.add(1,'d').format($scope.format);
+            DateUtilService.setMinMaxDates($scope);
+
+            $scope.vote.timeBox.startDate = moment($scope.now).format($scope.format);
+
+            $scope.vote.timeBox.endDate = moment($scope.now).add(1,'w').format($scope.format);
 
             $scope.vote.timeBox.startTime = new Date();
             $scope.vote.timeBox.endTime = new Date(); 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('CreateRateController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, RateTemplateService) {
+    .controller('CreateRateController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, DateUtilService, RateTemplateService) {
         
         if(_.isUndefined($scope.rate)) {
             $scope.rate = {
@@ -31,12 +31,12 @@ angular.module('floopApp')
                 },
                 'items': []
             };
-            $scope.format = 'YYYY-MM-DD';  
-            $scope.now = moment();
-            $scope.minDate = $scope.now.format($scope.format);
-            $scope.rate.timeBox.startDate = $scope.now.format($scope.format);
 
-            $scope.rate.timeBox.endDate = $scope.now.add(1,'d').format($scope.format);
+            DateUtilService.setMinMaxDates($scope);
+
+            $scope.rate.timeBox.startDate = moment($scope.now).format($scope.format);
+
+            $scope.rate.timeBox.endDate = moment($scope.now).add(1,'w').format($scope.format);
 
             $scope.rate.timeBox.startTime = new Date();
             $scope.rate.timeBox.endTime = new Date(); 
@@ -52,7 +52,6 @@ angular.module('floopApp')
         $scope.mstep = 10;
 
         $scope.create = function() {
-debugger
             var rate = _.clone($scope.rate);
             delete rate['timeBox'];
             rate.startDate = DateTimeService.toDateTimeUTC($scope.rate.timeBox.startDate, 
@@ -71,16 +70,36 @@ debugger
 
         };
     })
-    .controller('ShowRateController', function ($scope, RateTemplateService, rate) {
+    .controller('ShowRateController', function ($scope, RateService, rate) {
           
         $scope.rate = rate;
         _.forEach($scope.rate.items, function(item, index) {
             $scope.rate.items[index] = angular.fromJson(item); 
             $scope.rate.items[index].score = 0;                  
         });
+        
+        $scope.r = {rateTemplate: rate, items: []};
 
-        $scope.save = function() {            
-            RateTemplateService.put().then(
+        $scope.buttonEnabled = false;
+
+        $scope.enableButton = function() {                    
+             $scope.buttonEnabled = true;      
+            _.forEach($scope.rate.items, function(item, index) {
+                if(item.score === 0) {
+                    $scope.buttonEnabled = false;
+                    return false;                    
+                }
+            });            
+        }
+
+        $scope.save = function() { 
+
+            _.forEach($scope.rate.items, function(item, index) {
+                $scope.rate.items[index] = angular.fromJson(item); 
+                $scope.r.items.push($scope.rate.items[index].score);                  
+            });
+debugger
+            RateService.post($scope.r).then(
                 function (value, responseHeaders) {
                     $scope.success = 'OK';
                     $state.go('home');

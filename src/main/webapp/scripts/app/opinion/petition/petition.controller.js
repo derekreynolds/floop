@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('CreatePetitionController', function ($scope, $translate, $timeout, $filter, $state, $sce, DateTimeService, PetitionTemplateService) {
+    .controller('CreatePetitionController', function ($scope, $translate, $timeout, $filter, $state, $sce, DateTimeService, DateUtilService, PetitionTemplateService) {
         
         if(_.isUndefined($scope.petition)) {
             $scope.petition = {
@@ -31,21 +31,21 @@ angular.module('floopApp')
                 },
                 'items': []
             };
-            $scope.format = 'YYYY-MM-DD';  
-            $scope.now = moment();
-            $scope.minDate = $scope.now.format($scope.format);
-            $scope.petition.timeBox.startDate = $scope.now.format($scope.format);
 
-            $scope.petition.timeBox.endDate = $scope.now.add(1,'d').format($scope.format);
+            DateUtilService.setMinMaxDates($scope);
+
+            $scope.petition.timeBox.startDate = moment($scope.now).format($scope.format);
+
+            $scope.petition.timeBox.endDate = moment($scope.now).add(1,'w').format($scope.format);
 
             $scope.petition.timeBox.startTime = new Date();
-            $scope.petition.timeBox.endTime = new Date(); 
+            $scope.petition.timeBox.endTime = new Date();
 
             $translate(['petition.form.buttonText.options.sign', 'petition.form.buttonText.options.count', 
                 'petition.form.buttonText.options.like']).then(function (options) {
                 var sign = options['petition.form.buttonText.options.sign'];
                 var count = options['petition.form.buttonText.options.count'];
-                var like = options['petition.form.buttonText.options.like'];
+                var like = options['petition.form.buttonText.options.like'];                
                 $scope.buttonText = [];
                 $scope.buttonText.push({id: 'petition.form.buttonText.options.sign', text: sign});
                 $scope.buttonText.push({id: 'petition.form.buttonText.options.count', text: count});

@@ -1,4 +1,9 @@
 <span class="voffset1 input-group">
+	<span class="input-group-btn" ng-hide="!image">
+        <button type="button" class="btn btn-default" ng-disabled="true">
+        	<i class="fa fa-file-image-o"></i>
+        </button>                       
+	</span>	
     <input type="text" name="{{name}}" value="{{value}}" class="form-control" ng-readonly="true"/>
     <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="removeItem()">

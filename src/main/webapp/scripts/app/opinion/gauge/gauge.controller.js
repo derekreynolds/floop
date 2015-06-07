@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('floopApp')
-    .controller('CreateGaugeController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, GaugeTemplateService) {
+    .controller('CreateGaugeController', function ($scope, $translate, $timeout, $filter, $state, $compile, DateTimeService, DateUtilService, GaugeTemplateService) {
         
         if(_.isUndefined($scope.gauge)) {
             $scope.gauge = {
@@ -31,15 +31,15 @@ angular.module('floopApp')
                 },
                 'items': []
             };
-            $scope.format = 'YYYY-MM-DD';  
-            $scope.now = moment();
-            $scope.minDate = $scope.now.format($scope.format);
-            $scope.gauge.timeBox.startDate = $scope.now.format($scope.format);
 
-            $scope.gauge.timeBox.endDate = $scope.now.add(1,'d').format($scope.format);
+            DateUtilService.setMinMaxDates($scope);
+
+            $scope.gauge.timeBox.startDate = moment($scope.now).format($scope.format);
+
+            $scope.gauge.timeBox.endDate = moment($scope.now).add(1,'w').format($scope.format);
 
             $scope.gauge.timeBox.startTime = new Date();
-            $scope.gauge.timeBox.endTime = new Date(); 
+            $scope.gauge.timeBox.endTime = new Date();
 
 
             $translate(['gauge.form.type.options.hot', 'gauge.form.type.options.happy', 

@@ -75,6 +75,20 @@ Browser Upgrade Prompt
     background-color: white;
 }
 
+ input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
 .hero-unit {
     margin: 50px auto 0 auto;
     width: 300px;

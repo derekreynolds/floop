@@ -35,6 +35,7 @@ angular.module('floopApp')
             }
 
             $scope.model[$scope.index].score = 0; 
+            $scope.onRateClick();            
         };
 
         $scope.rateLeave = function(event) {
@@ -52,7 +53,9 @@ angular.module('floopApp')
         };
 
         $scope.rateRecord = function(event, index) {            
-            $scope.model[$scope.index].score = index;                                   
+            $scope.model[$scope.index].score = index;
+            debugger
+            $scope.onRateClick();           
         };
 
         function getParent(event) {
